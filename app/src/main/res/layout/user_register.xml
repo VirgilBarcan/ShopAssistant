@@ -1,0 +1,100 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_main_horizontal_margin"
+    android:paddingRight="@dimen/activity_main_horizontal_margin"
+    android:paddingTop="@dimen/activity_main_vertical_margin"
+    android:paddingBottom="@dimen/activity_main_vertical_margin"
+    tools:context=".MainActivity"
+    android:background="#161616">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_user_register_text"
+            android:textColor="#faf5f8"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/imageViewLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/app_logo"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/editTextFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_text_fullname_text"
+                android:textColor="#faf5f8"
+                android:textColorHint="#faf5f8"
+                android:singleLine="true"
+                android:ellipsize="start"
+                android:outlineProvider="paddedBounds" />
+
+            <EditText
+                android:id="@+id/editTextUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_text_username_text"
+                android:inputType="textPersonName"
+                android:textColor="#faf5f8"
+                android:textColorHint="#faf5f8"
+                android:singleLine="true"
+                android:outlineProvider="paddedBounds" />
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_text_password_text"
+                android:inputType="textPassword"
+                android:textColor="#faf5f8"
+                android:singleLine="true"
+                android:outlineProvider="paddedBounds"
+                android:textColorHint="#faf5f8" />
+
+            <EditText
+                android:id="@+id/editTextConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="password again"
+                android:inputType="textPassword"
+                android:textColor="#faf5f8"
+                android:singleLine="true"
+                android:outlineProvider="paddedBounds"
+                android:textColorHint="#faf5f8" />
+
+            <Button
+                android:id="@+id/buttonRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_register_text"
+                android:onClick="userRegister"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

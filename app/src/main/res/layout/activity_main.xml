@@ -1,0 +1,64 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:gravity="bottom"
+    android:paddingLeft="@dimen/activity_main_horizontal_margin"
+    android:paddingRight="@dimen/activity_main_horizontal_margin"
+    android:paddingTop="@dimen/activity_main_vertical_margin"
+    android:paddingBottom="@dimen/activity_main_vertical_margin"
+    tools:context=".MainActivity"
+    android:background="#161616">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutLogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/app_logo"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBottomMain"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonLoginMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_login_text"
+            android:textColor="#faf5f8"
+            style="?android:attr/borderlessButtonStyle"
+            android:onClick="loginMain"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#faf5f8" />
+
+        <Button
+            android:id="@+id/buttonRegisterMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_register_text"
+            android:textColor="#faf5f8"
+            style="?android:attr/borderlessButtonStyle"
+            android:onClick="registerMain"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</LinearLayout>

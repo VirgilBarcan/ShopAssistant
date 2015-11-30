@@ -1,0 +1,119 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_main_horizontal_margin"
+    android:paddingRight="@dimen/activity_main_horizontal_margin"
+    android:paddingTop="@dimen/activity_main_vertical_margin"
+    android:paddingBottom="@dimen/activity_main_vertical_margin"
+    tools:context=".MainActivity"
+    android:background="#161616">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_login_user_text"
+            android:textColor="#faf5f8"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/imageViewLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/app_logo"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/editTextUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_text_username_text"
+                android:inputType="textPersonName"
+                android:textColor="#faf5f8"
+                android:textColorHint="#faf5f8"
+                android:singleLine="true"
+                android:textStyle="bold"
+                android:ellipsize="start"
+                android:outlineProvider="paddedBounds" />
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_text_password_text"
+                android:inputType="textPassword"
+                android:textColor="#faf5f8"
+                android:textColorHint="#faf5f8"
+                android:singleLine="true"
+                android:outlineProvider="paddedBounds" />
+
+            <Button
+                android:id="@+id/buttonLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_login_text"
+                android:onClick="userLogin"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:layout_weight="0.050">
+
+            <Button
+                android:id="@+id/buttonCompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:text="@string/button_company_text"
+                android:textColor="#faf5f8"
+                style="?android:attr/borderlessButtonStyle"
+                android:onClick="startCompanyLoginActivity"
+                android:layout_weight="1"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:background="#faf5f8" />
+
+            <Button
+                android:id="@+id/buttonRegisterBottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:text="@string/button_register_text"
+                android:textColor="#faf5f8"
+                style="?android:attr/borderlessButtonStyle"
+                android:onClick="startUserRegisterActivity"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
