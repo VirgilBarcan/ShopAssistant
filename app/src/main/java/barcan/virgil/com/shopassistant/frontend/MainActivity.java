@@ -8,8 +8,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.io.IOException;
+import java.util.List;
+
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
+import barcan.virgil.com.shopassistant.backend.backend.database.DatabaseHelper;
+import barcan.virgil.com.shopassistant.model.RegularUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         else {
             setContentView(R.layout.activity_main);
         }
+
+        checkDBHelper();
 
         //Start the controller, which is a service running in background, waiting for location updates
         Controller controller = new Controller();
@@ -68,6 +75,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void checkDBHelper() {
+        DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
+        try {
+            dbHelper.createDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<RegularUser> listUsers = dbHelper.getAllRegularUsers();
+
+        if(listUsers != null){
+            for (RegularUser regularUser : listUsers)
+                System.out.println(regularUser);
+        }
     }
 
     /**

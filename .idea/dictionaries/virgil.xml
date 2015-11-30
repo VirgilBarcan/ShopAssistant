@@ -2,12 +2,15 @@
   <dictionary name="virgil">
     <words>
       <w>asus</w>
+      <w>barcan</w>
       <w>emag</w>
       <w>fullname</w>
       <w>macbook</w>
       <w>paperwhite</w>
       <w>samsung</w>
+      <w>shopassistant</w>
       <w>smartphone</w>
+      <w>sqlite</w>
     </words>
   </dictionary>
 </component>
