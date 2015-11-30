@@ -14,6 +14,7 @@ import java.util.List;
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.backend.backend.database.DatabaseHelper;
+import barcan.virgil.com.shopassistant.model.CompanyUser;
 import barcan.virgil.com.shopassistant.model.RegularUser;
 
 public class MainActivity extends AppCompatActivity {
@@ -85,10 +86,10 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        List<RegularUser> listUsers = dbHelper.getAllRegularUsers();
+        List<CompanyUser> listUsers = dbHelper.getAllUsersOfCompany("Emag");
 
         if(listUsers != null){
-            for (RegularUser regularUser : listUsers)
+            for (CompanyUser regularUser : listUsers)
                 System.out.println(regularUser);
         }
     }

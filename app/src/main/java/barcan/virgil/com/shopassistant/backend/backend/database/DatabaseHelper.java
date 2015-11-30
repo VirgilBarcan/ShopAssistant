@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
+import barcan.virgil.com.shopassistant.model.Category;
+import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.CompanyUser;
 import barcan.virgil.com.shopassistant.model.RegularUser;
 
@@ -192,7 +194,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             if(cursor == null) return null;
 
-            String regularUserID;
+            String companyUserID;
             String username;
             String password;
             String fullName;
@@ -200,14 +202,163 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             cursor.moveToFirst();
             do {
-                regularUserID = cursor.getString(0);
+                companyUserID = cursor.getString(0);
                 username = cursor.getString(1);
                 password = cursor.getString(2);
                 pathToImage = cursor.getString(3);
                 fullName = cursor.getString(4);
 
                 CompanyUser companyUser = new CompanyUser();
-                companyUser.setUserID(Integer.parseInt(regularUserID));
+                companyUser.setUserID(Integer.parseInt(companyUserID));
+                companyUser.setUsername(username);
+                companyUser.setPassword(password);
+                companyUser.setFullName(fullName);
+                companyUser.setPathToImage(pathToImage);
+
+                companyUsers.add(companyUser);
+            } while (cursor.moveToNext());
+            cursor.close();
+        } catch (Exception e) {
+            Log.e("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return companyUsers;
+    }
+
+    /**
+     * Get the list of all Categories from the database
+     * @return the list of all Categories from the database
+     */
+    public List<Category> getAllCategories(){
+        List<Category> categories = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + TablesContracts.Category.TABLE_NAME, null);
+
+            if(cursor == null) return null;
+
+            String categoryID;
+            String categoryName;
+
+            cursor.moveToFirst();
+            do {
+
+                categoryID = cursor.getString(0);
+                categoryName = cursor.getString(1);
+
+                Category category = new Category();
+                category.setCategoryID(categoryID);
+                category.setCategoryName(categoryName);
+
+                categories.add(category);
+            } while (cursor.moveToNext());
+            cursor.close();
+        } catch (Exception e) {
+            Log.e("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return categories;
+    }
+
+    /**
+     * Get the list of all Companies from the database
+     * @return the list of all Companies from the database
+     */
+    public List<Company> getAllCompanies(){
+        List<Company> companies = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + TablesContracts.Company.TABLE_NAME, null);
+
+            if(cursor == null) return null;
+
+            String companyID;
+            String companyName;
+            String companyInfo;
+            String companyRating;
+
+            cursor.moveToFirst();
+            do {
+
+                companyID = cursor.getString(0);
+                companyName = cursor.getString(1);
+                companyInfo = cursor.getString(2);
+                companyRating = cursor.getString(3);
+
+                Company company = new Company();
+                company.setCompanyID(companyID);
+                company.setCompanyName(companyName);
+                company.setCompanyInfo(companyInfo);
+                company.setCompanyRating(Double.parseDouble(companyRating));
+
+                companies.add(company);
+            } while (cursor.moveToNext());
+            cursor.close();
+        } catch (Exception e) {
+            Log.e("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return companies;
+    }
+
+    /**
+     * Get the list of all CompanyUsers that work for a given Company from the database
+     * @return the list of all CompanyUsers that work for a given Company from the database
+     */
+    public List<CompanyUser> getAllUsersOfCompany(Company company) {
+        return this.getAllUsersOfCompany(company.getCompanyName());
+    }
+
+    /**
+     * Get the list of all CompanyUsers that work for a given Company from the database
+     * @return the list of all CompanyUsers that work for a given Company from the database
+     */
+    public List<CompanyUser> getAllUsersOfCompany(String companyName){
+        List<CompanyUser> companyUsers = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            String sqlQuery = "SELECT CU.companyUserID, CU.username, CU.password, CU.pathToImage, CU.fullName " +
+                    "FROM " + TablesContracts.CompanyUser.TABLE_NAME + " CU, " +
+                    TablesContracts.CompanyCompanyUser.TABLE_NAME + " CCU, " +
+                    TablesContracts.Company.TABLE_NAME + " C " +
+                    "WHERE CCU.companyUserID = CU.companyUserID " +
+                    "AND CCU.companyID = C.companyID " +
+                    "AND C.companyName = '" + companyName + "'";
+            cursor = db.rawQuery(sqlQuery, null);
+
+            if(cursor == null) return null;
+
+            String companyUserID;
+            String username;
+            String password;
+            String fullName;
+            String pathToImage;
+
+            cursor.moveToFirst();
+            do {
+                companyUserID = cursor.getString(0);
+                username = cursor.getString(1);
+                password = cursor.getString(2);
+                pathToImage = cursor.getString(3);
+                fullName = cursor.getString(4);
+
+                CompanyUser companyUser = new CompanyUser();
+                companyUser.setUserID(Integer.parseInt(companyUserID));
                 companyUser.setUsername(username);
                 companyUser.setPassword(password);
                 companyUser.setFullName(fullName);

@@ -5,6 +5,7 @@ package barcan.virgil.com.shopassistant.model;
  */
 public class Location {
 
+    private String locationID;
     private Double latitude;
     private Double longitude;
 
@@ -27,6 +28,7 @@ public class Location {
     }
 
     private void initMemberData() {
+        this.locationID = "";
         this.latitude = 0.0;
         this.longitude = 0.0;
 
@@ -36,6 +38,14 @@ public class Location {
         this.streetNo = "";
         this.ZIP = "";
         this.fullAddress = "";
+    }
+
+    public String getLocationID() {
+        return locationID;
+    }
+
+    public void setLocationID(String locationID) {
+        this.locationID = locationID;
     }
 
     public Double getLatitude() {

@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Company {
 
+    private String companyID;
     private String companyName;
     private String companyInfo;
     //private Timetable openHours;
@@ -17,12 +18,22 @@ public class Company {
     private Double companyRating;
 
     public Company() {
+        companyID = "";
+        companyName = "";
         companyInfo = "";
         companyRating = 0.0;
         location = new Location();
 
         allProducts = new ArrayList<>();
         availableProducts = new ArrayList<>();
+    }
+
+    public String getCompanyID() {
+        return companyID;
+    }
+
+    public void setCompanyID(String companyID) {
+        this.companyID = companyID;
     }
 
     public String getCompanyName() {

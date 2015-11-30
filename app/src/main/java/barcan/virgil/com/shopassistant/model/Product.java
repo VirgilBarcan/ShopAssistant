@@ -5,6 +5,7 @@ package barcan.virgil.com.shopassistant.model;
  */
 public class Product {
 
+    private String productID;
     private String productName;
     private Category productCategory;
     private Company productSeller;
@@ -12,11 +13,20 @@ public class Product {
     private Double productRating;
 
     public Product() {
+        productID = "";
         productName = "";
         productCategory = new Category();
         productSeller = new Company();
         productPrice = new Price();
         productRating = 0.0;
+    }
+
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
     }
 
     public String getProductName() {

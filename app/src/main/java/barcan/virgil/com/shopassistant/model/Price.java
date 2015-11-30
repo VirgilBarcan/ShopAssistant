@@ -5,17 +5,34 @@ package barcan.virgil.com.shopassistant.model;
  */
 public class Price {
 
+    private String priceID;
     private Double priceValue;
     private String priceCurrency;
 
     public Price() {
+        priceID = "";
         priceValue = 0.0;
         priceCurrency = "";
     }
 
     public Price(Double priceValue, String priceCurrency) {
+        this.priceID = "";
         this.priceValue = priceValue;
         this.priceCurrency = priceCurrency;
+    }
+
+    public Price(String priceID, Double priceValue, String priceCurrency) {
+        this.priceID = priceID;
+        this.priceValue = priceValue;
+        this.priceCurrency = priceCurrency;
+    }
+
+    public String getPriceID() {
+        return priceID;
+    }
+
+    public void setPriceID(String priceID) {
+        this.priceID = priceID;
     }
 
     public Double getPriceValue() {
