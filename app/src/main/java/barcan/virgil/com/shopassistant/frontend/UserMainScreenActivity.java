@@ -8,9 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import barcan.virgil.com.shopassistant.R;
-import barcan.virgil.com.shopassistant.backend.Controller;
 
-public class MainScreenActivity extends AppCompatActivity {
+public class UserMainScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class MainScreenActivity extends AppCompatActivity {
         System.out.println("MainActivity.loginMain");
 
         //TODO: Start the login activity
-        Intent intentLoginActivity = new Intent(MainScreenActivity.this, UserLoginActivity.class);
+        Intent intentLoginActivity = new Intent(UserMainScreenActivity.this, UserLoginActivity.class);
         //intentLoginActivity.putExtra("KEY", "value");
         startActivity(intentLoginActivity);
     }
@@ -62,7 +61,7 @@ public class MainScreenActivity extends AppCompatActivity {
         System.out.println("MainActivity.registerMain");
 
         //TODO: Start the register activity
-        Intent intentRegisterActivity = new Intent(MainScreenActivity.this, UserRegisterActivity.class);
+        Intent intentRegisterActivity = new Intent(UserMainScreenActivity.this, UserRegisterActivity.class);
         //intentLoginActivity.putExtra("KEY", "value");
         startActivity(intentRegisterActivity);
     }

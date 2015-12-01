@@ -1,8 +1,8 @@
 package barcan.virgil.com.shopassistant.frontend;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,22 +11,20 @@ import android.view.View;
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityLogged extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Start the controller, which is a service running in background, waiting for location updates
-        Controller controller = Controller.getInstance(this, this);
+        Controller controller = Controller.getInstance();
 
-        //TODO: Check if the user is logged in (better check to be done! check the DB also)
+        //TODO: Check if the user is logged in
         if (controller.isLogged()) {
-            //Open the activity that has the user already logged
-            openMainActivityLogged();
+            setContentView(R.layout.activity_main_logged);
         }
         else {
-            //Continue with this activity
             controller.setupSharedPreferences();
 
             setContentView(R.layout.activity_main);
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
 
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -49,6 +47,15 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
+            case R.id.action_search:
+                System.out.println("MainActivity.onOptionsItemSelected: Search pressed!");
+                //TODO: React to search
+                break;
+            case R.id.action_shopping_list:
+                System.out.println("MainActivity.onOptionsItemSelected: ShoppingList pressed!");
+                //TODO: React to shopping list
+                openShoppingListActivity();
+                break;
             case R.id.action_settings:
                 System.out.println("MainActivity.onOptionsItemSelected: Settings pressed!");
                 //TODO: React to setting
@@ -66,16 +73,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * This method is called when the user is already logged in
-     * The Activity is changed to MainActivityLogged, which has the action bar
+     * This method is called when the user presses ShoppingList button from the AppBar
+     * It opens the ShoppingListActivity and shows the user's shopping list
      */
-    private void openMainActivityLogged() {
-        Intent intentMainActivityLogged = new Intent(MainActivity.this, MainActivityLogged.class);
-        //intentMainActivityLogged.putExtra("KEY", "value");
-        startActivity(intentMainActivityLogged);
-
-        //Finish the app so the user can not get back to this activity
-        finish();
+    private void openShoppingListActivity() {
+        Intent intentShoppingListActivity = new Intent(MainActivityLogged.this, UserShoppingListActivity.class);
+        //intentShoppingListActivity.putExtra("KEY", "value");
+        startActivity(intentShoppingListActivity);
     }
 
     /**
@@ -86,12 +90,9 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("MainActivity.loginMain");
 
         //TODO: Start the login activity
-        Intent intentLoginActivity = new Intent(MainActivity.this, UserLoginActivity.class);
+        Intent intentLoginActivity = new Intent(MainActivityLogged.this, UserLoginActivity.class);
         //intentLoginActivity.putExtra("KEY", "value");
         startActivity(intentLoginActivity);
-
-        //Finish the app so the user can not get back to this activity
-        finish();
     }
 
     /**
@@ -102,11 +103,8 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("MainActivity.registerMain");
 
         //TODO: Start the register activity
-        Intent intentRegisterActivity = new Intent(MainActivity.this, UserRegisterActivity.class);
+        Intent intentRegisterActivity = new Intent(MainActivityLogged.this, UserRegisterActivity.class);
         //intentLoginActivity.putExtra("KEY", "value");
         startActivity(intentRegisterActivity);
-
-        //Finish the app so the user can not get back to this activity
-        finish();
     }
 }

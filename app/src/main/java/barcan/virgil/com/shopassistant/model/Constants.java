@@ -6,5 +6,5 @@ package barcan.virgil.com.shopassistant.model;
 public class Constants {
 
     public static final String SHARED_PREFERENCES_USERNAME_LOG_IN = "USERNAME_LOG_IN";
-
+    public static final String INCORRECT_LOGIN_CREDENTIALS = "Incorrect Login credentials! Please try again!";
 }

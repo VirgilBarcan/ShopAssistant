@@ -2,7 +2,6 @@ package barcan.virgil.com.shopassistant.backend;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import java.io.IOException;
 import java.util.Map;
@@ -11,6 +10,7 @@ import barcan.virgil.com.shopassistant.backend.backend.database.DatabaseHelper;
 import barcan.virgil.com.shopassistant.frontend.MainActivity;
 import barcan.virgil.com.shopassistant.model.CompanyUser;
 import barcan.virgil.com.shopassistant.model.Constants;
+import barcan.virgil.com.shopassistant.model.RegularUser;
 
 /**
  * This class should handle the flow of data from the frontend to the model and back
@@ -122,6 +122,7 @@ public class Controller {
     public boolean isLogged() {
         String usernameLogIn = sharedPreferences.getString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, "");
         System.out.println("Controller.isLogged: username=" + usernameLogIn);
+
         return !usernameLogIn.isEmpty();
     }
 
@@ -133,5 +134,22 @@ public class Controller {
         SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
         sharedPreferencesEditor.putString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, username);
         sharedPreferencesEditor.commit();
+    }
+
+    /**
+     * This method checks if the given <username, password> pair exist in the database
+     * @param username the username
+     * @param password the password
+     * @return true if the <username, password> pair exists in the database, false otherwise
+     */
+    public boolean existsUserInDatabase(String username, String password) {
+        Map<String, RegularUser> regularUsers = databaseHelper.getAllRegularUsers();
+
+        for (RegularUser regularUser : regularUsers.values()) {
+            if (regularUser.getUsername().equals(username) && regularUser.getPassword().equals(password))
+                return true;
+        }
+
+        return false;
     }
 }
