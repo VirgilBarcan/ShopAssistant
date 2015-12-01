@@ -8,14 +8,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.io.IOException;
-import java.util.List;
-
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
-import barcan.virgil.com.shopassistant.backend.backend.database.DatabaseHelper;
-import barcan.virgil.com.shopassistant.model.CompanyUser;
-import barcan.virgil.com.shopassistant.model.RegularUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,18 +17,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Start the controller, which is a service running in background, waiting for location updates
+        Controller controller = Controller.getInstance(this, this);
+
         //TODO: Check if the user is logged in
-        if (true) {
+        if (controller.isLogged()) {
             setContentView(R.layout.activity_main_logged);
         }
         else {
+            controller.setupSharedPreferences();
+
             setContentView(R.layout.activity_main);
         }
-
-        checkDBHelper();
-
-        //Start the controller, which is a service running in background, waiting for location updates
-        Controller controller = new Controller();
     }
 
     @Override
@@ -76,22 +70,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void checkDBHelper() {
-        DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
-        try {
-            dbHelper.createDatabase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        List<CompanyUser> listUsers = dbHelper.getAllUsersOfCompany("Emag");
-
-        if(listUsers != null){
-            for (CompanyUser regularUser : listUsers)
-                System.out.println(regularUser);
-        }
     }
 
     /**

@@ -9,14 +9,19 @@ import android.view.View;
 import android.widget.EditText;
 
 import barcan.virgil.com.shopassistant.R;
+import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.model.RegularUser;
 
 public class UserLoginActivity extends AppCompatActivity {
+
+    Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_login);
+
+        controller = Controller.getInstance();
     }
 
     @Override
@@ -63,6 +68,9 @@ public class UserLoginActivity extends AppCompatActivity {
         //Start the MainScreen activity if the user credentials are correct
         //TODO: Check if the user credentials are correct
         if (true) {
+            //Save the username in sharedPreferences to know that the user was logged in successfully
+            controller.saveUsernameLoggedIn(username);
+
             Intent intentMainScreen = new Intent(UserLoginActivity.this, MainScreenActivity.class);
             //intentMainScreen.putExtra("KEY", "value");
             startActivity(intentMainScreen);

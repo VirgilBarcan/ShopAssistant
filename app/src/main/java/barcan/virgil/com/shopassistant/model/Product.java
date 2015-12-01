@@ -8,7 +8,7 @@ public class Product {
     private String productID;
     private String productName;
     private Category productCategory;
-    private Company productSeller;
+    private Company productSeller; //redundant data that simplifies access to this information
     private Price productPrice;
     private Double productRating;
 

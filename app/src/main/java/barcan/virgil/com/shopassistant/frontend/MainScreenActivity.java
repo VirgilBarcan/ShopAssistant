@@ -16,9 +16,6 @@ public class MainScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_logged);
-
-        //Start the controller, which is a service running in background, waiting for location updates
-        Controller controller = new Controller();
     }
 
     @Override

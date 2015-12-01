@@ -1,17 +1,137 @@
 package barcan.virgil.com.shopassistant.backend;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import java.io.IOException;
+import java.util.Map;
+
+import barcan.virgil.com.shopassistant.backend.backend.database.DatabaseHelper;
+import barcan.virgil.com.shopassistant.frontend.MainActivity;
+import barcan.virgil.com.shopassistant.model.CompanyUser;
+import barcan.virgil.com.shopassistant.model.Constants;
+
 /**
  * This class should handle the flow of data from the frontend to the model and back
- * It should have knowledge about the user's data: username, password, shoppingList, productList, etc.
- * It should be able to save the information in a way that will be safe enough
+ * It should have knowledge about the user's data: username, password, shoppingList, productList, etc. <= Database
+ * It should be able to save the information in a way that will be safe enough <= Database
  * It should start the location monitoring service => it is a Service itself
  * It should display notifications when needed
  * Created by virgil on 29.11.2015.
  */
 public class Controller {
 
-    public Controller() {
+    //The controller needs to access data from the database
+    private DatabaseHelper databaseHelper;
+    //The controller needs to access info about the user that is logged in
+    private SharedPreferences sharedPreferences;
 
+    private MainActivity mainActivity;
+
+    //The controller needs the context
+    private Context context;
+
+    private static Controller instance;
+
+    private Controller() {
+        //do nothing here
     }
 
+    private Controller(Context context, MainActivity mainActivity) {
+        this.context = context;
+        this.mainActivity = mainActivity;
+
+        //Init sharedPreferences
+        sharedPreferences = mainActivity.getPreferences(Context.MODE_PRIVATE);
+
+        //Create DatabaseHelper
+        createDatabaseHelper();
+
+        //Check Database
+        checkDatabaseHelper();
+    }
+
+    /**
+     * This function is the getter for the Singleton
+     * @return the Controller instance
+     */
+    public static Controller getInstance() {
+        if (Controller.instance == null) {
+            Controller.instance = new Controller();
+        }
+
+        return Controller.instance;
+    }
+
+    /**
+     * This function is the getter for the Singleton
+     * @param context the Context
+     * @param mainActivity the MainActivity
+     * @return the Controller instance
+     */
+    public static Controller getInstance(Context context, MainActivity mainActivity) {
+        if (Controller.instance == null) {
+            Controller.instance = new Controller(context, mainActivity);
+        }
+
+        return Controller.instance;
+    }
+
+    /**
+     * This method is used to start the DatabaseHelper
+     * The DatabaseHelper class handles communication with the database
+     */
+    private void createDatabaseHelper() {
+        databaseHelper = new DatabaseHelper(context);
+        try {
+            databaseHelper.createDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method is used to check if the DatabaseHelper was initialized correctly
+     * It performs a get to check if data is fetched
+     */
+    private void checkDatabaseHelper() {
+        //Print all users that work at Emag
+        Map<String, CompanyUser> allUsersOfCompany = databaseHelper.getAllUsersOfCompany("Emag");
+
+        if(allUsersOfCompany != null){
+            for (CompanyUser companyUser : allUsersOfCompany.values())
+                System.out.println(companyUser);
+        }
+    }
+
+    /**
+     * Setup sharedPreferences when the app is opened for the first time
+     */
+    public void setupSharedPreferences() {
+        sharedPreferences = mainActivity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        sharedPreferencesEditor.putString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, "");
+        sharedPreferencesEditor.commit();
+    }
+
+    /**
+     * This function checks if the user is logged in
+     * @return true if the user is logged in, false otherwise
+     */
+    public boolean isLogged() {
+        String usernameLogIn = sharedPreferences.getString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, "");
+        System.out.println("Controller.isLogged: username=" + usernameLogIn);
+        return !usernameLogIn.isEmpty();
+    }
+
+    /**
+     * This method is used to save the username of the user that has logged in
+     * @param username the username
+     */
+    public void saveUsernameLoggedIn(String username) {
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        sharedPreferencesEditor.putString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, username);
+        sharedPreferencesEditor.commit();
+    }
 }

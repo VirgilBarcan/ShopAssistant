@@ -14,12 +14,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.model.Category;
 import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.CompanyUser;
+import barcan.virgil.com.shopassistant.model.Product;
 import barcan.virgil.com.shopassistant.model.RegularUser;
 
 /**
@@ -74,8 +77,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             Resources resources = context.getResources();
             InputStream myInput = resources.openRawResource(R.raw.shopping_assistant);
-
             //InputStream myInput = context.getAssets().open(DB_NAME);
+
             String outputFileName = DB_PATH + DB_NAME;
             OutputStream myOutput = new FileOutputStream(outputFileName);
 
@@ -132,11 +135,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Get the list of all RegularUsers from the database
-     * @return the list of all RegularUsers from the database
+     * Get the map of all RegularUsers from the database
+     * A map is used to make it easy to access the objects when having their IDs
+     * @return the map of all RegularUsers from the database
      */
-    public List<RegularUser> getAllRegularUsers(){
-        List<RegularUser> regularUsers = new ArrayList<>();
+    public Map<String, RegularUser> getAllRegularUsers(){
+        Map<String, RegularUser> regularUsers = new HashMap<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
@@ -167,7 +171,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 regularUser.setFullName(fullName);
                 regularUser.setPathToImage(pathToImage);
 
-                regularUsers.add(regularUser);
+                regularUsers.put(regularUserID, regularUser);
             } while (cursor.moveToNext());
             cursor.close();
         } catch (Exception e) {
@@ -180,11 +184,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Get the list of all CompanyUsers from the database
-     * @return the list of all CompanyUsers from the database
+     * Get the map of all CompanyUsers from the database
+     * A map is used to make it easy to access the objects when having their IDs
+     * @return the map of all CompanyUsers from the database
      */
-    public List<CompanyUser> getAllCompanyUsers(){
-        List<CompanyUser> companyUsers = new ArrayList<>();
+    public Map<String, CompanyUser> getAllCompanyUsers(){
+        Map<String, CompanyUser> companyUsers = new HashMap<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
@@ -215,7 +220,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 companyUser.setFullName(fullName);
                 companyUser.setPathToImage(pathToImage);
 
-                companyUsers.add(companyUser);
+                companyUsers.put(companyUserID, companyUser);
             } while (cursor.moveToNext());
             cursor.close();
         } catch (Exception e) {
@@ -228,105 +233,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Get the list of all Categories from the database
-     * @return the list of all Categories from the database
+     * Get the map of all CompanyUsers that work for a given Company from the database
+     * A map is used to make it easy to access the objects when having their IDs
+     * @param company the company for which the users are searched
+     * @return the map of all CompanyUsers that work for a given Company from the database
      */
-    public List<Category> getAllCategories(){
-        List<Category> categories = new ArrayList<>();
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor;
-
-        try {
-            cursor = db.rawQuery("SELECT * FROM " + TablesContracts.Category.TABLE_NAME, null);
-
-            if(cursor == null) return null;
-
-            String categoryID;
-            String categoryName;
-
-            cursor.moveToFirst();
-            do {
-
-                categoryID = cursor.getString(0);
-                categoryName = cursor.getString(1);
-
-                Category category = new Category();
-                category.setCategoryID(categoryID);
-                category.setCategoryName(categoryName);
-
-                categories.add(category);
-            } while (cursor.moveToNext());
-            cursor.close();
-        } catch (Exception e) {
-            Log.e("ShopAssist", e.getMessage());
-        }
-
-        db.close();
-
-        return categories;
-    }
-
-    /**
-     * Get the list of all Companies from the database
-     * @return the list of all Companies from the database
-     */
-    public List<Company> getAllCompanies(){
-        List<Company> companies = new ArrayList<>();
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor;
-
-        try {
-            cursor = db.rawQuery("SELECT * FROM " + TablesContracts.Company.TABLE_NAME, null);
-
-            if(cursor == null) return null;
-
-            String companyID;
-            String companyName;
-            String companyInfo;
-            String companyRating;
-
-            cursor.moveToFirst();
-            do {
-
-                companyID = cursor.getString(0);
-                companyName = cursor.getString(1);
-                companyInfo = cursor.getString(2);
-                companyRating = cursor.getString(3);
-
-                Company company = new Company();
-                company.setCompanyID(companyID);
-                company.setCompanyName(companyName);
-                company.setCompanyInfo(companyInfo);
-                company.setCompanyRating(Double.parseDouble(companyRating));
-
-                companies.add(company);
-            } while (cursor.moveToNext());
-            cursor.close();
-        } catch (Exception e) {
-            Log.e("ShopAssist", e.getMessage());
-        }
-
-        db.close();
-
-        return companies;
-    }
-
-    /**
-     * Get the list of all CompanyUsers that work for a given Company from the database
-     * @return the list of all CompanyUsers that work for a given Company from the database
-     */
-    public List<CompanyUser> getAllUsersOfCompany(Company company) {
+    public Map<String, CompanyUser> getAllUsersOfCompany(Company company) {
         return this.getAllUsersOfCompany(company.getCompanyName());
     }
 
     /**
-     * Get the list of all CompanyUsers that work for a given Company from the database
-     * @return the list of all CompanyUsers that work for a given Company from the database
+     * Get the map of all CompanyUsers that work for a given Company from the database
+     * A map is used to make it easy to access the objects when having their IDs
+     * @param companyName the name of the company for which the users are searched
+     * @return the map of all CompanyUsers that work for a given Company from the database
      */
-    public List<CompanyUser> getAllUsersOfCompany(String companyName){
-        List<CompanyUser> companyUsers = new ArrayList<>();
+    public Map<String, CompanyUser> getAllUsersOfCompany(String companyName){
+        Map<String, CompanyUser> companyUsers = new HashMap<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor;
@@ -364,7 +287,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 companyUser.setFullName(fullName);
                 companyUser.setPathToImage(pathToImage);
 
-                companyUsers.add(companyUser);
+                companyUsers.put(companyUserID, companyUser);
             } while (cursor.moveToNext());
             cursor.close();
         } catch (Exception e) {
@@ -375,4 +298,92 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return companyUsers;
     }
+
+    /**
+     * Get the list of all Categories from the database
+     * @return the list of all Categories from the database
+     */
+    public Map<String, Category> getAllCategories(){
+        Map<String, Category> categories = new HashMap<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + TablesContracts.Category.TABLE_NAME, null);
+
+            if(cursor == null) return null;
+
+            String categoryID;
+            String categoryName;
+
+            cursor.moveToFirst();
+            do {
+
+                categoryID = cursor.getString(0);
+                categoryName = cursor.getString(1);
+
+                Category category = new Category();
+                category.setCategoryID(categoryID);
+                category.setCategoryName(categoryName);
+
+                categories.put(categoryID, category);
+            } while (cursor.moveToNext());
+            cursor.close();
+        } catch (Exception e) {
+            Log.e("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return categories;
+    }
+
+    /**
+     * Get the map of all Companies from the database
+     * A map is used to make it easy to access the objects when having their IDs
+     * @return the map of all Companies from the database
+     */
+    public Map<String, Company> getAllCompanies(){
+        Map<String, Company> companies = new HashMap<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + TablesContracts.Company.TABLE_NAME, null);
+
+            if(cursor == null) return null;
+
+            String companyID;
+            String companyName;
+            String companyInfo;
+            String companyRating;
+
+            cursor.moveToFirst();
+            do {
+
+                companyID = cursor.getString(0);
+                companyName = cursor.getString(1);
+                companyInfo = cursor.getString(2);
+                companyRating = cursor.getString(3);
+
+                Company company = new Company();
+                company.setCompanyID(companyID);
+                company.setCompanyName(companyName);
+                company.setCompanyInfo(companyInfo);
+                company.setCompanyRating(Double.parseDouble(companyRating));
+
+                companies.put(companyID, company);
+            } while (cursor.moveToNext());
+            cursor.close();
+        } catch (Exception e) {
+            Log.e("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return companies;
+    }
+
 }
