@@ -35,6 +35,7 @@ public class TablesContracts {
         public static final String COLUMN_NAME_COMPANY_USER_ID = "companyUserID";
         public static final String COLUMN_NAME_USERNAME = "username";
         public static final String COLUMN_NAME_PASSWORD = "password";
+        public static final String COLUMN_NAME_FULL_NAME = "fullName";
         public static final String COLUMN_NAME_PATH_TO_IMAGE = "pathToImage";
     }
 
@@ -90,6 +91,7 @@ public class TablesContracts {
         public static final String COLUMN_NAME_REGULAR_USER_ID = "regularUserID";
         public static final String COLUMN_NAME_USERNAME = "username";
         public static final String COLUMN_NAME_PASSWORD = "password";
+        public static final String COLUMN_NAME_FULL_NAME = "fullName";
         public static final String COLUMN_NAME_PATH_TO_IMAGE = "pathToImage";
     }
 

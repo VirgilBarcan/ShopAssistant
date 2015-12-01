@@ -96,6 +96,14 @@ public class Controller {
      * It performs a get to check if data is fetched
      */
     private void checkDatabaseHelper() {
+        //Print all regular users
+        Map<String, RegularUser> allRegularUsers = databaseHelper.getAllRegularUsers();
+
+        if(allRegularUsers != null){
+            for (RegularUser regularUser : allRegularUsers.values())
+                System.out.println(regularUser);
+        }
+
         //Print all users that work at Emag
         Map<String, CompanyUser> allUsersOfCompany = databaseHelper.getAllUsersOfCompany("Emag");
 
@@ -143,13 +151,28 @@ public class Controller {
      * @return true if the <username, password> pair exists in the database, false otherwise
      */
     public boolean existsUserInDatabase(String username, String password) {
+        //Check regular users
         Map<String, RegularUser> regularUsers = databaseHelper.getAllRegularUsers();
-
         for (RegularUser regularUser : regularUsers.values()) {
             if (regularUser.getUsername().equals(username) && regularUser.getPassword().equals(password))
                 return true;
         }
 
+        //Check company users
+        Map<String, CompanyUser> companyUsers = databaseHelper.getAllCompanyUsers();
+        for (CompanyUser companyUser : companyUsers.values()) {
+            if (companyUser.getUsername().equals(username) && companyUser.getPassword().equals(password))
+                return true;
+        }
+
         return false;
+    }
+
+    public boolean addNewRegularUser(RegularUser regularUser) {
+        if (existsUserInDatabase(regularUser.getUsername(), regularUser.getPassword()))
+            return false;
+
+        //Add the new user to the database
+        return databaseHelper.addNewRegularUser(regularUser) >= 0;
     }
 }

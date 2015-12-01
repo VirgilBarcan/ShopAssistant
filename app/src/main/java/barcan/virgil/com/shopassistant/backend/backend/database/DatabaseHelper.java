@@ -1,5 +1,6 @@
 package barcan.virgil.com.shopassistant.backend.backend.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -386,4 +387,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return companies;
     }
 
+    /**
+     * Add a new regular user to the database
+     * @param regularUser the regular user to be added
+     * @return the regularUserID given by the database
+     */
+    public long addNewRegularUser(RegularUser regularUser) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(TablesContracts.RegularUser.COLUMN_NAME_USERNAME, regularUser.getUsername());
+        values.put(TablesContracts.RegularUser.COLUMN_NAME_PASSWORD, regularUser.getPassword());
+        values.put(TablesContracts.RegularUser.COLUMN_NAME_PATH_TO_IMAGE, regularUser.getPathToImage());
+        values.put(TablesContracts.RegularUser.COLUMN_NAME_FULL_NAME, regularUser.getFullName());
+
+        // insert row
+        long regularUserID = db.insert(TablesContracts.RegularUser.TABLE_NAME, null, values);
+
+        db.close();
+
+        return regularUserID;
+    }
 }

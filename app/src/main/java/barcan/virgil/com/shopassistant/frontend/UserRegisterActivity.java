@@ -1,21 +1,29 @@
 package barcan.virgil.com.shopassistant.frontend;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import barcan.virgil.com.shopassistant.R;
+import barcan.virgil.com.shopassistant.backend.Controller;
+import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.RegularUser;
 
 public class UserRegisterActivity extends AppCompatActivity {
+
+    Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_register);
+
+        controller = Controller.getInstance();
     }
 
     @Override
@@ -64,9 +72,30 @@ public class UserRegisterActivity extends AppCompatActivity {
             regularUser.setUsername(username);
             regularUser.setPassword(password);
             System.out.println(regularUser);
+
+            //Add the new user to the database
+            if (controller.addNewRegularUser(regularUser)) {
+                //The user was added => Start the new MainScreenActivity
+                startMainScreenActivity();
+            }
+            else {
+                //Inform the user something went wrong!
+                Toast.makeText(this, Constants.SOMETHING_WENT_WRONG, Toast.LENGTH_LONG).show();
+            }
         }
         else {
             //TODO: Inform the user that the passwords do not match! Ask to introduce them again!
+            editTextPassword.setText(""); editTextConfirmPassword.setText("");
+            Toast.makeText(this, Constants.PASSWORDS_DONT_MATCH, Toast.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * This method is called when the user has registered correctly; the MainScreenActivity has to be opened
+     */
+    private void startMainScreenActivity() {
+        Intent intentMainScreen = new Intent(UserRegisterActivity.this, UserMainScreenActivity.class);
+        //intentMainScreen.putExtra("KEY", "value");
+        startActivity(intentMainScreen);
     }
 }

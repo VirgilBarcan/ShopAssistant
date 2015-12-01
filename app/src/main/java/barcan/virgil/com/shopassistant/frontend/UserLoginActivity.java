@@ -71,9 +71,8 @@ public class UserLoginActivity extends AppCompatActivity {
             //Save the username in sharedPreferences to know that the user was logged in successfully
             controller.saveUsernameLoggedIn(username);
 
-            Intent intentMainScreen = new Intent(UserLoginActivity.this, UserMainScreenActivity.class);
-            //intentMainScreen.putExtra("KEY", "value");
-            startActivity(intentMainScreen);
+            //Start the MainScreenActivity
+            startMainScreenActivity();
 
             //Finish the app so the user can not get back to this activity
             finish();
@@ -82,9 +81,8 @@ public class UserLoginActivity extends AppCompatActivity {
             //Inform the user that the credentials are not correct and erase the previous credentials
             System.out.println("UserLoginActivity.userLogin: incorrect login credentials!");
 
-            Toast.makeText(this, Constants.INCORRECT_LOGIN_CREDENTIALS, Toast.LENGTH_LONG).show();
-
             editTextUsername.setText(""); editTextPassword.setText("");
+            Toast.makeText(this, Constants.INCORRECT_LOGIN_CREDENTIALS, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -116,5 +114,14 @@ public class UserLoginActivity extends AppCompatActivity {
 
         //Finish the app so the user can not get back to this activity
         finish();
+    }
+
+    /**
+     * This method is called when the user has logged in correctly; the MainScreenActivity has to be opened
+     */
+    private void startMainScreenActivity() {
+        Intent intentMainScreen = new Intent(UserLoginActivity.this, UserMainScreenActivity.class);
+        //intentMainScreen.putExtra("KEY", "value");
+        startActivity(intentMainScreen);
     }
 }
