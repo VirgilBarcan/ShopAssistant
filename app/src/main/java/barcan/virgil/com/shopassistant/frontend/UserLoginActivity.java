@@ -17,7 +17,7 @@ import barcan.virgil.com.shopassistant.model.RegularUser;
 
 public class UserLoginActivity extends AppCompatActivity {
 
-    Controller controller;
+    private Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +60,8 @@ public class UserLoginActivity extends AppCompatActivity {
      */
     public void userLogin(View view) {
         System.out.println("UserLoginActivity.userLogin");
-        EditText editTextUsername = (EditText)findViewById(R.id.editTextUsername);
-        EditText editTextPassword = (EditText)findViewById(R.id.editTextPassword);
+        EditText editTextUsername = (EditText) findViewById(R.id.editTextUsername);
+        EditText editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         String username = editTextUsername.getText().toString();
         String password = editTextPassword.getText().toString();
 

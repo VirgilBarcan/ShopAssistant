@@ -77,6 +77,9 @@ public class UserRegisterActivity extends AppCompatActivity {
             if (controller.addNewRegularUser(regularUser)) {
                 //The user was added => Start the new MainScreenActivity
                 startMainScreenActivity();
+
+                //Finish the app so the user can not get back to this activity
+                finish();
             }
             else {
                 //Inform the user something went wrong!

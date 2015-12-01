@@ -408,4 +408,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return regularUserID;
     }
+
+    /**
+     * Add a new company user to the database
+     * @param companyUser the company user to be added
+     * @return the companyUserID given by the database
+     */
+    public long addNewCompanyUser(CompanyUser companyUser) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(TablesContracts.CompanyUser.COLUMN_NAME_USERNAME, companyUser.getUsername());
+        values.put(TablesContracts.CompanyUser.COLUMN_NAME_PASSWORD, companyUser.getPassword());
+        values.put(TablesContracts.CompanyUser.COLUMN_NAME_PATH_TO_IMAGE, companyUser.getPathToImage());
+        values.put(TablesContracts.CompanyUser.COLUMN_NAME_FULL_NAME, companyUser.getFullName());
+
+        // insert row
+        long companyUserID = db.insert(TablesContracts.CompanyUser.TABLE_NAME, null, values);
+
+        db.close();
+
+        return companyUserID;
+    }
 }

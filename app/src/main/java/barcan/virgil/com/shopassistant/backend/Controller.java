@@ -168,11 +168,31 @@ public class Controller {
         return false;
     }
 
+    /**
+     * Add a new regular user to the database
+     * @param regularUser the new regular user to be added
+     * @return true if the user was added, false otherwise (if the user already exists or something wrong happened at insert)
+     */
     public boolean addNewRegularUser(RegularUser regularUser) {
+        //Check if the user doesn't already exist in the database
         if (existsUserInDatabase(regularUser.getUsername(), regularUser.getPassword()))
             return false;
 
         //Add the new user to the database
         return databaseHelper.addNewRegularUser(regularUser) >= 0;
+    }
+
+    /**
+     * Add a new company user to the database
+     * @param companyUser the new company user to be added
+     * @return true if the user was added, false otherwise (if the user already exists or something wrong happened at insert)
+     */
+    public boolean addNewCompanyUser(CompanyUser companyUser) {
+        //Check if the user doesn't already exist in the database
+        if (existsUserInDatabase(companyUser.getUsername(), companyUser.getPassword()))
+            return false;
+
+        //Add the new user to the database
+        return databaseHelper.addNewCompanyUser(companyUser) >= 0;
     }
 }

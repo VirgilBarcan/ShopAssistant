@@ -30,4 +30,5 @@
     <string name="search_hint">Search hint</string>
     <string name="title_activity_search">Search</string>
     <string name="text_view_similar_products_text">Similar Products</string>
+    <string name="edit_text_company_user_full_name_text">Name Surname</string>
 </resources>

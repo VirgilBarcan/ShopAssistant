@@ -44,6 +44,17 @@
             android:layout_weight="1">
 
             <EditText
+                android:id="@+id/editTextCompanyUserFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_text_company_user_full_name_text"
+                android:textColor="#faf5f8"
+                android:textColorHint="#faf5f8"
+                android:singleLine="true"
+                android:ellipsize="start"
+                android:outlineProvider="paddedBounds" />
+
+            <EditText
                 android:id="@+id/editTextCompanyName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
