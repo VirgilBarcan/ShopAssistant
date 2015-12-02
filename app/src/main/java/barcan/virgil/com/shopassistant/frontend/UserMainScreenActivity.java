@@ -1,7 +1,10 @@
 package barcan.virgil.com.shopassistant.frontend;
 
+import android.app.ActionBar;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,9 +15,11 @@ import android.view.View;
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
 
-public class UserMainScreenActivity extends AppCompatActivity {
+public class UserMainScreenActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private Toolbar toolbar;
+    private NavigationDrawerFragment navigationDrawerFragment;
+    private CharSequence title;
 
     private Controller controller;
 
@@ -27,6 +32,51 @@ public class UserMainScreenActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         controller = Controller.getInstance();
+
+        navigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        title = getSupportActionBar().getTitle();
+
+        navigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        FragmentManager fragmentManager = getFragmentManager();
+
+        switch (position) {
+            case 0: //Regular User
+                fragmentManager.beginTransaction().replace(R.id.container, UserMainFragment.newInstance(this, position)).commit();
+                break;
+            case 1: //Company User
+                //TODO: Define CompanyUserMainFragment
+                //fragmentManager.beginTransaction().replace(R.id.container, CompanyUserMainFragment.newInstance(position)).commit();
+                break;
+            default:
+                System.out.println("UserMainScreenActivity.onNavigationDrawerItemSelected: ERROR! NavigationDrawer position out of bounds!");
+                break;
+        }
+    }
+
+    public void onSectionAttached(int number) {
+        switch (number) {
+            case 1:
+                title = getString(R.string.title_section1);
+                break;
+            case 2:
+                title = getString(R.string.title_section2);
+                break;
+            default:
+                System.out.println("UserMainScreenActivity.onSectionAttached! ERROR! Section number out of bounds!");
+                break;
+        }
+    }
+
+    public void restoreActionBar() {
+        //TODO: Modify to user Toolbar
+        //ActionBar actionBar = getActionBar();
+        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        //actionBar.setDisplayShowTitleEnabled(true);
+        //actionBar.setTitle(mTitle);
     }
 
     @Override
@@ -36,9 +86,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
 
         System.out.println("UserMainScreenActivity.onCreateOptionsMenu: menu=" + menu);
 
-        menu.findItem(R.id.action_search).setVisible(true);
-        menu.findItem(R.id.action_shopping_list).setVisible(true);
-        menu.findItem(R.id.action_settings).setVisible(true);
+        restoreActionBar();
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -90,4 +138,5 @@ public class UserMainScreenActivity extends AppCompatActivity {
         //intentShoppingListActivity.putExtra("KEY", "value");
         startActivity(intentShoppingListActivity);
     }
+
 }

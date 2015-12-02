@@ -6,10 +6,11 @@
     <color name="colorPrimaryLight">#BBDEFB</color>
     <color name="textColorPrimary">#212121</color>
     <color name="textColorSecondary">#727272</color>
-    <color name="windowBackground">#FFFFFF</color>
+    <color name="windowBackground">#FAFAFA</color>
     <color name="navigationBarColor">#000000</color>
     <color name="textIconsColor">#FFFFFF</color>
     <color name="dividerColor">#B6B6B6</color>
+    <color name="cardsDialogsColor">#FFFFFF</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorAccentLoginLogout">#FF4081</color>
 

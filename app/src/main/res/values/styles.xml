@@ -15,7 +15,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">#757575</item>
         <item name="colorControlActivated">@color/colorAccent</item>
-        <item name="colorControlHighlight">@color/colorPrimaryLight</item>
         <item name="colorSwitchThumbNormal">@color/dividerColor</item>
     </style>
 
