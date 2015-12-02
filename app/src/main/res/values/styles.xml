@@ -1,25 +1,22 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowNoTitle">true</item>
-        <!--We will be using the toolbar so no need to show ActionBar-->
-        <item name="android:windowActionBar">false</item>
-    </style>
+    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base" />
 
-    <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-    </style>
-
-    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
-
-    </style>
-
-    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Android Version < 21 -->
+    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/windowBackground</item>
+        <item name="android:textColorPrimaryInverse">@color/textIconsColor</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">#757575</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorPrimaryLight</item>
+        <item name="colorSwitchThumbNormal">@color/dividerColor</item>
     </style>
 
 </resources>

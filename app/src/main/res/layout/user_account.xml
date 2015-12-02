@@ -4,16 +4,15 @@
     android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
-    android:background="#161616"
     android:orientation="vertical" >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#2196F3"
+        android:background="@color/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,8 +25,7 @@
         android:paddingRight="@dimen/activity_main_horizontal_margin"
         android:paddingTop="@dimen/activity_main_vertical_margin"
         android:paddingBottom="@dimen/activity_main_vertical_margin"
-        tools:context=".MainActivity"
-        android:background="#161616">
+        tools:context=".MainActivity" >
 
         <LinearLayout
             android:id="@+id/linearLayoutAccountImage"
@@ -52,7 +50,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Name Surname"
-                android:textColor="#faf5f8"
                 android:textSize="@dimen/text_size"
                 android:gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_top" />
@@ -69,22 +66,19 @@
                 android:id="@+id/buttonChangePassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/button_change_password_text"
-                android:textColor="#faf5f8" />
+                android:text="@string/button_change_password_text" />
 
             <Button
                 android:id="@+id/buttonChangeLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/button_change_location_text"
-                android:textColor="#faf5f8" />
+                android:text="@string/button_change_location_text" />
 
             <Button
                 android:id="@+id/buttonEditFavourites"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/button_edit_favourites_text"
-                android:textColor="#faf5f8" />
+                android:text="@string/button_edit_favourites_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,9 +91,8 @@
                 android:id="@+id/buttonLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#2f32fa"
                 android:text="@string/button_logout_text"
-                android:textColor="#faf5f8" />
+                android:background="@color/colorAccentLoginLogout" />
 
         </LinearLayout>
 

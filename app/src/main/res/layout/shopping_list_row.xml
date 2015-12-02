@@ -47,7 +47,6 @@
                 android:text="Product Name"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="#faf5f8"
                 android:maxLines="1"
                 android:maxLength="20"
                 android:ellipsize="marquee"
@@ -59,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:text="Product Category"
                 android:textSize="12dp"
-                android:textColor="#faf5f8"
                 android:layout_marginLeft="15dp" />
 
             <TextView
@@ -68,7 +66,6 @@
                 android:layout_height="wrap_content"
                 android:text="Company Selling"
                 android:textSize="12dp"
-                android:textColor="#faf5f8"
                 android:layout_marginLeft="15dp" />
         </LinearLayout>
 

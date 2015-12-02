@@ -8,8 +8,7 @@
     android:paddingRight="@dimen/activity_main_horizontal_margin"
     android:paddingTop="@dimen/activity_main_vertical_margin"
     android:paddingBottom="@dimen/activity_main_vertical_margin"
-    tools:context=".MainActivity"
-    android:background="#161616">
+    tools:context=".MainActivity" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,8 +42,6 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/edit_text_username_text"
                 android:inputType="textPersonName"
-                android:textColor="#faf5f8"
-                android:textColorHint="#faf5f8"
                 android:singleLine="true"
                 android:textStyle="bold"
                 android:ellipsize="start"
@@ -56,8 +53,6 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/edit_text_password_text"
                 android:inputType="textPassword"
-                android:textColor="#faf5f8"
-                android:textColorHint="#faf5f8"
                 android:singleLine="true"
                 android:outlineProvider="paddedBounds" />
 
@@ -66,7 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_login_text"
-                android:onClick="companyLogin"/>
+                android:onClick="companyLogin"
+                android:background="@color/colorAccentLoginLogout" />
         </LinearLayout>
 
     </LinearLayout>

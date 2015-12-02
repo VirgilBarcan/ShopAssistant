@@ -4,17 +4,16 @@
     android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
-    android:background="#161616"
     android:orientation="vertical" >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#2196F3"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="@color/colorPrimary" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -24,8 +23,7 @@
         android:paddingRight="@dimen/activity_main_horizontal_margin"
         android:paddingTop="@dimen/activity_main_vertical_margin"
         android:paddingBottom="@dimen/activity_main_vertical_margin"
-        tools:context=".MainActivity"
-        android:background="#161616">
+        tools:context=".MainActivity" >
 
         <LinearLayout
             android:id="@+id/linearLayoutMain"
@@ -39,15 +37,13 @@
                 android:id="@+id/buttonSearchByCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/button_search_by_category_text"
-                android:textColor="#faf5f8" />
+                android:text="@string/button_search_by_category_text" />
 
             <Button
                 android:id="@+id/buttonSearchByShop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/button_shop_by_shop_text"
-                android:textColor="#faf5f8" />
+                android:text="@string/button_shop_by_shop_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -62,8 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/text_view_your_favourite_categories_text"
-                android:textColor="#faf5f8" />
+                android:text="@string/text_view_your_favourite_categories_text" />
 
             <HorizontalScrollView
                 android:id="@+id/horizontalScrollViewFavouriteCategories"
@@ -133,8 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/text_view_your_shopping_list_text"
-                android:textColor="#faf5f8" />
+                android:text="@string/text_view_your_shopping_list_text" />
 
             <HorizontalScrollView
                 android:id="@+id/horizontalScrollViewShoppingList"
