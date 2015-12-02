@@ -1,30 +1,51 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:gravity="bottom"
-    android:paddingLeft="@dimen/activity_main_horizontal_margin"
-    android:paddingRight="@dimen/activity_main_horizontal_margin"
-    android:paddingTop="@dimen/activity_main_vertical_margin"
-    android:paddingBottom="@dimen/activity_main_vertical_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
-    android:background="#161616">
+    android:background="#161616"
+    android:orientation="vertical" >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#2196F3"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <LinearLayout
-        android:id="@+id/linearLayoutLogo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:paddingLeft="@dimen/activity_main_horizontal_margin"
+        android:paddingRight="@dimen/activity_main_horizontal_margin"
+        android:paddingTop="@dimen/activity_main_vertical_margin"
+        android:paddingBottom="@dimen/activity_main_vertical_margin"
+        tools:context=".MainActivity"
+        android:background="#161616">
 
-        <ListView
-            android:id="@+id/listViewShoppingList"
+        <LinearLayout
+            android:id="@+id/linearLayoutLogo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:dividerHeight="10dp">
+            android:layout_weight="1">
 
-        </ListView>
+            <ListView
+                android:id="@+id/listViewShoppingList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerHeight="10dp">
+
+            </ListView>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -16,12 +16,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_view_login_user_text"
-            android:textColor="#faf5f8"/>
-
         <LinearLayout
             android:id="@+id/linearLayoutLogo"
             android:layout_width="match_parent"
@@ -73,45 +67,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/button_login_text"
                 android:onClick="userLogin"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayoutBottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            android:layout_weight="0.050">
-
-            <Button
-                android:id="@+id/buttonCompany"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:text="@string/button_company_text"
-                android:textColor="#faf5f8"
-                style="?android:attr/borderlessButtonStyle"
-                android:onClick="startCompanyLoginActivity"
-                android:layout_weight="1"/>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:background="#faf5f8" />
-
-            <Button
-                android:id="@+id/buttonRegisterBottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:text="@string/button_register_text"
-                android:textColor="#faf5f8"
-                style="?android:attr/borderlessButtonStyle"
-                android:onClick="startUserRegisterActivity"
-                android:layout_weight="1"/>
-
         </LinearLayout>
 
     </LinearLayout>

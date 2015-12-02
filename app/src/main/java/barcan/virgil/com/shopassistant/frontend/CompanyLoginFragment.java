@@ -2,10 +2,14 @@ package barcan.virgil.com.shopassistant.frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -14,49 +18,42 @@ import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.model.CompanyUser;
 import barcan.virgil.com.shopassistant.model.Constants;
 
-public class CompanyLoginActivity extends AppCompatActivity {
+public class CompanyLoginFragment extends Fragment {
 
     private Controller controller;
+    private View rootView;
+    private Button buttonLogin;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        System.out.println("CompanyLoginFragment.onCreateView");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.company_login);
 
         controller = Controller.getInstance();
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+        rootView = inflater.inflate(R.layout.company_login, container, false);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        buttonLogin = (Button) rootView.findViewById(R.id.buttonLogin);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                companyLogin();
+            }
+        });
 
-        return super.onOptionsItemSelected(item);
+        return rootView;
     }
 
     /**
      * This function is called when the Login button from the company login screen is pressed
      * It gets the data introduced in the fields and saves it
-     * @param view the view
      */
-    public void companyLogin(View view) {
-        System.out.println("CompanyLoginActivity.companyLogin");
-        EditText editTextUsername = (EditText) findViewById(R.id.editTextUsername);
-        EditText editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+    public void companyLogin() {
+        System.out.println("CompanyLoginFragment.companyLogin");
+        EditText editTextUsername = (EditText) rootView.findViewById(R.id.editTextUsername);
+        EditText editTextPassword = (EditText) rootView.findViewById(R.id.editTextPassword);
         String username = editTextUsername.getText().toString();
         String password = editTextPassword.getText().toString();
 
@@ -77,27 +74,15 @@ public class CompanyLoginActivity extends AppCompatActivity {
             startCompanyMainScreenActivity();
 
             //Finish the app so the user can not get back to this activity
-            finish();
+            getActivity().finish();
         }
         else {
             //Inform the user that the credentials are not correct and erase the previous credentials
-            System.out.println("CompanyLoginActivity.companyLogin: incorrect login credentials!");
+            System.out.println("CompanyLoginFragment.companyLogin: incorrect login credentials!");
 
             editTextUsername.setText(""); editTextPassword.setText("");
-            Toast.makeText(this, Constants.INCORRECT_LOGIN_CREDENTIALS, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), Constants.INCORRECT_LOGIN_CREDENTIALS, Toast.LENGTH_LONG).show();
         }
-    }
-
-    /**
-     * This function is called when the User button from the company login screen is pressed
-     * @param view the view
-     */
-    public void startUserLoginActivity(View view) {
-        System.out.println("CompanyLoginActivity.startUserLoginActivity");
-        //TODO: Handle user login
-        Intent intentUserLoginActivity = new Intent(CompanyLoginActivity.this, UserLoginActivity.class);
-        //intentUserLoginActivity.putExtra("KEY", "value");
-        startActivity(intentUserLoginActivity);
     }
 
     /**
@@ -105,18 +90,24 @@ public class CompanyLoginActivity extends AppCompatActivity {
      * @param view the view
      */
     public void startCompanyRegisterActivity(View view) {
-        System.out.println("CompanyLoginActivity.startCompanyRegisterActivity");
+        System.out.println("CompanyLoginFragment.startCompanyRegisterActivity");
         //TODO: Handle company register
-        Intent intentCompanyRegisterActivity = new Intent(CompanyLoginActivity.this, CompanyRegisterActivity.class);
+        Intent intentCompanyRegisterActivity = new Intent(getActivity(), CompanyRegisterActivity.class);
         //intentCompanyRegisterActivity.putExtra("KEY", "value");
         startActivity(intentCompanyRegisterActivity);
+
+        //Finish the app so the user can not get back to this activity
+        getActivity().finish();
     }
 
     private void startCompanyMainScreenActivity() {
         //TODO: Add a new activity for a company main screen
 
-        Intent intentMainScreen = new Intent(CompanyLoginActivity.this, UserMainScreenActivity.class);
+        Intent intentMainScreen = new Intent(getActivity(), UserMainScreenActivity.class);
         //intentMainScreen.putExtra("KEY", "value");
         startActivity(intentMainScreen);
+
+        //Finish the app so the user can not get back to this activity
+        getActivity().finish();
     }
 }

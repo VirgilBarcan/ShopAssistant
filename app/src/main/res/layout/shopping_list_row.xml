@@ -21,7 +21,7 @@
             android:orientation="vertical"
             android:minHeight="60dp"
             android:maxHeight="60dp" >
-            
+
             <ImageView
                 android:id="@+id/imageViewProductImageSmall"
                 android:layout_width="match_parent"

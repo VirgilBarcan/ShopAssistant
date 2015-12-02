@@ -1,35 +1,63 @@
 package barcan.virgil.com.shopassistant.frontend;
 
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import barcan.virgil.com.shopassistant.R;
+import barcan.virgil.com.shopassistant.backend.AppSectionsPageAdapter;
 import barcan.virgil.com.shopassistant.backend.Controller;
 
 public class MainActivity extends AppCompatActivity {
+
+    private AppSectionsPageAdapter appSectionsPageAdapter;
+    private ViewPager viewPager;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+
+    private Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Start the controller, which is a service running in background, waiting for location updates
-        Controller controller = Controller.getInstance(this, this);
+        controller = Controller.getInstance(this, this);
 
         //TODO: Check if the user is logged in (better check to be done! check the DB also)
         if (controller.isLogged()) {
-            //Open the activity that has the user already logged
-            openMainActivityLogged();
+            //TODO: Check to see if regular user or company user
+            if (true) {
+                //Open the activity that has the user already logged
+                openRegularUserMainScreenActivity();
+            }
+            else {
+                //Open the activity that has the user already logged
+                //openCompanyUserMainScreenActivity();
+            }
         }
         else {
             //Continue with this activity
             controller.setupSharedPreferences();
 
             setContentView(R.layout.activity_main);
+
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+            appSectionsPageAdapter = new AppSectionsPageAdapter(getSupportFragmentManager());
+
+            viewPager = (ViewPager) findViewById(R.id.viewPager);
+            viewPager.setAdapter(appSectionsPageAdapter);
+
+            tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(viewPager);
         }
     }
 
@@ -38,7 +66,11 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
 
-        return true;
+        menu.findItem(R.id.action_search).setVisible(false);
+        menu.findItem(R.id.action_shopping_list).setVisible(false);
+        menu.findItem(R.id.action_settings).setVisible(false);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -57,56 +89,33 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("MainActivity.onOptionsItemSelected: ERROR! MenuItem id not recognized!");
         }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
     /**
-     * This method is called when the user is already logged in
+     * This method is called when the regular user is already logged in
      * The Activity is changed to MainActivityLogged, which has the action bar
      */
-    private void openMainActivityLogged() {
-        Intent intentMainActivityLogged = new Intent(MainActivity.this, MainActivityLogged.class);
-        //intentMainActivityLogged.putExtra("KEY", "value");
-        startActivity(intentMainActivityLogged);
+    private void openRegularUserMainScreenActivity() {
+        Intent intentUserMainScreenActivity = new Intent(MainActivity.this, UserMainScreenActivity.class);
+        //intentUserMainScreenActivity.putExtra("KEY", "value");
+        startActivity(intentUserMainScreenActivity);
 
         //Finish the app so the user can not get back to this activity
         finish();
     }
 
     /**
-     * This function is called when the Login button from the main screen is pressed
-     * @param view the view
+     * This method is called when the company user is already logged in
+     * The Activity is changed to MainActivityLogged, which has the action bar
      */
-    public void loginMain(View view) {
-        System.out.println("MainActivity.loginMain");
-
-        //TODO: Start the login activity
-        Intent intentLoginActivity = new Intent(MainActivity.this, UserLoginActivity.class);
-        //intentLoginActivity.putExtra("KEY", "value");
-        startActivity(intentLoginActivity);
+    private void openCompanyUserMainScreenActivity() {
+        Intent intentUserMainScreenActivity = new Intent(MainActivity.this, UserMainScreenActivity.class);
+        //intentUserMainScreenActivity.putExtra("KEY", "value");
+        startActivity(intentUserMainScreenActivity);
 
         //Finish the app so the user can not get back to this activity
         finish();
     }
 
-    /**
-     * This function is called when the Register button from the main screen is pressed
-     * @param view the view
-     */
-    public void registerMain(View view) {
-        System.out.println("MainActivity.registerMain");
-
-        //TODO: Start the register activity
-        Intent intentRegisterActivity = new Intent(MainActivity.this, UserRegisterActivity.class);
-        //intentLoginActivity.putExtra("KEY", "value");
-        startActivity(intentRegisterActivity);
-
-        //Finish the app so the user can not get back to this activity
-        finish();
-    }
 }
