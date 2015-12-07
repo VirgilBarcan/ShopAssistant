@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:textColor="@color/cardsDialogsColor"
-            android:text="Virgil Barcan"
+            android:text="User Name"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:textColor="@color/cardsDialogsColor"
-            android:text="virgil.barcan"
+            android:text="user.name"
             android:textSize="14sp"
             android:textStyle="normal" />
 

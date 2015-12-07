@@ -430,4 +430,101 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return companyUserID;
     }
+
+    /**
+     * Get a RegularUser from the Database
+     * @param username the username of the user
+     * @return the user
+     */
+    public RegularUser getRegularUser(String username) {
+        RegularUser regularUser = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + TablesContracts.RegularUser.TABLE_NAME +
+                                 " WHERE username = \'" + username + "\'", null);
+
+            if(cursor == null) return null;
+
+            String regularUserID;
+            String password;
+            String fullName;
+            String pathToImage;
+
+            cursor.moveToFirst();
+
+            regularUserID = cursor.getString(0);
+            username = cursor.getString(1);
+            password = cursor.getString(2);
+            pathToImage = cursor.getString(3);
+            fullName = cursor.getString(4);
+
+            regularUser = new RegularUser();
+            regularUser.setUserID(Integer.parseInt(regularUserID));
+            regularUser.setUsername(username);
+            regularUser.setPassword(password);
+            regularUser.setFullName(fullName);
+            regularUser.setPathToImage(pathToImage);
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return regularUser;
+    }
+
+    /**
+     * Get a CompanyUser from the Database
+     * @param username the username of the user
+     * @return the user
+     */
+    public CompanyUser getCompanyUser(String username) {
+        CompanyUser companyUser = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + TablesContracts.CompanyUser.TABLE_NAME +
+                    " WHERE username = '" + username + "\'", null);
+
+            if(cursor == null) return null;
+
+            String companyUserID;
+            String password;
+            String fullName;
+            String pathToImage;
+
+            cursor.moveToFirst();
+
+            companyUserID = cursor.getString(0);
+            username = cursor.getString(1);
+            password = cursor.getString(2);
+            pathToImage = cursor.getString(3);
+            fullName = cursor.getString(4);
+
+            companyUser = new CompanyUser();
+            companyUser.setUserID(Integer.parseInt(companyUserID));
+            companyUser.setUsername(username);
+            companyUser.setPassword(password);
+            companyUser.setFullName(fullName);
+            companyUser.setPathToImage(pathToImage);
+
+
+            cursor.close();
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return companyUser;
+    }
 }

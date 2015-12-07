@@ -11,6 +11,7 @@ import barcan.virgil.com.shopassistant.frontend.MainActivity;
 import barcan.virgil.com.shopassistant.model.CompanyUser;
 import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.RegularUser;
+import barcan.virgil.com.shopassistant.model.User;
 
 /**
  * This class should handle the flow of data from the frontend to the model and back
@@ -129,7 +130,6 @@ public class Controller {
      */
     public boolean isLogged() {
         String usernameLogIn = sharedPreferences.getString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, "");
-        System.out.println("Controller.isLogged: username=" + usernameLogIn);
 
         return !usernameLogIn.isEmpty();
     }
@@ -194,5 +194,27 @@ public class Controller {
 
         //Add the new user to the database
         return databaseHelper.addNewCompanyUser(companyUser) >= 0;
+    }
+
+    /**
+     * Get the currently connected user
+     * @return the currently connected user
+     */
+    public User getConnectedUser() {
+        User connectedUser = null;
+
+        if (isLogged()) {
+            String username = sharedPreferences.getString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, "");
+            connectedUser = databaseHelper.getRegularUser(username);
+
+            if (connectedUser == null)
+                connectedUser = databaseHelper.getCompanyUser(username);
+            else
+                return connectedUser;
+        }
+
+        System.out.println("Controller.getConnectedUser: connectedUser=" + connectedUser);
+
+        return connectedUser;
     }
 }

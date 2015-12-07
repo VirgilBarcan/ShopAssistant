@@ -41,7 +41,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
 
-        recyclerViewAdapter = new RecyclerViewAdapter();
+        recyclerViewAdapter = new RecyclerViewAdapter(controller.getConnectedUser());
         recyclerView.setAdapter(recyclerViewAdapter);
 
         recyclerViewLayoutManager = new LinearLayoutManager(this);

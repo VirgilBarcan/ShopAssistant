@@ -37,10 +37,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         this.connectedUser = connectedUser;
 
         if (connectedUser instanceof RegularUser) {
+            System.out.println("RecyclerViewAdapter.RecyclerViewAdapter: RegularUser connected");
             navTitles = new String[]{"Change Password", "Change Location", "Edit Favourites"};
             navIcons = new int[]{R.drawable.ic_change_password, R.drawable.ic_edit_location, R.drawable.ic_edit_favourites};
         }
         else {
+            System.out.println("RecyclerViewAdapter.RecyclerViewAdapter: CompanyUser connected");
             //TODO: Do the same for CompanyUser
         }
     }
