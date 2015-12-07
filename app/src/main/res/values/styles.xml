@@ -3,7 +3,7 @@
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base" />
 
     <!-- Android Version < 21 -->
-    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light">
+    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>

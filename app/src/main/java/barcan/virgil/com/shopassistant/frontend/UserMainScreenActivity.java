@@ -1,10 +1,11 @@
 package barcan.virgil.com.shopassistant.frontend;
 
-import android.app.ActionBar;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,12 +15,16 @@ import android.view.View;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
+import barcan.virgil.com.shopassistant.backend.RecyclerViewAdapter;
 
-public class UserMainScreenActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class UserMainScreenActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private NavigationDrawerFragment navigationDrawerFragment;
-    private CharSequence title;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter recyclerViewAdapter;
+    private RecyclerView.LayoutManager recyclerViewLayoutManager;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private Controller controller;
 
@@ -33,50 +38,34 @@ public class UserMainScreenActivity extends AppCompatActivity implements Navigat
 
         controller = Controller.getInstance();
 
-        navigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        title = getSupportActionBar().getTitle();
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
 
-        navigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
-    }
+        recyclerViewAdapter = new RecyclerViewAdapter();
+        recyclerView.setAdapter(recyclerViewAdapter);
 
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        FragmentManager fragmentManager = getFragmentManager();
+        recyclerViewLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(recyclerViewLayoutManager);
 
-        switch (position) {
-            case 0: //Regular User
-                fragmentManager.beginTransaction().replace(R.id.container, UserMainFragment.newInstance(this, position)).commit();
-                break;
-            case 1: //Company User
-                //TODO: Define CompanyUserMainFragment
-                //fragmentManager.beginTransaction().replace(R.id.container, CompanyUserMainFragment.newInstance(position)).commit();
-                break;
-            default:
-                System.out.println("UserMainScreenActivity.onNavigationDrawerItemSelected: ERROR! NavigationDrawer position out of bounds!");
-                break;
-        }
-    }
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                title = getString(R.string.title_section1);
-                break;
-            case 2:
-                title = getString(R.string.title_section2);
-                break;
-            default:
-                System.out.println("UserMainScreenActivity.onSectionAttached! ERROR! Section number out of bounds!");
-                break;
-        }
-    }
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                // code here will execute once the drawer is opened( As I dont want anything happened whe drawer is
+                // open I am not going to put anything here)
+            }
 
-    public void restoreActionBar() {
-        //TODO: Modify to user Toolbar
-        //ActionBar actionBar = getActionBar();
-        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        //actionBar.setDisplayShowTitleEnabled(true);
-        //actionBar.setTitle(mTitle);
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                // Code here will execute once drawer is closed
+            }
+        };
+
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
     }
 
     @Override
@@ -85,8 +74,6 @@ public class UserMainScreenActivity extends AppCompatActivity implements Navigat
         inflater.inflate(R.menu.menu_main, menu);
 
         System.out.println("UserMainScreenActivity.onCreateOptionsMenu: menu=" + menu);
-
-        restoreActionBar();
 
         return super.onCreateOptionsMenu(menu);
     }
