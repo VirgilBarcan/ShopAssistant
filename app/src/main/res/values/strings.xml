@@ -37,4 +37,9 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
+    <string name="user_menu_drawer_home_text">Home</string>
+    <string name="user_menu_drawer_products_text">Products</string>
+    <string name="user_menu_drawer_shopping_list_text">Shopping List</string>
+    <string name="user_menu_drawer_account_text">Account</string>
+    <string name="user_menu_drawer_notifications_text">Notifications</string>
 </resources>
