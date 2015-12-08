@@ -1,4 +1,4 @@
-package barcan.virgil.com.shopassistant.frontend;
+package barcan.virgil.com.shopassistant.frontend.regular;
 
 import android.content.Intent;
 import android.os.Bundle;

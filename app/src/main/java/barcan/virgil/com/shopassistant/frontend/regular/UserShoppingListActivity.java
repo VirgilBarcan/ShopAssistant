@@ -1,4 +1,4 @@
-package barcan.virgil.com.shopassistant.frontend;
+package barcan.virgil.com.shopassistant.frontend.regular;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.ShoppingListViewAdapter;
+import barcan.virgil.com.shopassistant.frontend.ShowProductActivity;
 import barcan.virgil.com.shopassistant.model.Category;
 import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.Price;
@@ -132,7 +133,7 @@ public class UserShoppingListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Product product = (Product) parent.getItemAtPosition(position);
 
-                //TODO: Decide what to do when the user click a product; possibly start a new activity and show more info about product
+                //TODO: Decide what to do when the user clicks a product; possibly start a new activity and show more info about product
                 startShowProductActivity(product);
             }
         });

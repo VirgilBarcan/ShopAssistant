@@ -1,4 +1,4 @@
-package barcan.virgil.com.shopassistant.frontend;
+package barcan.virgil.com.shopassistant.frontend.company;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +11,9 @@ import android.widget.Toast;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
-import barcan.virgil.com.shopassistant.backend.backend.database.TablesContracts;
+import barcan.virgil.com.shopassistant.frontend.regular.UserMainScreenActivity;
 import barcan.virgil.com.shopassistant.model.CompanyUser;
 import barcan.virgil.com.shopassistant.model.Constants;
-import barcan.virgil.com.shopassistant.model.RegularUser;
 
 public class CompanyRegisterActivity extends AppCompatActivity {
 

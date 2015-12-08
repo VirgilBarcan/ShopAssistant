@@ -1,4 +1,4 @@
-package barcan.virgil.com.shopassistant.frontend;
+package barcan.virgil.com.shopassistant.frontend.regular;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -59,10 +59,10 @@ public class UserMainScreenActivity extends AppCompatActivity {
                     case R.id.goToHome:
                         Toast.makeText(getApplicationContext(), "Home selected", Toast.LENGTH_SHORT).show();
 
-                        UserLoggedHomeFragment fragment = new UserLoggedHomeFragment();
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, fragment);
-                        fragmentTransaction.commit();
+                        UserLoggedHomeFragment fragmentHome = new UserLoggedHomeFragment();
+                        FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
+                        fragmentTransactionHome.replace(R.id.frame, fragmentHome);
+                        fragmentTransactionHome.commit();
                         return true;
 
                     case R.id.goToProducts:
@@ -75,7 +75,10 @@ public class UserMainScreenActivity extends AppCompatActivity {
                     case R.id.shoppingList:
                         Toast.makeText(getApplicationContext(), "Shopping list selected", Toast.LENGTH_SHORT).show();
 
-                        //TODO: Create fragments and classes
+                        UserLoggedShoppingListFragment fragmentShoppingList = new UserLoggedShoppingListFragment();
+                        FragmentTransaction fragmentTransactionShoppingList = getSupportFragmentManager().beginTransaction();
+                        fragmentTransactionShoppingList.replace(R.id.frame, fragmentShoppingList);
+                        fragmentTransactionShoppingList.commit();
 
                         return true;
 
