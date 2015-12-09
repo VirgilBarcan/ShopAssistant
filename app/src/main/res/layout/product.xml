@@ -114,7 +114,7 @@
                     android:orientation="vertical"
                     android:layout_weight="3"
                     android:layout_marginTop="15dp"
-                    android:background="#32575757" >
+                    android:background="@color/cardsDialogsColor" >
 
                     <TextView
                         android:layout_width="match_parent"

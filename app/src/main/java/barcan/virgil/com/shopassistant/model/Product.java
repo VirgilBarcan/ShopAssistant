@@ -21,6 +21,15 @@ public class Product {
         productRating = 0.0;
     }
 
+    public Product(Product product) {
+        this.productID = new String(product.getProductID());
+        this.productName = new String(product.getProductName());
+        this.productCategory = new Category(product.getProductCategory());
+        this.productSeller = new Company(product.getProductSeller());
+        this.productPrice = new Price(product.getProductPrice());
+        this.productRating = new Double(product.getProductRating());
+    }
+
     public String getProductID() {
         return productID;
     }

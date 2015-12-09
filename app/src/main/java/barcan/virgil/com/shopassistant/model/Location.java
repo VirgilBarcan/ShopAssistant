@@ -27,6 +27,19 @@ public class Location {
         this.longitude = longitude;
     }
 
+    public Location(Location location) {
+        this.locationID = new String(location.getLocationID());
+        this.latitude = new Double(location.getLatitude());
+        this.longitude = new Double(location.getLongitude());
+
+        this.countryName = new String(location.getCountryName());
+        this.cityName = new String(location.getCityName());
+        this.streetName = new String(location.getStreetName());
+        this.streetNo = new String(location.getStreetNo());
+        this.ZIP = new String(location.getZIP());
+        this.fullAddress = new String(location.getFullAddress());
+    }
+
     private void initMemberData() {
         this.locationID = "";
         this.latitude = 0.0;

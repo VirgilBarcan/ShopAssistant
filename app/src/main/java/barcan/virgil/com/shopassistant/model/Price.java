@@ -27,6 +27,12 @@ public class Price {
         this.priceCurrency = priceCurrency;
     }
 
+    public Price(Price price) {
+        this.priceID = new String(price.getPriceID());
+        this.priceValue = new Double(price.getPriceValue());
+        this.priceCurrency = new String(price.getPriceCurrency());
+    }
+
     public String getPriceID() {
         return priceID;
     }

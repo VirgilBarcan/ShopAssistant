@@ -89,7 +89,7 @@ public class UserRegisterActivity extends AppCompatActivity {
         else {
             //TODO: Inform the user that the passwords do not match! Ask to introduce them again!
             editTextPassword.setText(""); editTextConfirmPassword.setText("");
-            Toast.makeText(this, Constants.PASSWORDS_DONT_MATCH, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, Constants.PASSWORDS_DON_NOT_MATCH, Toast.LENGTH_LONG).show();
         }
     }
 

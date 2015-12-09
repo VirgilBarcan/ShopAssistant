@@ -1,6 +1,5 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -150,31 +149,27 @@ public class UserMainScreenActivity extends AppCompatActivity {
             case R.id.action_search:
                 System.out.println("MainActivity.onOptionsItemSelected: Search pressed!");
                 //TODO: React to search
+                //TODO: Create fragments and classes
+                startProductsFragment();
                 break;
+
             case R.id.action_shopping_list:
                 System.out.println("MainActivity.onOptionsItemSelected: Shopping List pressed!");
                 //TODO: React to shopping list
-                openShoppingListActivity();
+                //TODO: Create fragments and classes
+                startShoppingListFragment();
                 break;
+
             case R.id.action_settings:
                 System.out.println("MainActivity.onOptionsItemSelected: Settings pressed!");
                 //TODO: React to settings
                 break;
+
             default:
                 System.out.println("MainActivity.onOptionsItemSelected: ERROR! MenuItem id not recognized!");
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * This method is called when the user presses ShoppingList button from the Toolbar
-     * It opens the ShoppingListActivity and shows the user's shopping list
-     */
-    private void openShoppingListActivity() {
-        Intent intentShoppingListActivity = new Intent(UserMainScreenActivity.this, UserShoppingListActivity.class);
-        //intentShoppingListActivity.putExtra("KEY", "value");
-        startActivity(intentShoppingListActivity);
     }
 
     /**

@@ -77,21 +77,6 @@ public class UserLoginFragment extends Fragment {
     }
 
     /**
-     * This function is called when the Register button from the user login screen is pressed
-     * @param view the view
-     */
-    public void startUserRegisterActivity(View view) {
-        System.out.println("UserLoginFragment.startUserRegisterActivity");
-        //TODO: Handle user register
-        Intent intentUserRegisterActivity = new Intent(getActivity(), UserRegisterActivity.class);
-        //intentUserRegisterActivity.putExtra("KEY", "value");
-        startActivity(intentUserRegisterActivity);
-
-        //Finish the app so the user can not get back to this activity
-        getActivity().finish();
-    }
-
-    /**
      * This method is called when the user has logged in correctly; the MainScreenActivity has to be opened
      */
     private void startMainScreenActivity() {

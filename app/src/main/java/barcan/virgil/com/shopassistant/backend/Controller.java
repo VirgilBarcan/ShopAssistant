@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import barcan.virgil.com.shopassistant.backend.backend.database.DatabaseHelper;
 import barcan.virgil.com.shopassistant.frontend.MainActivity;
 import barcan.virgil.com.shopassistant.model.CompanyUser;
 import barcan.virgil.com.shopassistant.model.Constants;
+import barcan.virgil.com.shopassistant.model.Product;
 import barcan.virgil.com.shopassistant.model.RegularUser;
 import barcan.virgil.com.shopassistant.model.User;
 
@@ -216,5 +218,23 @@ public class Controller {
         System.out.println("Controller.getConnectedUser: connectedUser=" + connectedUser);
 
         return connectedUser;
+    }
+
+    /**
+     * Get the Product with the given productID
+     * @param productID the productID of the wanted product
+     * @return the product with the productID or null if it doesn't exist
+     */
+    public Product getProductWithProductID(String productID) {
+        return databaseHelper.getProductWithProductID(productID);
+    }
+
+    /**
+     * Get the shopping list of the user
+     * @param user the user whose shopping list we want
+     * @return the shopping list of the user or null if it doesn't exist
+     */
+    public List<Product> getUserShoppingList(User user) {
+        return databaseHelper.getUserShoppingList(user);
     }
 }

@@ -18,6 +18,12 @@ public class Category {
         this.categoryName = categoryName;
     }
 
+    public Category(Category category) {
+        this.categoryID = new String(category.getCategoryID());
+        this.categoryName = new String(category.getCategoryName());
+    }
+
+
     public Category(String categoryID, String categoryName) {
         this.categoryID = categoryID;
         this.categoryName = categoryName;

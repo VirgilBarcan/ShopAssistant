@@ -1,5 +1,6 @@
 package barcan.virgil.com.shopassistant.frontend;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,14 +12,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import barcan.virgil.com.shopassistant.R;
+import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.model.Category;
 import barcan.virgil.com.shopassistant.model.Company;
+import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.Price;
 import barcan.virgil.com.shopassistant.model.Product;
 
 public class ShowProductActivity extends AppCompatActivity {
 
+    private Controller controller;
     private Toolbar toolbar;
+    private Intent intent;
+    private Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,13 @@ public class ShowProductActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        controller = Controller.getInstance();
+
+        intent = getIntent();
+        String productID = intent.getStringExtra(Constants.PRODUCT_ID);
+
+        product = controller.getProductWithProductID(productID);
 
         //Set the product info for the given product
         setProductAttributes();
@@ -66,16 +79,6 @@ public class ShowProductActivity extends AppCompatActivity {
     private void setProductInfo() {
         //TODO: Get the product info from the backend and then display it
 
-        //ProofOfConcept
-        Company companyEmag = new Company();
-        companyEmag.setCompanyName("Emag");
-
-        Product product = new Product();
-        product.setProductName("LG G2");
-        product.setProductCategory(new Category("Smartphone"));
-        product.setProductSeller(companyEmag);
-        product.setProductPrice(new Price(1150.0, "Lei"));
-
         TextView textViewProductName = (TextView) findViewById(R.id.productName);
         textViewProductName.setText(product.getProductName());
 
@@ -113,6 +116,8 @@ public class ShowProductActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            //TODO: React to settings
+
             return true;
         }
 

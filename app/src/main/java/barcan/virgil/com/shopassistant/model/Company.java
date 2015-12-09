@@ -1,6 +1,7 @@
 package barcan.virgil.com.shopassistant.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,6 +27,18 @@ public class Company {
 
         allProducts = new ArrayList<>();
         availableProducts = new ArrayList<>();
+    }
+
+    public Company(Company company) {
+        this.companyID = new String(company.getCompanyID());
+        this.companyName = new String(company.getCompanyName());
+        this.companyInfo = new String(company.getCompanyInfo());
+        this.companyRating = new Double(company.getCompanyRating());
+        this.location = new Location(company.getLocation());
+
+        //TODO: Test if this is really correct! May need some cloning
+        this.allProducts = new ArrayList<>(); this.allProducts.addAll(company.getAllProducts());
+        this.availableProducts = new ArrayList<>(); this.availableProducts.addAll(company.getAvailableProducts());
     }
 
     public String getCompanyID() {

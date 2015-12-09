@@ -18,6 +18,7 @@ import barcan.virgil.com.shopassistant.backend.ShoppingListViewAdapter;
 import barcan.virgil.com.shopassistant.frontend.ShowProductActivity;
 import barcan.virgil.com.shopassistant.model.Category;
 import barcan.virgil.com.shopassistant.model.Company;
+import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.Price;
 import barcan.virgil.com.shopassistant.model.Product;
 
@@ -46,10 +47,11 @@ public class UserLoggedShoppingListFragment extends Fragment {
     private void populateShoppingList() {
         listViewShoppingList = (ListView) view.findViewById(R.id.listViewShoppingList);
 
-        productList = new ArrayList<>();
+        productList = controller.getUserShoppingList(controller.getConnectedUser());
 
         //TODO: Get the list from the backend
         //ProofOfConcept
+        /*
         Company companyEmag = new Company();
         companyEmag.setCompanyName("Emag");
 
@@ -105,6 +107,7 @@ public class UserLoggedShoppingListFragment extends Fragment {
         productList.add(product5);
         productList.add(product6);
         productList.add(product7);
+        */
 
         ShoppingListViewAdapter shoppingListViewAdapter = new ShoppingListViewAdapter(getActivity(), productList);
         listViewShoppingList.setAdapter(shoppingListViewAdapter);
@@ -130,7 +133,7 @@ public class UserLoggedShoppingListFragment extends Fragment {
         //TODO: Use a fragment instead of an activity
         //TODO: Send the product id or something
         Intent intentShowProductActivity = new Intent(getActivity(), ShowProductActivity.class);
-        //intent.showProductActivity.putExtra("KEY", "value");
+        intentShowProductActivity.putExtra(Constants.PRODUCT_ID, product.getProductID());
         startActivity(intentShowProductActivity);
     }
 

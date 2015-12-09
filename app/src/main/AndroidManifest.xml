@@ -31,10 +31,6 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".frontend.regular.UserShoppingListActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
             android:name=".frontend.ShowProductActivity"
             android:label="@string/app_name" >
         </activity>
