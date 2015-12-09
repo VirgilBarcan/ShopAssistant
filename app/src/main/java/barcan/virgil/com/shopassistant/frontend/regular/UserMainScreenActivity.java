@@ -39,6 +39,11 @@ public class UserMainScreenActivity extends AppCompatActivity {
 
         controller = Controller.getInstance();
 
+        UserLoggedHomeFragment fragmentHome = new UserLoggedHomeFragment();
+        FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
+        fragmentTransactionHome.replace(R.id.frame, fragmentHome);
+        fragmentTransactionHome.commit();
+
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         addDataToNavigationViewHeader(navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -59,26 +64,24 @@ public class UserMainScreenActivity extends AppCompatActivity {
                     case R.id.goToHome:
                         Toast.makeText(getApplicationContext(), "Home selected", Toast.LENGTH_SHORT).show();
 
-                        UserLoggedHomeFragment fragmentHome = new UserLoggedHomeFragment();
-                        FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
-                        fragmentTransactionHome.replace(R.id.frame, fragmentHome);
-                        fragmentTransactionHome.commit();
+                        //TODO: Create fragments and classes
+                        startHomeFragment();
+
                         return true;
 
                     case R.id.goToProducts:
                         Toast.makeText(getApplicationContext(), "Search products selected", Toast.LENGTH_SHORT).show();
 
                         //TODO: Create fragments and classes
+                        startProductsFragment();
 
                         return true;
 
                     case R.id.shoppingList:
                         Toast.makeText(getApplicationContext(), "Shopping list selected", Toast.LENGTH_SHORT).show();
 
-                        UserLoggedShoppingListFragment fragmentShoppingList = new UserLoggedShoppingListFragment();
-                        FragmentTransaction fragmentTransactionShoppingList = getSupportFragmentManager().beginTransaction();
-                        fragmentTransactionShoppingList.replace(R.id.frame, fragmentShoppingList);
-                        fragmentTransactionShoppingList.commit();
+                        //TODO: Create fragments and classes
+                        startShoppingListFragment();
 
                         return true;
 
@@ -86,8 +89,15 @@ public class UserMainScreenActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Account selected", Toast.LENGTH_SHORT).show();
 
                         //TODO: Create fragments and classes
+                        startAccountFragment();
 
                         return true;
+
+                    case R.id.goToNotifications:
+                        Toast.makeText(getApplicationContext(), "Notifications selected", Toast.LENGTH_SHORT).show();
+
+                        //TODO: Create fragments and classes
+                        startNotificationsFragment();
 
                     default:
                         System.out.println("UserMainScreenActivity.onNavigationItemSelected: ERROR! Id not supported!");
@@ -167,6 +177,10 @@ public class UserMainScreenActivity extends AppCompatActivity {
         startActivity(intentShoppingListActivity);
     }
 
+    /**
+     * This method adds user related info to the navigation header
+     * @param navigationView the NavigationView whose header we want to process
+     */
     private void addDataToNavigationViewHeader(NavigationView navigationView) {
         User connectedUser = controller.getConnectedUser();
 
@@ -190,6 +204,66 @@ public class UserMainScreenActivity extends AppCompatActivity {
         else {
             System.out.println("UserMainScreenActivity.addDataToNavigationViewHeader: ERROR! No user is connected! This should not be possible!");
         }
+    }
+
+    /**
+     * This method starts the Home fragment when the user clicks on the Home button
+     * in the NavigationView (Drawer)
+     */
+    private void startHomeFragment() {
+        UserLoggedHomeFragment fragmentHome = new UserLoggedHomeFragment();
+        FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
+        fragmentTransactionHome.replace(R.id.frame, fragmentHome);
+        fragmentTransactionHome.addToBackStack("Home");
+        fragmentTransactionHome.commit();
+    }
+
+    /**
+     * This method starts the Products fragment when the user clicks on the Products button
+     * in the NavigationView (Drawer)
+     */
+    private void startProductsFragment() {
+        UserLoggedProductsFragment fragmentProducts = new UserLoggedProductsFragment();
+        FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
+        fragmentTransactionHome.replace(R.id.frame, fragmentProducts);
+        fragmentTransactionHome.addToBackStack("Products");
+        fragmentTransactionHome.commit();
+    }
+
+    /**
+     * This method starts the ShoppingList fragment when the user clicks on the ShoppingList button
+     * in the NavigationView (Drawer)
+     */
+    private void startShoppingListFragment() {
+        UserLoggedShoppingListFragment fragmentShoppingList = new UserLoggedShoppingListFragment();
+        FragmentTransaction fragmentTransactionShoppingList = getSupportFragmentManager().beginTransaction();
+        fragmentTransactionShoppingList.replace(R.id.frame, fragmentShoppingList);
+        fragmentTransactionShoppingList.addToBackStack("Shopping List");
+        fragmentTransactionShoppingList.commit();
+    }
+
+    /**
+     * This method starts the Account fragment when the user clicks on the Account button
+     * in the NavigationView (Drawer)
+     */
+    private void startAccountFragment() {
+        UserLoggedAccountFragment fragmentAccount = new UserLoggedAccountFragment();
+        FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
+        fragmentTransactionHome.replace(R.id.frame, fragmentAccount);
+        fragmentTransactionHome.addToBackStack("Account");
+        fragmentTransactionHome.commit();
+    }
+
+    /**
+     * This method starts the Notifications fragment when the user clicks on the Notifications button
+     * in the NavigationView (Drawer)
+     */
+    private void startNotificationsFragment() {
+        UserLoggedNotificationsFragment fragmentNotifications = new UserLoggedNotificationsFragment();
+        FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
+        fragmentTransactionHome.replace(R.id.frame, fragmentNotifications);
+        fragmentTransactionHome.addToBackStack("Notifications");
+        fragmentTransactionHome.commit();
     }
 
 }

@@ -12,14 +12,15 @@ import barcan.virgil.com.shopassistant.backend.Controller;
 /**
  * Created by virgil on 08.12.2015.
  */
-public class UserLoggedHomeFragment extends Fragment {
+public class UserLoggedNotificationsFragment extends Fragment {
 
     private Controller controller;
     private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.user_logged_home_fragment, container, false);
+        //TODO: Add new layout
+        view = inflater.inflate(R.layout.user_logged_notifications, container, false);
 
         controller = Controller.getInstance();
 

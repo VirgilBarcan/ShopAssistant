@@ -1,5 +1,6 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
+import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.backend.ShoppingListViewAdapter;
+import barcan.virgil.com.shopassistant.frontend.ShowProductActivity;
 import barcan.virgil.com.shopassistant.model.Category;
 import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.Price;
@@ -23,14 +26,18 @@ import barcan.virgil.com.shopassistant.model.Product;
  */
 public class UserLoggedShoppingListFragment extends Fragment {
 
+    private Controller controller;
     private View view;
     private ListView listViewShoppingList;
     private List<Product> productList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.user_shopping_list, container, false);
+        view = inflater.inflate(R.layout.user_shopping_list_fragment, container, false);
 
+        controller = Controller.getInstance();
+
+        //TODO: Get the shopping list from the Controller
         populateShoppingList();
 
         return view;
@@ -108,9 +115,23 @@ public class UserLoggedShoppingListFragment extends Fragment {
                 final Product product = (Product) parent.getItemAtPosition(position);
 
                 //TODO: Decide what to do when the user clicks a product; possibly start a new activity and show more info about product
-                //startShowProductActivity(product);
+                startShowProductActivity(product);
             }
         });
+    }
+
+    /**
+     * This method is used to start the ShowProductActivity for the selected product
+     * @param product the selected product
+     */
+    private void startShowProductActivity(Product product) {
+        System.out.println("UserShoppingListActivity.startShowProductActivity");
+
+        //TODO: Use a fragment instead of an activity
+        //TODO: Send the product id or something
+        Intent intentShowProductActivity = new Intent(getActivity(), ShowProductActivity.class);
+        //intent.showProductActivity.putExtra("KEY", "value");
+        startActivity(intentShowProductActivity);
     }
 
 }
