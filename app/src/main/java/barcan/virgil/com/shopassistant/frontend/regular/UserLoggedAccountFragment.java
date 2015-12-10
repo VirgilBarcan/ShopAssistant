@@ -3,6 +3,7 @@ package barcan.virgil.com.shopassistant.frontend.regular;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,9 @@ public class UserLoggedAccountFragment extends Fragment {
                 Intent intentStartMainActivity = new Intent(getActivity(), MainActivity.class);
                 intentStartMainActivity.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intentStartMainActivity);
+
+                //Finish the activity to make it impossible for the user to come back here
+                getActivity().finish();
             }
         };
     }
