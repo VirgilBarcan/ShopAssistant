@@ -143,6 +143,15 @@ public class Controller {
     }
 
     /**
+     * This method updates the shared preferences to logout the user
+     */
+    public void logoutUser() {
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        sharedPreferencesEditor.putString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, "");
+        sharedPreferencesEditor.apply();
+    }
+
+    /**
      * This method checks if the given <username, password> pair exist in the database
      * @param username the username
      * @param password the password

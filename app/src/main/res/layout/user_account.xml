@@ -26,11 +26,12 @@
             android:orientation="vertical"
             android:layout_weight="1" >
 
-            <com.pkmmte.view.CircularImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/circularImageView"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:src="@drawable/image_person"
+                android:background="@color/blue"
                 app:border="true"
                 app:border_color="#8198ee"
                 app:border_width="4dp"
