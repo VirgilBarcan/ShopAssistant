@@ -6,17 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
-import barcan.virgil.com.shopassistant.model.Category;
-import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.Constants;
-import barcan.virgil.com.shopassistant.model.Price;
 import barcan.virgil.com.shopassistant.model.Product;
 
 public class ShowProductActivity extends AppCompatActivity {

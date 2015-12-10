@@ -33,8 +33,8 @@ import barcan.virgil.com.shopassistant.model.User;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static String DB_PATH = "/data/data/barcan.virgil.com.shopassistant/databases/";
-    public static String DB_NAME = "shopping_assistant.sqlite";
+    public static final String DB_PATH = "/data/data/barcan.virgil.com.shopassistant/databases/";
+    public static final String DB_NAME = "shopping_assistant.sqlite";
     public static final int DB_VERSION = 1;
 
     private SQLiteDatabase myDB;
@@ -76,7 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Copy database from res/raw to the device internal storage
      * @throws IOException
      */
-    public void copyDataBase() throws IOException {
+    public void copyDataBase() {
         try {
             Resources resources = context.getResources();
             InputStream myInput = resources.openRawResource(R.raw.shopping_assistant);
@@ -105,18 +105,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Check if the database doesn't exist on device, create new one
      * @throws IOException
      */
-    public void createDatabase() throws IOException {
+    public void createDatabase() {
         boolean dbExist = checkDatabase();
 
         if (dbExist) {
             //Do nothing, we already have the database
         } else {
             this.getReadableDatabase();
-            try {
-                copyDataBase();
-            } catch (IOException e) {
-                Log.e("ShopAssist-create", e.getMessage());
-            }
+
+            copyDataBase();
         }
     }
 
@@ -713,14 +710,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             String productID;
             String companyID;
-            String productPriceID;
 
             cursor.moveToFirst();
 
             do {
                 productID = cursor.getString(1);
                 companyID = cursor.getString(2);
-                productPriceID = cursor.getString(3);
 
                 product = getProductWithProductIDSoldBy(productID, companyID);
 

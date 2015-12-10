@@ -1,7 +1,6 @@
 package barcan.virgil.com.shopassistant.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

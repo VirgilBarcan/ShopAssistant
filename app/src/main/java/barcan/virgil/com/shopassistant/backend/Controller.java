@@ -87,11 +87,7 @@ public class Controller {
      */
     private void createDatabaseHelper() {
         databaseHelper = new DatabaseHelper(context);
-        try {
-            databaseHelper.createDatabase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        databaseHelper.createDatabase();
     }
 
     /**
@@ -123,7 +119,7 @@ public class Controller {
         sharedPreferences = mainActivity.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
         sharedPreferencesEditor.putString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, "");
-        sharedPreferencesEditor.commit();
+        sharedPreferencesEditor.apply();
     }
 
     /**
@@ -143,7 +139,7 @@ public class Controller {
     public void saveUsernameLoggedIn(String username) {
         SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
         sharedPreferencesEditor.putString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, username);
-        sharedPreferencesEditor.commit();
+        sharedPreferencesEditor.apply();
     }
 
     /**

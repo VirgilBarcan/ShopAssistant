@@ -1,8 +1,5 @@
 package barcan.virgil.com.shopassistant.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by virgil on 28.11.2015.
  */

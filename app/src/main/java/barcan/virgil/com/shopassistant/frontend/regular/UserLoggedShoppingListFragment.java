@@ -1,6 +1,5 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,17 +9,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.backend.ShoppingListViewAdapter;
-import barcan.virgil.com.shopassistant.frontend.ShowProductActivity;
-import barcan.virgil.com.shopassistant.model.Category;
-import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.Constants;
-import barcan.virgil.com.shopassistant.model.Price;
 import barcan.virgil.com.shopassistant.model.Product;
 
 /**
