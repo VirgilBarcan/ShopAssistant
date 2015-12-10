@@ -62,13 +62,15 @@ public class UserLoggedAccountFragment extends Fragment {
 
     }
 
-
     /**
      * This method adds listeners for all buttons
      */
     private void addButtonsListeners() {
+        //Logout button
         Button buttonLogout = (Button) view.findViewById(R.id.buttonLogout);
         buttonLogout.setOnClickListener(buttonLogoutClickListener());
+
+        //TODO: ChangePassword button + the others
     }
 
     /**

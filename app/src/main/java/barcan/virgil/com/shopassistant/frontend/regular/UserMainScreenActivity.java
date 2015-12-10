@@ -15,8 +15,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Map;
+
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
+import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 

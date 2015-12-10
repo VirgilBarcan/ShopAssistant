@@ -23,6 +23,7 @@ import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.model.Category;
 import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.CompanyUser;
+import barcan.virgil.com.shopassistant.model.Location;
 import barcan.virgil.com.shopassistant.model.Price;
 import barcan.virgil.com.shopassistant.model.Product;
 import barcan.virgil.com.shopassistant.model.RegularUser;
@@ -35,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DB_PATH = "/data/data/barcan.virgil.com.shopassistant/databases/";
     public static final String DB_NAME = "shopping_assistant.sqlite";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     private SQLiteDatabase myDB;
     private Context context;
@@ -374,7 +375,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 company.setCompanyInfo(companyInfo);
                 company.setCompanyRating(Double.parseDouble(companyRating));
 
+                //Get the company location
+                company.setLocation(getCompanyLocation(companyID));
+
+                //Get the list of sold products
+                company.setAllProducts(getAllProductsSoldBy(company));
+
+                //TODO: Get the list of available products; for now leave it as it is
+                company.setAvailableProducts(getAllProductsSoldBy(company));
+
                 companies.put(companyID, company);
+
             } while (cursor.moveToNext());
             cursor.close();
         } catch (Exception e) {
@@ -384,6 +395,314 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return companies;
+    }
+
+    /**
+     * Get the Location of the given company
+     * @param companyID the companyID of the company whose location we want to get
+     * @return the Location of the given company
+     */
+    public Location getCompanyLocation(String companyID) {
+        Location location = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            String query = "SELECT L.locationID, L.latitude, L.longitude, L.countryName, L.cityName, L.streetName, L.streetNo, L.ZIP, L.fullAddress \n" +
+                    "FROM COMPANY C, LOCATION L, COMPANY_LOCATION CL\n" +
+                    "WHERE C.companyID = CL.companyID\n" +
+                    "AND L.locationID = CL.locationID\n" +
+                    "AND C.companyID = " + companyID;
+
+            cursor = db.rawQuery(query, null);
+
+            if(cursor == null) return null;
+
+            String locationID;
+            String latitude;
+            String longitude;
+            String countryName;
+            String cityName;
+            String streetName;
+            String streetNo;
+            String ZIP;
+            String fullAddress;
+
+            cursor.moveToFirst();
+
+            locationID = cursor.getString(0);
+            latitude = cursor.getString(1);
+            longitude = cursor.getString(2);
+            countryName = cursor.getString(3);
+            cityName = cursor.getString(4);
+            streetName = cursor.getString(5);
+            streetNo = cursor.getString(6);
+            ZIP = cursor.getString(7);
+            fullAddress = cursor.getString(8);
+
+            location = new Location();
+            location.setLocationID(locationID);
+            location.setLatitude(Double.parseDouble(latitude));
+            location.setLongitude(Double.parseDouble(longitude));
+            location.setCountryName(countryName);
+            location.setCityName(cityName);
+            location.setStreetName(streetName);
+            location.setStreetNo(streetNo);
+            location.setZIP(ZIP);
+            location.setFullAddress(fullAddress);
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return location;
+    }
+
+    /**
+     * Get the Product with the given productID
+     * @param productID the productID of the wanted product
+     * @return the product with the productID or null if it doesn't exist
+     */
+    public Product getProductWithProductID(String productID) {
+        Product product = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            String query = "SELECT P.productName, P.productRating, PP.priceID, PP.priceValue, PP.priceCurrency, C.categoryID, C.categoryName, CO.companyID, CO.companyName\n" +
+                    "FROM PRODUCT P, CATEGORY C, PRODUCT_COMPANY PC, COMPANY CO, PRICE PP\n" +
+                    "WHERE P.productCategory = C.categoryID\n" +
+                    "AND P.productID = PC.productID\n" +
+                    "AND CO.companyID = PC.companyID\n" +
+                    "AND PC.productPriceID = PP.priceID\n" +
+                    "AND P.productID = " + productID;
+
+            cursor = db.rawQuery(query, null);
+
+            if(cursor == null) return null;
+
+            String productName;
+            String productRating;
+            String priceID;
+            String priceValue;
+            String priceCurrency;
+            String categoryID;
+            String categoryName;
+            String companyID;
+            String companyName;
+
+            cursor.moveToFirst();
+
+            productName = cursor.getString(0);
+            productRating = cursor.getString(1);
+            priceID = cursor.getString(2);
+            priceValue = cursor.getString(3);
+            priceCurrency = cursor.getString(4);
+            categoryID = cursor.getString(5);
+            categoryName = cursor.getString(6);
+            companyID = cursor.getString(7);
+            companyName = cursor.getString(8);
+
+            Price productPrice = new Price();
+            productPrice.setPriceID(priceID);
+            productPrice.setPriceValue(Double.parseDouble(priceValue));
+            productPrice.setPriceCurrency(priceCurrency);
+
+            Category productCategory = new Category();
+            productCategory.setCategoryID(categoryID);
+            productCategory.setCategoryName(categoryName);
+
+            Company productSeller = new Company();
+            productSeller.setCompanyID(companyID);
+            productSeller.setCompanyName(companyName);
+
+            product = new Product();
+            product.setProductID(productID);
+            product.setProductName(productName);
+            product.setProductRating(Double.parseDouble(productRating));
+            product.setProductPrice(productPrice);
+            product.setProductCategory(productCategory);
+            product.setProductSeller(productSeller);
+
+            cursor.close();
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return product;
+    }
+
+    /**
+     * Get the Product with the given productID
+     * @param productID the productID of the wanted product
+     * @param companyID the companyID of the company that sells the product
+     * @return the product with the productID or null if it doesn't exist
+     */
+    private Product getProductWithProductIDSoldBy(String productID, String companyID) {
+        Product product = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            String query = "SELECT P.productName, P.productRating, PP.priceID, PP.priceValue, PP.priceCurrency, C.categoryID, C.categoryName, CO.companyID, CO.companyName\n" +
+                    "FROM PRODUCT P, CATEGORY C, PRODUCT_COMPANY PC, COMPANY CO, PRICE PP\n" +
+                    "WHERE P.productCategory = C.categoryID\n" +
+                    "AND CO.companyID = PC.companyID\n" +
+                    "AND P.productID = PC.productID\n" +
+                    "AND CO.companyID = " + companyID + "\n" +
+                    "AND PC.productPriceID = PP.priceID\n" +
+                    "AND P.productID = " + productID;
+
+            cursor = db.rawQuery(query, null);
+
+            if(cursor == null) return null;
+
+            String productName;
+            String productRating;
+            String priceID;
+            String priceValue;
+            String priceCurrency;
+            String categoryID;
+            String categoryName;
+            String companyName;
+
+            cursor.moveToFirst();
+
+            productName = cursor.getString(0);
+            productRating = cursor.getString(1);
+            priceID = cursor.getString(2);
+            priceValue = cursor.getString(3);
+            priceCurrency = cursor.getString(4);
+            categoryID = cursor.getString(5);
+            categoryName = cursor.getString(6);
+            companyID = cursor.getString(7);
+            companyName = cursor.getString(8);
+
+            Price productPrice = new Price();
+            productPrice.setPriceID(priceID);
+            productPrice.setPriceValue(Double.parseDouble(priceValue));
+            productPrice.setPriceCurrency(priceCurrency);
+
+            Category productCategory = new Category();
+            productCategory.setCategoryID(categoryID);
+            productCategory.setCategoryName(categoryName);
+
+            Company productSeller = new Company();
+            productSeller.setCompanyID(companyID);
+            productSeller.setCompanyName(companyName);
+
+            product = new Product();
+            product.setProductID(productID);
+            product.setProductName(productName);
+            product.setProductRating(Double.parseDouble(productRating));
+            product.setProductPrice(productPrice);
+            product.setProductCategory(productCategory);
+            product.setProductSeller(productSeller);
+
+            cursor.close();
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return product;
+    }
+
+    /**
+     * Get the list of Products sold by the given company
+     * @param company the company that sells the product
+     * @return the list of Products sold by the given company
+     */
+    private List<Product> getAllProductsSoldBy(Company company) {
+        Product product = null;
+        List<Product> products = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            String query = "SELECT P.productID, P.productName, P.productRating, PP.priceID, PP.priceValue, PP.priceCurrency, C.categoryID, C.categoryName, CO.companyID, CO.companyName\n" +
+                    "FROM PRODUCT P, CATEGORY C, PRODUCT_COMPANY PC, COMPANY CO, PRICE PP\n" +
+                    "WHERE P.productCategory = C.categoryID\n" +
+                    "AND CO.companyID = PC.companyID\n" +
+                    "AND P.productID = PC.productID\n" +
+                    "AND CO.companyID = " + company.getCompanyID() +"\n" +
+                    "AND PC.productPriceID = PP.priceID";
+
+            cursor = db.rawQuery(query, null);
+
+            if(cursor == null) return null;
+
+            String productID;
+            String productName;
+            String productRating;
+            String priceID;
+            String priceValue;
+            String priceCurrency;
+            String categoryID;
+            String categoryName;
+            String companyID;
+            String companyName;
+
+            cursor.moveToFirst();
+            do {
+                productID = cursor.getString(0);
+                productName = cursor.getString(1);
+                productRating = cursor.getString(2);
+                priceID = cursor.getString(3);
+                priceValue = cursor.getString(4);
+                priceCurrency = cursor.getString(5);
+                categoryID = cursor.getString(6);
+                categoryName = cursor.getString(7);
+                companyID = cursor.getString(8);
+                companyName = cursor.getString(9);
+
+                Price productPrice = new Price();
+                productPrice.setPriceID(priceID);
+                productPrice.setPriceValue(Double.parseDouble(priceValue));
+                productPrice.setPriceCurrency(priceCurrency);
+
+                Category productCategory = new Category();
+                productCategory.setCategoryID(categoryID);
+                productCategory.setCategoryName(categoryName);
+
+                //Company productSeller = new Company();
+                //productSeller.setCompanyID(companyID);
+                //productSeller.setCompanyName(companyName);
+
+                product = new Product();
+                product.setProductID(productID);
+                product.setProductName(productName);
+                product.setProductRating(Double.parseDouble(productRating));
+                product.setProductPrice(productPrice);
+                product.setProductCategory(productCategory);
+                product.setProductSeller(company);
+
+                products.add(product);
+
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return products;
     }
 
     /**
@@ -525,164 +844,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return companyUser;
-    }
-
-    /**
-     * Get the Product with the given productID
-     * @param productID the productID of the wanted product
-     * @return the product with the productID or null if it doesn't exist
-     */
-    public Product getProductWithProductID(String productID) {
-        Product product = null;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor;
-
-        try {
-            String query = "SELECT P.productName, P.productRating, PP.priceID, PP.priceValue, PP.priceCurrency, C.categoryID, C.categoryName, CO.companyID, CO.companyName\n" +
-                    "FROM PRODUCT P, CATEGORY C, PRODUCT_COMPANY PC, COMPANY CO, PRICE PP\n" +
-                    "WHERE P.productCategory = C.categoryID\n" +
-                    "AND P.productID = PC.productID\n" +
-                    "AND CO.companyID = PC.companyID\n" +
-                    "AND PC.productPriceID = PP.priceID\n" +
-                    "AND P.productID = " + productID;
-
-            cursor = db.rawQuery(query, null);
-
-            if(cursor == null) return null;
-
-            String productName;
-            String productRating;
-            String priceID;
-            String priceValue;
-            String priceCurrency;
-            String categoryID;
-            String categoryName;
-            String companyID;
-            String companyName;
-
-            cursor.moveToFirst();
-
-            productName = cursor.getString(0);
-            productRating = cursor.getString(1);
-            priceID = cursor.getString(2);
-            priceValue = cursor.getString(3);
-            priceCurrency = cursor.getString(4);
-            categoryID = cursor.getString(5);
-            categoryName = cursor.getString(6);
-            companyID = cursor.getString(7);
-            companyName = cursor.getString(8);
-
-            Price productPrice = new Price();
-            productPrice.setPriceID(priceID);
-            productPrice.setPriceValue(Double.parseDouble(priceValue));
-            productPrice.setPriceCurrency(priceCurrency);
-
-            Category productCategory = new Category();
-            productCategory.setCategoryID(categoryID);
-            productCategory.setCategoryName(categoryName);
-
-            Company productSeller = new Company();
-            productSeller.setCompanyID(companyID);
-            productSeller.setCompanyName(companyName);
-
-            product = new Product();
-            product.setProductID(productID);
-            product.setProductName(productName);
-            product.setProductRating(Double.parseDouble(productRating));
-            product.setProductPrice(productPrice);
-            product.setProductCategory(productCategory);
-            product.setProductSeller(productSeller);
-
-            cursor.close();
-
-            cursor.close();
-        } catch (Exception e) {
-            Log.v("ShopAssist", e.getMessage());
-        }
-
-        db.close();
-
-        return product;
-    }
-
-    /**
-     * Get the Product with the given productID
-     * @param productID the productID of the wanted product
-     * @param companyID the companyID of the company that sells the product
-     * @return the product with the productID or null if it doesn't exist
-     */
-    private Product getProductWithProductIDSoldBy(String productID, String companyID) {
-        Product product = null;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor;
-
-        try {
-            String query = "SELECT P.productName, P.productRating, PP.priceID, PP.priceValue, PP.priceCurrency, C.categoryID, C.categoryName, CO.companyID, CO.companyName\n" +
-                    "FROM PRODUCT P, CATEGORY C, PRODUCT_COMPANY PC, COMPANY CO, PRICE PP\n" +
-                    "WHERE P.productCategory = C.categoryID\n" +
-                    "AND P.productID = PC.productID\n" +
-                    "AND CO.companyID = " + companyID + "\n" +
-                    "AND PC.productPriceID = PP.priceID\n" +
-                    "AND P.productID = " + productID;
-
-            cursor = db.rawQuery(query, null);
-
-            if(cursor == null) return null;
-
-            String productName;
-            String productRating;
-            String priceID;
-            String priceValue;
-            String priceCurrency;
-            String categoryID;
-            String categoryName;
-            String companyName;
-
-            cursor.moveToFirst();
-
-            productName = cursor.getString(0);
-            productRating = cursor.getString(1);
-            priceID = cursor.getString(2);
-            priceValue = cursor.getString(3);
-            priceCurrency = cursor.getString(4);
-            categoryID = cursor.getString(5);
-            categoryName = cursor.getString(6);
-            companyID = cursor.getString(7);
-            companyName = cursor.getString(8);
-
-            Price productPrice = new Price();
-            productPrice.setPriceID(priceID);
-            productPrice.setPriceValue(Double.parseDouble(priceValue));
-            productPrice.setPriceCurrency(priceCurrency);
-
-            Category productCategory = new Category();
-            productCategory.setCategoryID(categoryID);
-            productCategory.setCategoryName(categoryName);
-
-            Company productSeller = new Company();
-            productSeller.setCompanyID(companyID);
-            productSeller.setCompanyName(companyName);
-
-            product = new Product();
-            product.setProductID(productID);
-            product.setProductName(productName);
-            product.setProductRating(Double.parseDouble(productRating));
-            product.setProductPrice(productPrice);
-            product.setProductCategory(productCategory);
-            product.setProductSeller(productSeller);
-
-            cursor.close();
-
-            cursor.close();
-        } catch (Exception e) {
-            Log.v("ShopAssist", e.getMessage());
-        }
-
-        db.close();
-
-        return product;
     }
 
     /**

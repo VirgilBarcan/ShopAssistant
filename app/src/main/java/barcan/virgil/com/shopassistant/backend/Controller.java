@@ -3,12 +3,12 @@ package barcan.virgil.com.shopassistant.backend;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import barcan.virgil.com.shopassistant.backend.backend.database.DatabaseHelper;
 import barcan.virgil.com.shopassistant.frontend.MainActivity;
+import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.CompanyUser;
 import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.Product;
@@ -29,9 +29,8 @@ public class Controller {
     private DatabaseHelper databaseHelper;
     //The controller needs to access info about the user that is logged in
     private SharedPreferences sharedPreferences;
-
+    //The controller needs to know the view
     private MainActivity mainActivity;
-
     //The controller needs the context
     private Context context;
 
@@ -133,6 +132,28 @@ public class Controller {
     }
 
     /**
+     * Get the currently connected user
+     * @return the currently connected user
+     */
+    public User getConnectedUser() {
+        User connectedUser = null;
+
+        if (isLogged()) {
+            String username = sharedPreferences.getString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, "");
+            connectedUser = databaseHelper.getRegularUser(username);
+
+            if (connectedUser == null)
+                connectedUser = databaseHelper.getCompanyUser(username);
+            else
+                return connectedUser;
+        }
+
+        System.out.println("Controller.getConnectedUser: connectedUser=" + connectedUser);
+
+        return connectedUser;
+    }
+
+    /**
      * This method is used to save the username of the user that has logged in
      * @param username the username
      */
@@ -204,28 +225,6 @@ public class Controller {
     }
 
     /**
-     * Get the currently connected user
-     * @return the currently connected user
-     */
-    public User getConnectedUser() {
-        User connectedUser = null;
-
-        if (isLogged()) {
-            String username = sharedPreferences.getString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, "");
-            connectedUser = databaseHelper.getRegularUser(username);
-
-            if (connectedUser == null)
-                connectedUser = databaseHelper.getCompanyUser(username);
-            else
-                return connectedUser;
-        }
-
-        System.out.println("Controller.getConnectedUser: connectedUser=" + connectedUser);
-
-        return connectedUser;
-    }
-
-    /**
      * Get the Product with the given productID
      * @param productID the productID of the wanted product
      * @return the product with the productID or null if it doesn't exist
@@ -241,5 +240,14 @@ public class Controller {
      */
     public List<Product> getUserShoppingList(User user) {
         return databaseHelper.getUserShoppingList(user);
+    }
+
+    /**
+     * Get the map of all Companies from the database
+     * A map is used to make it easy to access the objects when having their IDs
+     * @return the map of all Companies from the database
+     */
+    public Map<String, Company> getCompanies() {
+        return databaseHelper.getAllCompanies();
     }
 }
