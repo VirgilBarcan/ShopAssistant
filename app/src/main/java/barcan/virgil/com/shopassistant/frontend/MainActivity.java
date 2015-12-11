@@ -36,11 +36,7 @@ public class MainActivity extends AppCompatActivity {
             //TODO: Check to see if regular user or company user
             if (true) {
                 //Open the activity that has the user already logged
-                //openRegularUserMainScreenActivity();
-
-
-                //Test: Open LocationActivity
-                openLocationActivity();
+                openRegularUserMainScreenActivity();
             }
             else {
                 //Open the activity that has the user already logged
@@ -121,16 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Finish the app so the user can not get back to this activity
         finish();
-    }
-
-
-    private void openLocationActivity() {
-        Intent intentLocationActivity = new Intent(MainActivity.this, LocationActivity.class);
-        //intentLocationActivity.putExtra("KEY", "value");
-        startActivity(intentLocationActivity);
-
-        //Finish the app so the user can not get back to this activity
-        //finish();
     }
 
 }

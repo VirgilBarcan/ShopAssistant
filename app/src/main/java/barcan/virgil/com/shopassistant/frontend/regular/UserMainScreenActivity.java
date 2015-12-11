@@ -1,5 +1,6 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
+import barcan.virgil.com.shopassistant.frontend.LocationActivity;
 import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -166,6 +168,10 @@ public class UserMainScreenActivity extends AppCompatActivity {
             case R.id.action_settings:
                 System.out.println("MainActivity.onOptionsItemSelected: Settings pressed!");
                 //TODO: React to settings
+
+                //Just a small test
+                openLocationActivity();
+
                 break;
 
             default:
@@ -262,6 +268,17 @@ public class UserMainScreenActivity extends AppCompatActivity {
         fragmentTransactionHome.replace(R.id.frame, fragmentNotifications);
         fragmentTransactionHome.addToBackStack("Notifications");
         fragmentTransactionHome.commit();
+    }
+
+
+
+    private void openLocationActivity() {
+        Intent intentLocationActivity = new Intent(this, LocationActivity.class);
+        //intentLocationActivity.putExtra("KEY", "value");
+        startActivity(intentLocationActivity);
+
+        //Finish the app so the user can not get back to this activity
+        //finish();
     }
 
 }
