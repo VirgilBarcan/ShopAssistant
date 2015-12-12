@@ -33,8 +33,8 @@ public class LocationService extends Service implements
         GoogleApiClient.OnConnectionFailedListener {
 
     public static final String BROADCAST_ACTION = "LOCATION_UPDATE";
-    public static final int LOCATION_UPDATE_INTERVAL = 10; //milliseconds
-    public static final int FASTEST_LOCATION_UPDATE_INTERVAL = 10; //milliseconds
+    public static final int LOCATION_UPDATE_INTERVAL = 1000 * 10; //milliseconds
+    public static final int FASTEST_LOCATION_UPDATE_INTERVAL = 1000 * 5; //milliseconds
     private static final String TAG = "LocationService";
 
     private boolean currentlyProcessingLocation = false;
@@ -88,16 +88,17 @@ public class LocationService extends Service implements
 
     @Override
     public void onLocationChanged(Location location) {
+        System.out.println("LocationService.onLocationChanged: position: " + location.getLatitude() + ", " + location.getLongitude() + " accuracy: " + location.getAccuracy());
+        Log.v(TAG, "LocationService.onLocationChanged: position: " + location.getLatitude() + ", " + location.getLongitude() + " accuracy: " + location.getAccuracy());
+
         if (location != null) {
-            System.out.println("LocationService.onLocationChanged: position: " + location.getLatitude() + ", " + location.getLongitude() + " accuracy: " + location.getAccuracy());
-            Log.v(TAG, "LocationService.onLocationChanged: position: " + location.getLatitude() + ", " + location.getLongitude() + " accuracy: " + location.getAccuracy());
 
             currentLocation = location;
 
             // we have our desired accuracy of 500 meters so lets quit this service,
             // onDestroy will be called and stop our location updates
-            if (location.getAccuracy() < 500.0f) {
-                stopLocationUpdates();
+            if (location.getAccuracy() < 2500.0f) {
+                //stopLocationUpdates();
                 //TODO: send notification about location or calculate distance to shops
                 calculateDistancesAndNotify();
             }
@@ -193,7 +194,6 @@ public class LocationService extends Service implements
                 float distanceToShop = currentLocation.distanceTo(shopLocation);
                 if (distanceToShop < 100) {
                     //User is to within 100 meters of the company => NOTIFY
-
                     notifyUserAboutCompany.put(company, true);
                     System.out.println("LocationService.calculateDistancesAndNotify: YOU ARE CLOSE TO THE PRODUCTS SOLD BY: " + company.getCompanyName() + " distance=" + distanceToShop);
                 } else {
