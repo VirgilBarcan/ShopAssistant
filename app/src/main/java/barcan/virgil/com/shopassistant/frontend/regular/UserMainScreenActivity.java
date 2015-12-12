@@ -16,10 +16,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.Map;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
+import barcan.virgil.com.shopassistant.backend.service.LocationService;
 import barcan.virgil.com.shopassistant.frontend.LocationActivity;
 import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.User;
@@ -42,6 +44,12 @@ public class UserMainScreenActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         controller = Controller.getInstance();
+
+        //Small test
+        List<Company> userShoppingListCompanies = controller.getShoppingListCompanies(controller.getConnectedUser());
+
+        //Start the location service
+        startLocationService();
 
         UserLoggedHomeFragment fragmentHome = new UserLoggedHomeFragment();
         FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
@@ -179,6 +187,17 @@ public class UserMainScreenActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * This method starts the LocationService
+     * The LocationService gets GPS position and checks if shops are close to the user
+     * If a shop that sells something the user wants is close, the Service notifies
+     */
+    private void startLocationService() {
+        Intent intentLocationService = new Intent(this, LocationService.class);
+        //intentLocationService.putExtra("KEY", "value");
+        this.startService(intentLocationService);
     }
 
     /**

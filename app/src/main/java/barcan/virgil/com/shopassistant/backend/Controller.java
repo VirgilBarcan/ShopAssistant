@@ -3,6 +3,7 @@ package barcan.virgil.com.shopassistant.backend;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import barcan.virgil.com.shopassistant.frontend.MainActivity;
 import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.CompanyUser;
 import barcan.virgil.com.shopassistant.model.Constants;
+import barcan.virgil.com.shopassistant.model.Location;
 import barcan.virgil.com.shopassistant.model.Product;
 import barcan.virgil.com.shopassistant.model.RegularUser;
 import barcan.virgil.com.shopassistant.model.User;
@@ -249,5 +251,26 @@ public class Controller {
      */
     public Map<String, Company> getCompanies() {
         return databaseHelper.getAllCompanies();
+    }
+
+    /**
+     * Get the list of all Companies selling products from the shopping list of the user
+     * @param user the user whose shopping list we want to check
+     * @return the list of all Companies selling products from the shopping list of the user
+     */
+    public List<Company> getShoppingListCompanies(User user) {
+        List<Company> userShoppingListCompanies = new ArrayList<>();
+        List<Product> userShoppingList = getUserShoppingList(user);
+        Map<String, Company> allCompanies = getCompanies();
+
+        for (Product product : userShoppingList) {
+            Company company = allCompanies.get(product.getProductSeller().getCompanyID());
+
+            if (!userShoppingListCompanies.contains(company)) {
+                userShoppingListCompanies.add(company);
+            }
+        }
+
+        return userShoppingListCompanies;
     }
 }
