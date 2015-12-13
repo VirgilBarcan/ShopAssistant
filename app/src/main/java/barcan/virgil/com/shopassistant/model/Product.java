@@ -77,4 +77,16 @@ public class Product {
     public void setProductSeller(Company productSeller) {
         this.productSeller = productSeller;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productID='" + productID + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productCategory=" + productCategory.getCategoryName() +
+                ", productSeller=" + productSeller.getCompanyName() +
+                ", productPrice=" + productPrice +
+                ", productRating=" + productRating +
+                '}';
+    }
 }

@@ -95,4 +95,15 @@ public class Company {
     public void setCompanyRating(Double companyRating) {
         this.companyRating = companyRating;
     }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "companyID='" + companyID + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", companyInfo='" + companyInfo + '\'' +
+                ", location=" + location +
+                ", companyRating=" + companyRating +
+                '}';
+    }
 }

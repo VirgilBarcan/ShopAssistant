@@ -236,6 +236,14 @@ public class Controller {
     }
 
     /**
+     * Get the list of all Products
+     * @return the list of all Products
+     */
+    public List<Product> getAllProducts() {
+        return databaseHelper.getAllProducts();
+    }
+
+    /**
      * Get the shopping list of the user
      * @param user the user whose shopping list we want
      * @return the shopping list of the user or null if it doesn't exist

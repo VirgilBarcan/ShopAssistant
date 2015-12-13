@@ -85,7 +85,7 @@ public class LocationReceiver extends BroadcastReceiver {
                 System.out.println(company.getCompanyName() + " location: " + shopLocation.getLatitude() + ", " + shopLocation.getLongitude());
 
                 float distanceToShop = currentLocation.distanceTo(shopLocation);
-                if (distanceToShop < 100) {
+                if (distanceToShop < 500) {
                     //User is to within 100 meters of the company => NOTIFY
                     createNotification(shopLocation);
 

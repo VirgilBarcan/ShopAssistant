@@ -622,6 +622,88 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Get the list of all Products
+     * @return the list of all Products
+     */
+    public List<Product> getAllProducts() {
+        Product product = null;
+        List<Product> products = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            String query = "SELECT P.productID, P.productName, P.productRating, PP.priceID, PP.priceValue, PP.priceCurrency, C.categoryID, C.categoryName, CO.companyID, CO.companyName\n" +
+                    "FROM PRODUCT P, CATEGORY C, PRODUCT_COMPANY PC, COMPANY CO, PRICE PP\n" +
+                    "WHERE P.productCategory = C.categoryID\n" +
+                    "AND CO.companyID = PC.companyID\n" +
+                    "AND P.productID = PC.productID\n" +
+                    "AND PC.productPriceID = PP.priceID";
+
+            cursor = db.rawQuery(query, null);
+
+            if(cursor == null) return null;
+
+            String productID;
+            String productName;
+            String productRating;
+            String priceID;
+            String priceValue;
+            String priceCurrency;
+            String categoryID;
+            String categoryName;
+            String companyID;
+            String companyName;
+
+            cursor.moveToFirst();
+            do {
+                productID = cursor.getString(0);
+                productName = cursor.getString(1);
+                productRating = cursor.getString(2);
+                priceID = cursor.getString(3);
+                priceValue = cursor.getString(4);
+                priceCurrency = cursor.getString(5);
+                categoryID = cursor.getString(6);
+                categoryName = cursor.getString(7);
+                companyID = cursor.getString(8);
+                companyName = cursor.getString(9);
+
+                Price productPrice = new Price();
+                productPrice.setPriceID(priceID);
+                productPrice.setPriceValue(Double.parseDouble(priceValue));
+                productPrice.setPriceCurrency(priceCurrency);
+
+                Category productCategory = new Category();
+                productCategory.setCategoryID(categoryID);
+                productCategory.setCategoryName(categoryName);
+
+                Company productSeller = new Company();
+                productSeller.setCompanyID(companyID);
+                productSeller.setCompanyName(companyName);
+
+                product = new Product();
+                product.setProductID(productID);
+                product.setProductName(productName);
+                product.setProductRating(Double.parseDouble(productRating));
+                product.setProductPrice(productPrice);
+                product.setProductCategory(productCategory);
+                product.setProductSeller(productSeller);
+
+                products.add(product);
+
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return products;
+    }
+
+    /**
      * Get the list of Products sold by the given company
      * @param company the company that sells the product
      * @return the list of Products sold by the given company

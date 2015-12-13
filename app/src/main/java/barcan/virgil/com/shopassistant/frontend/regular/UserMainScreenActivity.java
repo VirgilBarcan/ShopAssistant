@@ -33,6 +33,7 @@ import barcan.virgil.com.shopassistant.backend.service.LocationService;
 import barcan.virgil.com.shopassistant.frontend.LocationActivity;
 import barcan.virgil.com.shopassistant.frontend.ShowProductActivity;
 import barcan.virgil.com.shopassistant.model.Company;
+import barcan.virgil.com.shopassistant.model.Product;
 import barcan.virgil.com.shopassistant.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 
