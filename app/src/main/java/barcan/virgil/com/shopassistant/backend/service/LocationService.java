@@ -1,8 +1,12 @@
 package barcan.virgil.com.shopassistant.backend.service;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -15,14 +19,14 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
+import barcan.virgil.com.shopassistant.frontend.ShowProductActivity;
 import barcan.virgil.com.shopassistant.model.Company;
-import barcan.virgil.com.shopassistant.model.Product;
 
 /**
  * Created by virgil on 12.12.2015.
@@ -41,7 +45,6 @@ public class LocationService extends Service implements
     private LocationRequest locationRequest;
     private GoogleApiClient googleApiClient;
     private Location currentLocation;
-    private Intent intent;
     private Controller controller;
 
     private List<Company> userShoppingListCompanies;
@@ -55,7 +58,6 @@ public class LocationService extends Service implements
 
         //TODO: Do some initialization
         controller = Controller.getInstance();
-        intent = new Intent(BROADCAST_ACTION);
 
         userShoppingListCompanies = controller.getShoppingListCompanies(controller.getConnectedUser());
     }
@@ -120,8 +122,11 @@ public class LocationService extends Service implements
         locationRequest.setFastestInterval(FASTEST_LOCATION_UPDATE_INTERVAL);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
+        Intent intent = new Intent(this, LocationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         LocationServices.FusedLocationApi.requestLocationUpdates(
-                googleApiClient, locationRequest, this);
+                googleApiClient, locationRequest, pendingIntent);
     }
 
     @Override
@@ -194,6 +199,8 @@ public class LocationService extends Service implements
                 float distanceToShop = currentLocation.distanceTo(shopLocation);
                 if (distanceToShop < 100) {
                     //User is to within 100 meters of the company => NOTIFY
+                    createNotification(shopLocation);
+
                     notifyUserAboutCompany.put(company, true);
                     System.out.println("LocationService.calculateDistancesAndNotify: YOU ARE CLOSE TO THE PRODUCTS SOLD BY: " + company.getCompanyName() + " distance=" + distanceToShop);
                 } else {
@@ -205,5 +212,36 @@ public class LocationService extends Service implements
                 //The location of the shop is not set, skip it
             }
         }
+    }
+
+    /**
+     * This method creates the notification that signals the user he is close to a shop
+     */
+    private void createNotification(Location shopLocation) {
+        System.out.println("UserMainScreenActivity.createNotification");
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        String location = shopLocation.getLatitude() + "," + shopLocation.getLongitude();
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + location + "&mode=w");
+        Intent intentShowMap = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        intentShowMap.setPackage("com.google.android.apps.maps");
+
+        Intent intentShowProducts = new Intent(this, ShowProductActivity.class);
+
+        PendingIntent pendingIntentShowProducts = PendingIntent.getActivity(this, 0, intentShowProducts, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntentShowMap = PendingIntent.getActivity(this, 0, intentShowMap, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new Notification.Builder(getApplicationContext())
+                .setSmallIcon(R.drawable.ic_notifications)
+                .setStyle(new Notification.BigTextStyle())
+                .addAction(R.drawable.ic_home, "PRODUCTS", pendingIntentShowProducts)
+                .addAction(R.drawable.ic_edit_location, "MAP", pendingIntentShowMap)
+                .setAutoCancel(true)
+                .setContentTitle("Go grab them!")
+                .setContentText("You are close to your wanted products!")
+                .build();
+
+        notificationManager.notify(1, notification);
     }
 }

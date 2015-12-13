@@ -31,10 +31,8 @@ public class ShowProductActivity extends AppCompatActivity {
 
         controller = Controller.getInstance();
 
-        intent = getIntent();
-        String productID = intent.getStringExtra(Constants.PRODUCT_ID);
-
-        product = controller.getProductWithProductID(productID);
+        //Proof Of Concept
+        product = controller.getProductWithProductID("1");
 
         //Set the product info for the given product
         setProductAttributes();

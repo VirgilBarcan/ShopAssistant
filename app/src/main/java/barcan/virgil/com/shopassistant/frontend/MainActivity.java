@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.AppSectionsPageAdapter;
 import barcan.virgil.com.shopassistant.backend.Controller;
-import barcan.virgil.com.shopassistant.backend.service.LocationService;
 import barcan.virgil.com.shopassistant.frontend.regular.UserMainScreenActivity;
 
 public class MainActivity extends AppCompatActivity {

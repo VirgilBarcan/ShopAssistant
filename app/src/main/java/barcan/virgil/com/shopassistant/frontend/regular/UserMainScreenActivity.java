@@ -1,6 +1,16 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -17,12 +27,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.Map;
-
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.backend.service.LocationService;
 import barcan.virgil.com.shopassistant.frontend.LocationActivity;
+import barcan.virgil.com.shopassistant.frontend.ShowProductActivity;
 import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -44,9 +53,6 @@ public class UserMainScreenActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         controller = Controller.getInstance();
-
-        //Small test
-        List<Company> userShoppingListCompanies = controller.getShoppingListCompanies(controller.getConnectedUser());
 
         //Start the location service
         startLocationService();
@@ -195,9 +201,29 @@ public class UserMainScreenActivity extends AppCompatActivity {
      * If a shop that sells something the user wants is close, the Service notifies
      */
     private void startLocationService() {
-        Intent intentLocationService = new Intent(this, LocationService.class);
-        //intentLocationService.putExtra("KEY", "value");
-        this.startService(intentLocationService);
+        Intent intentLocationService = createExplicitIntentFromImplicitIntent(getApplicationContext(), new Intent("barcan.virgil.com.shopassistant.backend.service"));
+        startService(intentLocationService);
+    }
+
+    private Intent createExplicitIntentFromImplicitIntent(Context context, Intent implicitIntent) {
+        PackageManager packageManager = context.getPackageManager();
+        List<ResolveInfo> resolveInfos = packageManager.queryIntentServices(implicitIntent, 0);
+
+        //Make sure only one match was found
+        if (resolveInfos == null || resolveInfos.size() != 1) {
+            return null;
+        }
+
+        //Get component info and create ComponentName
+        ResolveInfo serviceInfo = resolveInfos.get(0);
+        String packageName = serviceInfo.serviceInfo.packageName;
+        String className = serviceInfo.serviceInfo.name;
+        ComponentName componentName = new ComponentName(packageName, className);
+
+        Intent explicitIntent = new Intent(implicitIntent);
+        explicitIntent.setComponent(componentName);
+
+        return explicitIntent;
     }
 
     /**
