@@ -2,6 +2,7 @@ package barcan.virgil.com.shopassistant.backend;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,6 @@ import barcan.virgil.com.shopassistant.frontend.MainActivity;
 import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.CompanyUser;
 import barcan.virgil.com.shopassistant.model.Constants;
-import barcan.virgil.com.shopassistant.model.Location;
 import barcan.virgil.com.shopassistant.model.Product;
 import barcan.virgil.com.shopassistant.model.RegularUser;
 import barcan.virgil.com.shopassistant.model.User;
@@ -42,12 +42,11 @@ public class Controller {
         //do nothing here
     }
 
-    private Controller(Context context, MainActivity mainActivity) {
+    private Controller(Context context) {
         this.context = context;
-        this.mainActivity = mainActivity;
 
         //Init sharedPreferences
-        sharedPreferences = mainActivity.getPreferences(Context.MODE_PRIVATE);
+        initializeSharedPreferences();
 
         //Create DatabaseHelper
         createDatabaseHelper();
@@ -74,9 +73,9 @@ public class Controller {
      * @param mainActivity the MainActivity
      * @return the Controller instance
      */
-    public static Controller getInstance(Context context, MainActivity mainActivity) {
+    public static Controller getInstance(Context context) {
         if (Controller.instance == null) {
-            Controller.instance = new Controller(context, mainActivity);
+            Controller.instance = new Controller(context);
         }
 
         return Controller.instance;
@@ -86,9 +85,11 @@ public class Controller {
      * This method is used to start the DatabaseHelper
      * The DatabaseHelper class handles communication with the database
      */
-    private void createDatabaseHelper() {
-        databaseHelper = new DatabaseHelper(context);
-        databaseHelper.createDatabase();
+    public void createDatabaseHelper() {
+        if (databaseHelper == null) {
+            databaseHelper = new DatabaseHelper(context);
+            databaseHelper.createDatabase();
+        }
     }
 
     /**
@@ -114,10 +115,19 @@ public class Controller {
     }
 
     /**
+     * This method is called in order to initialize the shared preferences
+     */
+    public void initializeSharedPreferences() {
+        if (sharedPreferences == null)
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context.getApplicationContext());
+    }
+
+    /**
      * Setup sharedPreferences when the app is opened for the first time
      */
     public void setupSharedPreferences() {
-        sharedPreferences = mainActivity.getPreferences(Context.MODE_PRIVATE);
+        initializeSharedPreferences();
+        //sharedPreferences = mainActivity.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
         sharedPreferencesEditor.putString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, "");
         sharedPreferencesEditor.apply();
@@ -128,6 +138,8 @@ public class Controller {
      * @return true if the user is logged in, false otherwise
      */
     public boolean isLogged() {
+        initializeSharedPreferences();
+
         String usernameLogIn = sharedPreferences.getString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, "");
 
         return !usernameLogIn.isEmpty();

@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
@@ -16,8 +17,10 @@ import java.util.Map;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
+import barcan.virgil.com.shopassistant.frontend.MainActivity;
 import barcan.virgil.com.shopassistant.frontend.ShowProductActivity;
 import barcan.virgil.com.shopassistant.model.Company;
+import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.User;
 
 /**
@@ -33,16 +36,23 @@ public class LocationReceiver extends BroadcastReceiver {
     private User connectedUser;
     private List<Company> userShoppingListCompanies;
 
-    private static LocationReceiver instance;
-
     public LocationReceiver() {
-
     }
 
-    public LocationReceiver(Controller controller) {
-        this.controller = controller;
-        connectedUser = this.controller.getConnectedUser();
-        userShoppingListCompanies = this.controller.getShoppingListCompanies(this.connectedUser);
+    private void init() {
+        if (this.controller == null)
+            this.controller = Controller.getInstance(context);
+
+        this.controller.initializeSharedPreferences();
+        this.controller.createDatabaseHelper();
+
+        if (this.connectedUser == null)
+            this.connectedUser = this.controller.getConnectedUser();
+        System.out.println("LocationReceiver.LocationReceiver: " + this.connectedUser);
+
+        if (this.userShoppingListCompanies == null)
+            this.userShoppingListCompanies = this.controller.getShoppingListCompanies(this.connectedUser);
+        System.out.println("LocationReceiver.LocationReceiver: " + this.userShoppingListCompanies);
     }
 
     @Override
@@ -51,17 +61,13 @@ public class LocationReceiver extends BroadcastReceiver {
 
         String locationKey = "com.google.android.location.LOCATION";
 
-        if (instance == null) {
-            System.out.println("LocationReceiver.onReceive: instance null");
-
-            instance = new LocationReceiver(Controller.getInstance());
-        }
-
         this.context = context;
+
+        init();
 
         if (intent.hasExtra(locationKey)) {
             Location location = (Location) intent.getExtras().get(locationKey);
-            currentLocation = location;
+            this.currentLocation = location;
 
             calculateDistancesAndNotify();
         }
@@ -75,7 +81,9 @@ public class LocationReceiver extends BroadcastReceiver {
 
         Map<Company, Boolean> notifyUserAboutCompany = new HashMap<>();
 
-        for (Company company : instance.userShoppingListCompanies) {
+        System.out.println("LocationReceiver.calculateDistancesAndNotify: " + this.userShoppingListCompanies);
+
+        for (Company company : this.userShoppingListCompanies) {
             Location shopLocation = new Location("");
 
             if (company.getLocation() != null) {
@@ -84,10 +92,10 @@ public class LocationReceiver extends BroadcastReceiver {
 
                 System.out.println(company.getCompanyName() + " location: " + shopLocation.getLatitude() + ", " + shopLocation.getLongitude());
 
-                float distanceToShop = currentLocation.distanceTo(shopLocation);
-                if (distanceToShop < 500) {
+                float distanceToShop = this.currentLocation.distanceTo(shopLocation);
+                if (distanceToShop < 100) {
                     //User is to within 100 meters of the company => NOTIFY
-                    createNotification(shopLocation);
+                    this.createNotification(shopLocation);
 
                     notifyUserAboutCompany.put(company, true);
                     System.out.println("LocationReceiver.calculateDistancesAndNotify: YOU ARE CLOSE TO THE PRODUCTS SOLD BY: " + company.getCompanyName() + " distance=" + distanceToShop);
@@ -108,7 +116,7 @@ public class LocationReceiver extends BroadcastReceiver {
     private void createNotification(Location shopLocation) {
         System.out.println("LocationReceiver.createNotification");
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) this.context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         String location = shopLocation.getLatitude() + "," + shopLocation.getLongitude();
         Uri gmmIntentUri = Uri.parse("google.navigation:q=" + location + "&mode=w");

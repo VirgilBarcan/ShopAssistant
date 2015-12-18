@@ -32,7 +32,6 @@ import barcan.virgil.com.shopassistant.model.Company;
  * Created by virgil on 12.12.2015.
  */
 public class LocationService extends Service implements
-        LocationListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
@@ -44,10 +43,7 @@ public class LocationService extends Service implements
     private boolean currentlyProcessingLocation = false;
     private LocationRequest locationRequest;
     private GoogleApiClient googleApiClient;
-    private Location currentLocation;
     private Controller controller;
-
-    private List<Company> userShoppingListCompanies;
 
     @Override
     public void onCreate() {
@@ -59,7 +55,7 @@ public class LocationService extends Service implements
         //TODO: Do some initialization
         controller = Controller.getInstance();
 
-        userShoppingListCompanies = controller.getShoppingListCompanies(controller.getConnectedUser());
+        Log.i(TAG, "LocationService.onCreate: controller=" + controller);
     }
 
     @Override
@@ -72,12 +68,19 @@ public class LocationService extends Service implements
         System.out.println("LocationService.onStartCommand");
         Log.v(TAG, "LocationService.onStartCommand");
 
-        // if we are currently trying to get a location and the alarm manager has called this again,
-        // no need to start processing a new location
-        if (!currentlyProcessingLocation) {
-            currentlyProcessingLocation = true;
-            startTracking();
-        }
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                // if we are currently trying to get a location and the alarm manager has called this again,
+                // no need to start processing a new location
+                if (!currentlyProcessingLocation) {
+                    currentlyProcessingLocation = true;
+                    startTracking();
+                }
+            }
+        };
+        runnable.run();
+        this.stopSelf();
 
         return START_NOT_STICKY;
     }
@@ -86,25 +89,6 @@ public class LocationService extends Service implements
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        System.out.println("LocationService.onLocationChanged: position: " + location.getLatitude() + ", " + location.getLongitude() + " accuracy: " + location.getAccuracy());
-        Log.v(TAG, "LocationService.onLocationChanged: position: " + location.getLatitude() + ", " + location.getLongitude() + " accuracy: " + location.getAccuracy());
-
-        if (location != null) {
-
-            currentLocation = location;
-
-            // we have our desired accuracy of 500 meters so lets quit this service,
-            // onDestroy will be called and stop our location updates
-            if (location.getAccuracy() < 2500.0f) {
-                //stopLocationUpdates();
-                //TODO: send notification about location or calculate distance to shops
-                calculateDistancesAndNotify();
-            }
-        }
     }
 
     /**
@@ -179,69 +163,4 @@ public class LocationService extends Service implements
         }
     }
 
-    /**
-     * This method calculates distances from current position to all shops and, if needed, notifies the user
-     */
-    private void calculateDistancesAndNotify() {
-        Log.v(TAG, "LocationService.calculateDistancesAndNotify");
-
-        Map<Company, Boolean> notifyUserAboutCompany = new HashMap<>();
-
-        for (Company company : userShoppingListCompanies) {
-            Location shopLocation = new Location("");
-
-            if (company.getLocation() != null) {
-                shopLocation.setLatitude(company.getLocation().getLatitude());
-                shopLocation.setLongitude(company.getLocation().getLongitude());
-
-                System.out.println(company.getCompanyName() + " location: " + shopLocation.getLatitude() + ", " + shopLocation.getLongitude());
-
-                float distanceToShop = currentLocation.distanceTo(shopLocation);
-                if (distanceToShop < 100) {
-                    //User is to within 100 meters of the company => NOTIFY
-                    createNotification(shopLocation);
-
-                    notifyUserAboutCompany.put(company, true);
-                    System.out.println("LocationService.calculateDistancesAndNotify: YOU ARE CLOSE TO THE PRODUCTS SOLD BY: " + company.getCompanyName() + " distance=" + distanceToShop);
-                } else {
-                    notifyUserAboutCompany.put(company, false);
-                    System.out.println("LocationService.calculateDistancesAndNotify: YOU ARE NOT CLOSE TO THE PRODUCTS SOLD BY: " + company.getCompanyName() + " distance=" + distanceToShop);
-                }
-            }
-            else {
-                //The location of the shop is not set, skip it
-            }
-        }
-    }
-
-    /**
-     * This method creates the notification that signals the user he is close to a shop
-     */
-    private void createNotification(Location shopLocation) {
-        System.out.println("UserMainScreenActivity.createNotification");
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        String location = shopLocation.getLatitude() + "," + shopLocation.getLongitude();
-        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + location + "&mode=w");
-        Intent intentShowMap = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        intentShowMap.setPackage("com.google.android.apps.maps");
-
-        Intent intentShowProducts = new Intent(this, ShowProductActivity.class);
-
-        PendingIntent pendingIntentShowProducts = PendingIntent.getActivity(this, 0, intentShowProducts, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingIntentShowMap = PendingIntent.getActivity(this, 0, intentShowMap, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Notification notification = new Notification.Builder(getApplicationContext())
-                .setSmallIcon(R.drawable.ic_notifications)
-                .setStyle(new Notification.BigTextStyle())
-                .addAction(R.drawable.ic_home, "PRODUCTS", pendingIntentShowProducts)
-                .addAction(R.drawable.ic_edit_location, "MAP", pendingIntentShowMap)
-                .setAutoCancel(true)
-                .setContentTitle("Go grab them!")
-                .setContentText("You are close to your wanted products!")
-                .build();
-
-        notificationManager.notify(1, notification);
-    }
 }

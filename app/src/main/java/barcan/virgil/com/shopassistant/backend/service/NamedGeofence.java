@@ -70,4 +70,15 @@ public class NamedGeofence implements Comparable {
         NamedGeofence other = (NamedGeofence) another;
         return name.compareTo(other.name);
     }
+
+    @Override
+    public String toString() {
+        return "NamedGeofence{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", radius=" + radius +
+                '}';
+    }
 }

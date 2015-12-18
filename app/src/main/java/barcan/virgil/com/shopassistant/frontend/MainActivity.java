@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //Start the controller, which is a service running in background, waiting for location updates
-        controller = Controller.getInstance(this, this);
+        controller = Controller.getInstance(this);
 
         //TODO: Check if the user is logged in (better check to be done! check the DB also)
         if (controller.isLogged()) {

@@ -1,5 +1,6 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,6 +19,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,9 +28,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import java.util.List;
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
+import barcan.virgil.com.shopassistant.backend.service.GeofenceController;
+import barcan.virgil.com.shopassistant.backend.service.LocationReceiver;
 import barcan.virgil.com.shopassistant.backend.service.LocationService;
 import barcan.virgil.com.shopassistant.frontend.LocationActivity;
 import barcan.virgil.com.shopassistant.frontend.ShowProductActivity;
@@ -57,6 +63,9 @@ public class UserMainScreenActivity extends AppCompatActivity {
 
         //Start the location service
         startLocationService();
+
+        //Start geofencing service
+        //startLocationService();
 
         UserLoggedHomeFragment fragmentHome = new UserLoggedHomeFragment();
         FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
@@ -196,6 +205,17 @@ public class UserMainScreenActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void startGeofencingService() {
+        GeofenceController.getInstance().init(this);
+
+        int googlePlayServicesCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        Log.i("UserMainScreenActivity", "googlePlayServicesCode = " + googlePlayServicesCode);
+
+        if (googlePlayServicesCode == 1 || googlePlayServicesCode == 2 || googlePlayServicesCode == 3) {
+            GooglePlayServicesUtil.getErrorDialog(googlePlayServicesCode, this, 0).show();
+        }
+    }
+
     /**
      * This method starts the LocationService
      * The LocationService gets GPS position and checks if shops are close to the user
@@ -204,6 +224,12 @@ public class UserMainScreenActivity extends AppCompatActivity {
     private void startLocationService() {
         Intent intentLocationService = createExplicitIntentFromImplicitIntent(getApplicationContext(), new Intent("barcan.virgil.com.shopassistant.backend.service"));
         startService(intentLocationService);
+
+//        Intent intent = new Intent(this, LocationService.class);
+//        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//        alarmManager.cancel(pendingIntent);
+//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, pendingIntent);
     }
 
     private Intent createExplicitIntentFromImplicitIntent(Context context, Intent implicitIntent) {

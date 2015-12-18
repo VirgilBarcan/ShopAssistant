@@ -38,6 +38,9 @@
             android:name=".frontend.LocationActivity"
             android:label="@string/app_name" >
         </activity>
+
+        <service android:name=".backend.service.GeofenceIntentService" />
+
         <service
             android:name=".backend.service.LocationService"
             android:exported="true"
