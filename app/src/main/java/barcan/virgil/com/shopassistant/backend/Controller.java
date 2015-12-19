@@ -35,6 +35,8 @@ public class Controller {
     private MainActivity mainActivity;
     //The controller needs the context
     private Context context;
+    //Store the shop whose products will be shown in the shopping list
+    private String shopToShow;
 
     private static Controller instance;
 
@@ -261,7 +263,10 @@ public class Controller {
      * @return the shopping list of the user or null if it doesn't exist
      */
     public List<Product> getUserShoppingList(User user) {
-        return databaseHelper.getUserShoppingList(user);
+        if (shopToShow == null || shopToShow.equals("ALL"))
+            return databaseHelper.getUserShoppingList(user);
+        else
+            return databaseHelper.getUserShoppingListSortedByShop(user, shopToShow);
     }
 
     /**
@@ -292,5 +297,13 @@ public class Controller {
         }
 
         return userShoppingListCompanies;
+    }
+
+    public void setShopToShow(String shopToShow) {
+        this.shopToShow = shopToShow;
+    }
+
+    public String getShopToShow() {
+        return shopToShow;
     }
 }

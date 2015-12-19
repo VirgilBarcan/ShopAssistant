@@ -14,5 +14,7 @@ public class Constants {
     public static final String REGULAR_USER_ID = "REGULAR_USER_ID";
     public static final String COMPANY_USER_ID = "COMPANY_USER_ID";
     public static final String PRODUCT_ID = "PRODUCT_ID";
-
+    public static final String ACTIVITY_TO_START = "ACTIVITY_TO_START";
+    public static final String FRAGMENT_TO_START = "FRAGMENT_TO_START";
+    public static final String SHOP_PRODUCTS_TO_SHOW = "SHOP_PRODUCTS_TO_SHOW";
 }

@@ -14,6 +14,7 @@ import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.AppSectionsPageAdapter;
 import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.frontend.regular.UserMainScreenActivity;
+import barcan.virgil.com.shopassistant.model.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,8 +37,19 @@ public class MainActivity extends AppCompatActivity {
 
             //TODO: Check to see if regular user or company user
             if (true) {
+                //If the activity is started from a notification, then send the user to the specific fragment
+                String activityToStart = "UserMainScreenActivity";
+                String fragmentToStart = "UserLoggedHomeFragment";
+                String shopProductsToShow = "ALL";
+
+                if (getIntent() != null) {
+                    activityToStart = getIntent().getStringExtra(Constants.ACTIVITY_TO_START);
+                    fragmentToStart = getIntent().getStringExtra(Constants.FRAGMENT_TO_START);
+                    shopProductsToShow = getIntent().getStringExtra(Constants.SHOP_PRODUCTS_TO_SHOW);
+                }
+
                 //Open the activity that has the user already logged
-                openRegularUserMainScreenActivity();
+                openRegularUserMainScreenActivity(fragmentToStart, shopProductsToShow);
             }
             else {
                 //Open the activity that has the user already logged
@@ -98,9 +110,10 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the regular user is already logged in
      * The Activity is changed to MainActivityLogged, which has the action bar
      */
-    private void openRegularUserMainScreenActivity() {
+    private void openRegularUserMainScreenActivity(String fragmentToStart, String shopProductsToShow) {
         Intent intentUserMainScreenActivity = new Intent(MainActivity.this, UserMainScreenActivity.class);
-        //intentUserMainScreenActivity.putExtra("KEY", "value");
+        intentUserMainScreenActivity.putExtra(Constants.FRAGMENT_TO_START, fragmentToStart);
+        intentUserMainScreenActivity.putExtra(Constants.SHOP_PRODUCTS_TO_SHOW, shopProductsToShow);
         startActivity(intentUserMainScreenActivity);
 
         //Finish the app so the user can not get back to this activity

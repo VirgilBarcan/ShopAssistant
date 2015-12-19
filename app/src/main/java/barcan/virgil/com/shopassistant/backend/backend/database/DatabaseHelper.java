@@ -975,4 +975,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return shoppingList;
     }
+
+    /**
+     * Get the shopping list of the user, sorted by the shop
+     * @param user the user
+     * @param shopToShow the shop whose products will be show
+     * @return the sorted shopping list
+     */
+    public List<Product> getUserShoppingListSortedByShop(User user, String shopToShow) {
+        List<Product> shoppingList = new ArrayList<>();
+        Product product = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            String query = "SELECT RU.regularUserID, PC.productID, PC.companyID, PC.productPriceID \n" +
+                    "FROM SHOPPING_LIST SL, REGULAR_USER RU, PRODUCT_COMPANY PC, COMPANY C\n" +
+                    "WHERE SL.regularUserID = " + user.getUserID() + "\n" +
+                    "AND SL.productID = PC.productID\n" +
+                    "AND SL.companyID = PC.companyID\n" +
+                    "AND C.companyID = PC.companyID\n" +
+                    "AND C.companyName = \'" + shopToShow + "\'";
+
+            cursor = db.rawQuery(query, null);
+
+            if(cursor == null) return null;
+
+            String productID;
+            String companyID;
+
+            cursor.moveToFirst();
+
+            do {
+                productID = cursor.getString(1);
+                companyID = cursor.getString(2);
+
+                product = getProductWithProductIDSoldBy(productID, companyID);
+
+                shoppingList.add(product);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return shoppingList;
+    }
 }

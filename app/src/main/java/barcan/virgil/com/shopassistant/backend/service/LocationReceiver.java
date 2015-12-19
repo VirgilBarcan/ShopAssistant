@@ -95,7 +95,7 @@ public class LocationReceiver extends BroadcastReceiver {
                 float distanceToShop = this.currentLocation.distanceTo(shopLocation);
                 if (distanceToShop < 100) {
                     //User is to within 100 meters of the company => NOTIFY
-                    this.createNotification(shopLocation);
+                    this.createNotification(company.getCompanyName(), shopLocation);
 
                     notifyUserAboutCompany.put(company, true);
                     System.out.println("LocationReceiver.calculateDistancesAndNotify: YOU ARE CLOSE TO THE PRODUCTS SOLD BY: " + company.getCompanyName() + " distance=" + distanceToShop);
@@ -113,7 +113,7 @@ public class LocationReceiver extends BroadcastReceiver {
     /**
      * This method creates the notification that signals the user he is close to a shop
      */
-    private void createNotification(Location shopLocation) {
+    private void createNotification(String companyName, Location shopLocation) {
         System.out.println("LocationReceiver.createNotification");
 
         NotificationManager notificationManager = (NotificationManager) this.context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -123,7 +123,10 @@ public class LocationReceiver extends BroadcastReceiver {
         Intent intentShowMap = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         intentShowMap.setPackage("com.google.android.apps.maps");
 
-        Intent intentShowProducts = new Intent(context, ShowProductActivity.class);
+        Intent intentShowProducts = new Intent(context, MainActivity.class);
+        intentShowProducts.putExtra(Constants.ACTIVITY_TO_START, "UserMainScreenActivity");
+        intentShowProducts.putExtra(Constants.FRAGMENT_TO_START, "UserLoggedShoppingListFragment");
+        intentShowProducts.putExtra(Constants.SHOP_PRODUCTS_TO_SHOW, companyName);
 
         PendingIntent pendingIntentShowProducts = PendingIntent.getActivity(context, 0, intentShowProducts, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent pendingIntentShowMap = PendingIntent.getActivity(context, 0, intentShowMap, PendingIntent.FLAG_UPDATE_CURRENT);

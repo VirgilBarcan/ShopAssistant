@@ -1,6 +1,8 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
+import android.app.ActivityManager;
 import android.app.AlarmManager;
+import android.app.Fragment;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -39,6 +41,7 @@ import barcan.virgil.com.shopassistant.backend.service.LocationService;
 import barcan.virgil.com.shopassistant.frontend.LocationActivity;
 import barcan.virgil.com.shopassistant.frontend.ShowProductActivity;
 import barcan.virgil.com.shopassistant.model.Company;
+import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.Product;
 import barcan.virgil.com.shopassistant.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -64,13 +67,29 @@ public class UserMainScreenActivity extends AppCompatActivity {
         //Start the location service
         startLocationService();
 
-        //Start geofencing service
-        //startLocationService();
+        //Choose the right fragment to show:
+        // if the activity was opened by a notification, show the shopping list fragment
+        // else show the home fragment
+        String fragmentToShowString = "UserLoggedHomeFragment";
+        String shopProductsToShow = "ALL";
+        if (getIntent() != null && getIntent().getStringExtra(Constants.FRAGMENT_TO_START) != null) {
+            fragmentToShowString = getIntent().getStringExtra(Constants.FRAGMENT_TO_START);
+            shopProductsToShow = getIntent().getStringExtra(Constants.SHOP_PRODUCTS_TO_SHOW);
+        }
+        controller.setShopToShow(shopProductsToShow);
 
-        UserLoggedHomeFragment fragmentHome = new UserLoggedHomeFragment();
-        FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
-        fragmentTransactionHome.replace(R.id.frame, fragmentHome);
-        fragmentTransactionHome.commit();
+        if (fragmentToShowString.equals("UserLoggedHomeFragment")) {
+            UserLoggedHomeFragment fragmentHome = new UserLoggedHomeFragment();
+            FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
+            fragmentTransactionHome.replace(R.id.frame, fragmentHome);
+            fragmentTransactionHome.commit();
+        }
+        else {
+            UserLoggedShoppingListFragment fragmentShoppingList = new UserLoggedShoppingListFragment();
+            FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
+            fragmentTransactionHome.replace(R.id.frame, fragmentShoppingList);
+            fragmentTransactionHome.commit();
+        }
 
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         addDataToNavigationViewHeader(navigationView);
@@ -205,33 +224,30 @@ public class UserMainScreenActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void startGeofencingService() {
-        GeofenceController.getInstance().init(this);
-
-        int googlePlayServicesCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        Log.i("UserMainScreenActivity", "googlePlayServicesCode = " + googlePlayServicesCode);
-
-        if (googlePlayServicesCode == 1 || googlePlayServicesCode == 2 || googlePlayServicesCode == 3) {
-            GooglePlayServicesUtil.getErrorDialog(googlePlayServicesCode, this, 0).show();
-        }
-    }
-
     /**
      * This method starts the LocationService
      * The LocationService gets GPS position and checks if shops are close to the user
      * If a shop that sells something the user wants is close, the Service notifies
      */
     private void startLocationService() {
-        Intent intentLocationService = createExplicitIntentFromImplicitIntent(getApplicationContext(), new Intent("barcan.virgil.com.shopassistant.backend.service"));
-        startService(intentLocationService);
+        if (!isMyServiceRunning(LocationReceiver.class)) {
+            Intent intentLocationService = createExplicitIntentFromImplicitIntent(getApplicationContext(), new Intent("barcan.virgil.com.shopassistant.backend.service"));
+            startService(intentLocationService);
 
-//        Intent intent = new Intent(this, LocationService.class);
-//        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//        alarmManager.cancel(pendingIntent);
-//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, pendingIntent);
+            //Intent intent = new Intent(this, LocationService.class);
+            //PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            //AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            //alarmManager.cancel(pendingIntent);
+            //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, pendingIntent);
+        }
     }
 
+    /**
+     * This function converts an implicit intent (given as a string) to an explicit one
+     * @param context the context
+     * @param implicitIntent the implicit intent
+     * @return the explicit Intent
+     */
     private Intent createExplicitIntentFromImplicitIntent(Context context, Intent implicitIntent) {
         PackageManager packageManager = context.getPackageManager();
         List<ResolveInfo> resolveInfos = packageManager.queryIntentServices(implicitIntent, 0);
@@ -251,6 +267,22 @@ public class UserMainScreenActivity extends AppCompatActivity {
         explicitIntent.setComponent(componentName);
 
         return explicitIntent;
+    }
+
+    /**
+     * This function is used to check if the service is running already, to not start it again
+     * @param serviceClass the class of the service
+     * @return true if the service is running, false otherwise
+     */
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                System.out.println("UserMainScreenActivity.isMyServiceRunning: yes, the " + service.service.getClassName() + " is running");
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
