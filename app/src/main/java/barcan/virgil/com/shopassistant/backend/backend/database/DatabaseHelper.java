@@ -996,7 +996,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "AND SL.productID = PC.productID\n" +
                     "AND SL.companyID = PC.companyID\n" +
                     "AND C.companyID = PC.companyID\n" +
-                    "AND C.companyName = \'" + shopToShow + "\'";
+                    "AND (";
+
+            String[] tokens = shopToShow.split(",");
+
+            if (tokens.length == 1) {
+                query += "C.companyName = '" + tokens[0] + "\'\n";
+            }
+            else {
+                for (int i = 0; i < tokens.length - 1; ++i)
+                    query += "C.companyName = '" + tokens[i] + "\'\nOR ";
+                query += "C.companyName = '" + tokens[tokens.length - 1] + "\'";
+            }
+
+            query += ")";
 
             cursor = db.rawQuery(query, null);
 
