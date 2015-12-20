@@ -1,4 +1,4 @@
-package barcan.virgil.com.shopassistant.frontend;
+package barcan.virgil.com.shopassistant.frontend.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,27 +15,23 @@ import barcan.virgil.com.shopassistant.R;
 /**
  * Created by virgil on 20.12.2015.
  */
-public class ProductButton extends LinearLayout {
+public class CategoryButton extends LinearLayout {
 
-    private ImageView productImage;
-    private TextView productName;
-    private TextView productSeller;
-    private TextView productPrice;
+    private ImageView categoryImage;
+    private TextView categoryName;
     private OnClickListener listener;
 
     private int imageSrc;
-    private String productNameString;
-    private String productSellerString;
-    private String productPriceString;
+    private String categoryNameString;
 
     /**
-     * ProductButton constructor
+     * CategoryButton constructor
      * @param context the context
      */
-    public ProductButton(Context context) {
+    public CategoryButton(Context context) {
         super(context);
 
-        System.out.println("ProductButton.ProductButton1");
+        System.out.println("CategoryButton.CategoryButton1");
 
         imageSrc = R.mipmap.product_image;
 
@@ -43,36 +39,32 @@ public class ProductButton extends LinearLayout {
     }
 
     /**
-     * ProductButton constructor
+     * CategoryButton constructor
      * @param context the context
      * @param attrs the attributes
      */
-    public ProductButton(Context context, AttributeSet attrs) {
+    public CategoryButton(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        System.out.println("ProductButton.ProductButton2");
+        System.out.println("CategoryButton.CategoryButton2");
 
         extractAttributes(context, attrs);
-
-        System.out.println("ProductButton.ProductButton3: imageSrc=" + imageSrc);
 
         initializeView(context);
     }
 
     /**
-     * ProductButton constructor
+     * CategoryButton constructor
      * @param context the context
      * @param attrs the attributes
      * @param defStyleAttr the style attributes
      */
-    public ProductButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CategoryButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        System.out.println("ProductButton.ProductButton3");
+        System.out.println("CategoryButton.CategoryButton3");
 
         extractAttributes(context, attrs);
-
-        System.out.println("ProductButton.ProductButton3: imageSrc=" + imageSrc);
 
         initializeView(context);
     }
@@ -81,11 +73,9 @@ public class ProductButton extends LinearLayout {
     public ProductButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
-        System.out.println("ProductButton.ProductButton4");
+        System.out.println("CategoryButton.CategoryButton4");
 
         extractAttributes(context, attrs);
-
-        System.out.println("ProductButton.ProductButton4: imageSrc=" + imageSrc);
 
         initializeView(context);
     }
@@ -97,7 +87,7 @@ public class ProductButton extends LinearLayout {
      */
     private void initializeView(Context context) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        layoutInflater.inflate(R.layout.product_button_layout, this);
+        layoutInflater.inflate(R.layout.category_button_layout, this);
 
         setClickable(true);
 
@@ -111,17 +101,15 @@ public class ProductButton extends LinearLayout {
     }
 
     /**
-     * This method extracts the attributes: imageSrc, productName, productSeller, productPrice
+     * This method extracts the attributes: imageSrc, categoryName
      * @param context the context
      * @param attrs the attributes
      */
     private void extractAttributes(Context context, AttributeSet attrs) {
         TypedArray typedArray;
-        typedArray = context.obtainStyledAttributes(attrs, R.styleable.ProductButton);
-        imageSrc = typedArray.getResourceId(R.styleable.ProductButton_imageSrc, R.mipmap.ic_launcher);
-        productNameString = typedArray.getString(R.styleable.ProductButton_productName);
-        productSellerString = typedArray.getString(R.styleable.ProductButton_productSeller);
-        productPriceString = typedArray.getString(R.styleable.ProductButton_productPrice);
+        typedArray = context.obtainStyledAttributes(attrs, R.styleable.CategoryButton);
+        imageSrc = typedArray.getResourceId(R.styleable.CategoryButton_categoryImageSrc, R.mipmap.ic_launcher);
+        categoryNameString = typedArray.getString(R.styleable.ProductButton_productName);
         typedArray.recycle();
     }
 
@@ -129,17 +117,11 @@ public class ProductButton extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        productImage = (ImageView) this.findViewById(R.id.productButtonImage);
-        productImage.setImageResource(imageSrc);
+        categoryImage = (ImageView) this.findViewById(R.id.categoryButtonImage);
+        categoryImage.setImageResource(imageSrc);
 
-        productName = (TextView) this.findViewById(R.id.productButtonProductName);
-        productName.setText(productNameString);
-
-        productSeller = (TextView) this.findViewById(R.id.productButtonProductSeller);
-        productSeller.setText(productSellerString);
-
-        productPrice = (TextView) this.findViewById(R.id.productButtonProductPrice);
-        productPrice.setText(productPriceString);
+        categoryName = (TextView) this.findViewById(R.id.categoryButtonCategoryName);
+        categoryName.setText(categoryNameString);
     }
 
     @Override
@@ -157,7 +139,7 @@ public class ProductButton extends LinearLayout {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        System.out.println("ProductButton.dispatchKeyEvent");
+        System.out.println("CategoryButton.dispatchKeyEvent");
         if(event.getAction() == KeyEvent.ACTION_UP && (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_CENTER || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
             if(listener != null) listener.onClick(this);
         }
@@ -169,31 +151,19 @@ public class ProductButton extends LinearLayout {
      * @param listener the OnClickListener object
      */
     public void setOnClickListener(OnClickListener listener) {
-        System.out.println("ProductButton.setOnClickListener");
+        System.out.println("CategoryButton.setOnClickListener");
         this.listener = listener;
     }
 
     public void setImageSrc(int imageSrc) {
         this.imageSrc = imageSrc;
 
-        productImage.setImageResource(this.imageSrc);
+        categoryImage.setImageResource(this.imageSrc);
     }
 
-    public void setProductNameString(String productNameString) {
-        this.productNameString = productNameString;
+    public void setCategoryNameString(String categoryNameString) {
+        this.categoryNameString = categoryNameString;
 
-        productName.setText(this.productNameString);
-    }
-
-    public void setProductSellerString(String productSellerString) {
-        this.productSellerString = productSellerString;
-
-        productSeller.setText(this.productSellerString);
-    }
-
-    public void setProductPriceString(String productPriceString) {
-        this.productPriceString = productPriceString;
-
-        productPrice.setText(this.productPriceString);
+        categoryName.setText(this.categoryNameString);
     }
 }

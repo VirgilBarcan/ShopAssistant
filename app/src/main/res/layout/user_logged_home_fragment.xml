@@ -54,14 +54,10 @@
                 android:layout_height="fill_parent"
                 android:orientation="horizontal" >
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
-                    android:id="@+id/productButton1"
+                <barcan.virgil.com.shopassistant.frontend.customview.CategoryButton
+                    android:id="@+id/categoryButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
-                    app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
-                    app:productSeller="eMag"
-                    app:productPrice="3299.99 Lei"
                     android:background="#FFFFFF"
                     android:elevation="4dp" />
 
@@ -69,13 +65,11 @@
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.CategoryButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
-                    app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
-                    app:productSeller="eMag"
-                    app:productPrice="3299.99 Lei"
+                    app:categoryImageSrc="@mipmap/product_image"
+                    app:categoryName="Smartphone"
                     android:background="#FFFFFF"
                     android:elevation="4dp" />
 
@@ -83,13 +77,11 @@
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.CategoryButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
-                    app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
-                    app:productSeller="eMag"
-                    app:productPrice="3299.99 Lei"
+                    app:categoryImageSrc="@mipmap/product_image"
+                    app:categoryName="Smartphone"
                     android:background="#FFFFFF"
                     android:elevation="4dp" />
 
@@ -97,13 +89,11 @@
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.CategoryButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
-                    app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
-                    app:productSeller="eMag"
-                    app:productPrice="3299.99 Lei"
+                    app:categoryImageSrc="@mipmap/product_image"
+                    app:categoryName="Smartphone"
                     android:background="#FFFFFF"
                     android:elevation="4dp" />
 
@@ -111,13 +101,11 @@
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.CategoryButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
-                    app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
-                    app:productSeller="eMag"
-                    app:productPrice="3299.99 Lei"
+                    app:categoryImageSrc="@mipmap/product_image"
+                    app:categoryName="Smartphone"
                     android:background="#FFFFFF"
                     android:elevation="4dp" />
 
@@ -125,41 +113,11 @@
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.CategoryButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
-                    app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
-                    app:productSeller="eMag"
-                    app:productPrice="3299.99 Lei"
-                    android:background="#FFFFFF"
-                    android:elevation="4dp" />
-
-                <Space
-                    android:layout_width="5dp"
-                    android:layout_height="wrap_content" />
-
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
-                    app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
-                    app:productSeller="eMag"
-                    app:productPrice="3299.99 Lei"
-                    android:background="#FFFFFF"
-                    android:elevation="4dp" />
-
-                <Space
-                    android:layout_width="5dp"
-                    android:layout_height="wrap_content" />
-
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
-                    app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
-                    app:productSeller="eMag"
-                    app:productPrice="3299.99 Lei"
+                    app:categoryImageSrc="@mipmap/product_image"
+                    app:categoryName="Smartphone"
                     android:background="#FFFFFF"
                     android:elevation="4dp" />
 
@@ -197,11 +155,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
-
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.ProductButton
+                    android:id="@+id/productButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
+                    app:productImageSrc="@mipmap/product_image"
                     app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
                     app:productSeller="eMag"
                     app:productPrice="3299.99 Lei"
@@ -212,10 +170,10 @@
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
+                    app:productImageSrc="@mipmap/product_image"
                     app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
                     app:productSeller="eMag"
                     app:productPrice="3299.99 Lei"
@@ -226,10 +184,10 @@
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
+                    app:productImageSrc="@mipmap/product_image"
                     app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
                     app:productSeller="eMag"
                     app:productPrice="3299.99 Lei"
@@ -240,10 +198,10 @@
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
+                    app:productImageSrc="@mipmap/product_image"
                     app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
                     app:productSeller="eMag"
                     app:productPrice="3299.99 Lei"
@@ -254,10 +212,10 @@
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
+                    app:productImageSrc="@mipmap/product_image"
                     app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
                     app:productSeller="eMag"
                     app:productPrice="3299.99 Lei"
@@ -268,10 +226,10 @@
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
+                    app:productImageSrc="@mipmap/product_image"
                     app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
                     app:productSeller="eMag"
                     app:productPrice="3299.99 Lei"
@@ -282,10 +240,10 @@
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
+                    app:productImageSrc="@mipmap/product_image"
                     app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
                     app:productSeller="eMag"
                     app:productPrice="3299.99 Lei"
@@ -296,10 +254,10 @@
                     android:layout_width="5dp"
                     android:layout_height="wrap_content" />
 
-                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                <barcan.virgil.com.shopassistant.frontend.customview.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:imageSrc="@mipmap/product_image"
+                    app:productImageSrc="@mipmap/product_image"
                     app:productName="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
                     app:productSeller="eMag"
                     app:productPrice="3299.99 Lei"

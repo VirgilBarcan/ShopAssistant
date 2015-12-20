@@ -2,10 +2,15 @@
 <resources>
 
     <declare-styleable name="ProductButton">
-        <attr name="imageSrc" format="reference" />
+        <attr name="productImageSrc" format="reference" />
         <attr name="productName" format="string" />
         <attr name="productSeller" format="string" />
         <attr name="productPrice" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CategoryButton">
+        <attr name="categoryImageSrc" format="reference" />
+        <attr name="categoryName" format="string" />
     </declare-styleable>
 
 </resources>

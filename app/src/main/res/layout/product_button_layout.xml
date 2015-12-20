@@ -13,35 +13,47 @@
         <ImageButton
             android:id="@+id/productButtonImage"
             android:layout_width="70dp"
-            android:layout_height="90dp"
+            android:layout_height="80dp"
             android:background="#FFFFFF"
             android:scaleType="centerCrop"
             android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal"
             android:adjustViewBounds="false" />
 
-        <TextView
-            android:id="@+id/productButtonProductName"
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textSize="10dp"
-            android:textStyle="bold" />
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/productButtonProductSeller"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textSize="8dp" />
+            <TextView
+                android:id="@+id/productButtonProductName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:textSize="10dp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/productButtonProductPrice"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textSize="12dp"
-            android:textColor="#FF0000" />
+            <TextView
+                android:id="@+id/productButtonProductSeller"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_below="@id/productButtonProductName"
+                android:textSize="8dp" />
+
+            <TextView
+                android:id="@+id/productButtonProductPrice"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:gravity="center_horizontal"
+                android:textSize="12dp"
+                android:textColor="#FF0000" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
