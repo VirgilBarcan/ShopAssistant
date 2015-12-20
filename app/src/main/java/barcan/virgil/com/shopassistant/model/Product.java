@@ -66,6 +66,10 @@ public class Product {
         return productPrice;
     }
 
+    public String getProductPriceString() {
+        return productPrice.getPriceValue() + " " + productPrice.getPriceCurrency();
+    }
+
     public void setProductPrice(Price productPrice) {
         this.productPrice = productPrice;
     }

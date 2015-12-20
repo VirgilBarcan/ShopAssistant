@@ -17,6 +17,8 @@ import barcan.virgil.com.shopassistant.R;
  */
 public class ProductButton extends LinearLayout {
 
+    private Context context;
+
     private ImageView productImage;
     private TextView productName;
     private TextView productSeller;
@@ -96,6 +98,8 @@ public class ProductButton extends LinearLayout {
      * @param context the context
      */
     private void initializeView(Context context) {
+        this.context = context;
+
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         layoutInflater.inflate(R.layout.product_button_layout, this);
 
@@ -144,8 +148,6 @@ public class ProductButton extends LinearLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        System.out.println("ProductButton.dispatchTouchEvent");
-        System.out.println("ProductButton.dispatchTouchEvent: event.getAction()=" + event.getAction());
         if(event.getAction() == MotionEvent.ACTION_UP) {
             if(listener != null) {
                 listener.onClick(this);
@@ -157,7 +159,6 @@ public class ProductButton extends LinearLayout {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        System.out.println("ProductButton.dispatchKeyEvent");
         if(event.getAction() == KeyEvent.ACTION_UP && (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_CENTER || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
             if(listener != null) listener.onClick(this);
         }
@@ -176,24 +177,44 @@ public class ProductButton extends LinearLayout {
     public void setImageSrc(int imageSrc) {
         this.imageSrc = imageSrc;
 
+        if (productImage == null) {
+            productImage = (ImageView) this.findViewById(R.id.productButtonImage);
+        }
         productImage.setImageResource(this.imageSrc);
+
+        this.invalidate();
     }
 
     public void setProductNameString(String productNameString) {
         this.productNameString = productNameString;
 
+        if (productName == null) {
+            productName = (TextView) this.findViewById(R.id.productButtonProductName);
+        }
         productName.setText(this.productNameString);
+
+        this.invalidate();
     }
 
     public void setProductSellerString(String productSellerString) {
         this.productSellerString = productSellerString;
 
+        if (productSeller == null) {
+            productSeller = (TextView) this.findViewById(R.id.productButtonProductSeller);
+        }
         productSeller.setText(this.productSellerString);
+
+        this.invalidate();
     }
 
     public void setProductPriceString(String productPriceString) {
         this.productPriceString = productPriceString;
 
+        if (productPrice == null) {
+            productPrice = (TextView) this.findViewById(R.id.productButtonProductPrice);
+        }
         productPrice.setText(this.productPriceString);
+
+        this.invalidate();
     }
 }

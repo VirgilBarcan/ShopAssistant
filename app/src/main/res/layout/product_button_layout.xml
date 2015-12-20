@@ -33,18 +33,20 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="10dp"
                 android:textSize="10dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/textColorPrimary" />
 
             <TextView
                 android:id="@+id/productButtonProductSeller"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:layout_below="@id/productButtonProductName"
-                android:textSize="8dp" />
+                android:layout_above="@+id/productButtonProductPrice"
+                android:textSize="8dp"
+                android:textColor="@color/textColorSecondary" />
 
             <TextView
-                android:id="@+id/productButtonProductPrice"
+                android:id="@id/productButtonProductPrice"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

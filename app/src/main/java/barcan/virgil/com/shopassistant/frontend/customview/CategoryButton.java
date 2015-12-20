@@ -17,6 +17,8 @@ import barcan.virgil.com.shopassistant.R;
  */
 public class CategoryButton extends LinearLayout {
 
+    private Context context;
+
     private ImageView categoryImage;
     private TextView categoryName;
     private OnClickListener listener;
@@ -86,6 +88,8 @@ public class CategoryButton extends LinearLayout {
      * @param context the context
      */
     private void initializeView(Context context) {
+        this.context = context;
+
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         layoutInflater.inflate(R.layout.category_button_layout, this);
 
@@ -126,8 +130,6 @@ public class CategoryButton extends LinearLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        System.out.println("ProductButton.dispatchTouchEvent");
-        System.out.println("ProductButton.dispatchTouchEvent: event.getAction()=" + event.getAction());
         if(event.getAction() == MotionEvent.ACTION_UP) {
             if(listener != null) {
                 listener.onClick(this);
@@ -139,7 +141,6 @@ public class CategoryButton extends LinearLayout {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        System.out.println("CategoryButton.dispatchKeyEvent");
         if(event.getAction() == KeyEvent.ACTION_UP && (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_CENTER || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
             if(listener != null) listener.onClick(this);
         }
@@ -158,12 +159,22 @@ public class CategoryButton extends LinearLayout {
     public void setImageSrc(int imageSrc) {
         this.imageSrc = imageSrc;
 
+        if (categoryImage == null) {
+            categoryImage = (ImageView) this.findViewById(R.id.categoryButtonImage);
+        }
         categoryImage.setImageResource(this.imageSrc);
+
+        this.invalidate();
     }
 
     public void setCategoryNameString(String categoryNameString) {
         this.categoryNameString = categoryNameString;
 
+        if (categoryName == null) {
+            categoryName = (TextView) this.findViewById(R.id.categoryButtonCategoryName);
+        }
         categoryName.setText(this.categoryNameString);
+
+        this.invalidate();
     }
 }
