@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="110dp"
+    android:layout_height="160dp"
+    android:background="?android:selectableItemBackground" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/productButtonImage"
+            android:layout_width="70dp"
+            android:layout_height="90dp"
+            android:background="#FFFFFF"
+            android:scaleType="centerCrop"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="false" />
+
+        <TextView
+            android:id="@+id/productButtonProductName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Telefon mobil Apple\n iPhone 6S, 16GB,\n Space Grey"
+            android:textSize="10dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/productButtonProductSeller"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="eMag"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/productButtonProductPrice"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="3299.99 Lei"
+            android:textSize="12dp"
+            android:textColor="#FF0000" />
+
+    </LinearLayout>
+
+</LinearLayout>

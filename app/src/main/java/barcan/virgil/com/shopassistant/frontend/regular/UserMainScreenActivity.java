@@ -1,19 +1,11 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
 import android.app.ActivityManager;
-import android.app.AlarmManager;
-import android.app.Fragment;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -21,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,19 +21,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
 import java.util.List;
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
-import barcan.virgil.com.shopassistant.backend.service.GeofenceController;
 import barcan.virgil.com.shopassistant.backend.service.LocationReceiver;
-import barcan.virgil.com.shopassistant.backend.service.LocationService;
 import barcan.virgil.com.shopassistant.frontend.LocationActivity;
-import barcan.virgil.com.shopassistant.frontend.ShowProductActivity;
-import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.Constants;
-import barcan.virgil.com.shopassistant.model.Product;
 import barcan.virgil.com.shopassistant.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 

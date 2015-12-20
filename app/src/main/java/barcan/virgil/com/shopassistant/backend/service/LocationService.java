@@ -1,12 +1,8 @@
 package barcan.virgil.com.shopassistant.backend.service;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -15,18 +11,10 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
-import barcan.virgil.com.shopassistant.frontend.ShowProductActivity;
-import barcan.virgil.com.shopassistant.model.Company;
 
 /**
  * Created by virgil on 12.12.2015.
@@ -36,8 +24,8 @@ public class LocationService extends Service implements
         GoogleApiClient.OnConnectionFailedListener {
 
     public static final String BROADCAST_ACTION = "LOCATION_UPDATE";
-    public static final int LOCATION_UPDATE_INTERVAL = 1000 * 10; //milliseconds
-    public static final int FASTEST_LOCATION_UPDATE_INTERVAL = 1000 * 5; //milliseconds
+    public static final int LOCATION_UPDATE_INTERVAL = 1000 * 60; //milliseconds
+    public static final int FASTEST_LOCATION_UPDATE_INTERVAL = 1000 * 30; //milliseconds
     private static final String TAG = "LocationService";
 
     private boolean currentlyProcessingLocation = false;

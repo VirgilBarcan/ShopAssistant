@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:paddingBottom="16dp" >
+    android:paddingBottom="16dp">
 
     <LinearLayout
         android:id="@+id/linearLayoutMain"
@@ -51,48 +51,96 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:orientation="horizontal" >
 
-                <Button
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button1" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button2" />
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
 
-                <Button
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button3" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button4" />
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
 
-                <Button
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button5" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button6" />
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
 
-                <Button
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button7" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
 
-                <Button
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
+
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button8" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
+
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
+
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
+
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
+
+                <Space
+                    android:layout_width="fill_parent"
+                    android:layout_height="10dp" />
 
             </LinearLayout>
 
@@ -124,45 +172,62 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
-                <Button
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button1" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
 
-                <Button
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button2" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
 
-                <Button
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button3" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
 
-                <Button
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button4" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
 
-                <Button
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button5" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
 
-                <Button
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button6" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
 
-                <Button
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button7" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
 
-                <Button
+                <barcan.virgil.com.shopassistant.frontend.ProductButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button8" />
+                    app:imageSrc="@mipmap/product_image"
+                    android:background="#FFFFFF"
+                    android:elevation="4dp" />
+
             </LinearLayout>
 
         </HorizontalScrollView>

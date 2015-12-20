@@ -299,10 +299,18 @@ public class Controller {
         return userShoppingListCompanies;
     }
 
+    /**
+     * Set the shop(s) to show in the shopping list
+     * @param shopToShow the shop(s) to show in the shopping list
+     */
     public void setShopToShow(String shopToShow) {
         this.shopToShow = shopToShow;
     }
 
+    /**
+     * Get the shop(s) to show in the shopping list
+     * @return the shop(s) to show in the shopping list
+     */
     public String getShopToShow() {
         return shopToShow;
     }
