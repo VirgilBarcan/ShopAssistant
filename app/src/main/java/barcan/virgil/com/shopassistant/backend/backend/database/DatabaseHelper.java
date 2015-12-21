@@ -530,8 +530,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             product.setProductSeller(productSeller);
 
             cursor.close();
-
-            cursor.close();
         } catch (Exception e) {
             Log.v("ShopAssist", e.getMessage());
         }
@@ -608,8 +606,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             product.setProductPrice(productPrice);
             product.setProductCategory(productCategory);
             product.setProductSeller(productSeller);
-
-            cursor.close();
 
             cursor.close();
         } catch (Exception e) {
@@ -785,6 +781,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return products;
+    }
+
+    /**
+     * Get the Category with the given categoryID
+     * @param categoryID the categoryID of the wanted category
+     * @return the category with the categoryID or null if it doesn't exist
+     */
+    public Category getCategoryWithCategoryID(String categoryID) {
+        Category category = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            String query = "SELECT categoryID, categoryName \n" +
+                    "FROM CATEGORY C\n" +
+                    "WHERE C.categoryID = " + categoryID;
+
+            cursor = db.rawQuery(query, null);
+
+            if(cursor == null) return null;
+
+            String categoryName;
+
+            cursor.moveToFirst();
+
+            categoryID = cursor.getString(0);
+            categoryName = cursor.getString(1);
+
+            category = new Category();
+            category.setCategoryID(categoryID);
+            category.setCategoryName(categoryName);
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return category;
     }
 
     /**

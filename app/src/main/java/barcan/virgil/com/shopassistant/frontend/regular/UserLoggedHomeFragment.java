@@ -65,6 +65,10 @@ public class UserLoggedHomeFragment extends Fragment {
         }
     }
 
+    /**
+     * Get the CategoryButton OnClickListener
+     * @return the OnClickListener of the CategoryButton
+     */
     private View.OnClickListener getCategoryButtonOnClickListener() {
         return new View.OnClickListener() {
 
@@ -78,6 +82,10 @@ public class UserLoggedHomeFragment extends Fragment {
         };
     }
 
+    /**
+     * Open the fragment where products in this category are shown
+     * @param category the category
+     */
     private void openCategoryFragment(Category category) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.CATEGORY_ID, category.getCategoryID());
@@ -126,6 +134,10 @@ public class UserLoggedHomeFragment extends Fragment {
         };
     }
 
+    /**
+     * Open the fragment where info about the product are shown
+     * @param product the product whose info will be shown
+     */
     private void openProductFragment(Product product) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.PRODUCT_ID, product.getProductID());

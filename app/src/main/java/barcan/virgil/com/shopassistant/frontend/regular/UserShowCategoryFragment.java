@@ -9,11 +9,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.backend.ShoppingListViewAdapter;
+import barcan.virgil.com.shopassistant.model.Category;
 import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.Product;
 
@@ -23,42 +25,59 @@ import barcan.virgil.com.shopassistant.model.Product;
 public class UserShowCategoryFragment extends Fragment {
 
     private Controller controller;
+    private Bundle bundle;
     private View view;
-    private ListView listViewShoppingList;
+    private ListView listViewProductsInCategory;
+    private Category category;
     private List<Product> productList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.user_shopping_list_fragment, container, false);
+        view = inflater.inflate(R.layout.user_category_fragment, container, false);
 
         controller = Controller.getInstance();
 
-        //TODO: Get the shopping list from the Controller
-        populateShoppingList();
+        bundle = getArguments();
+        String categoryID = "";
+
+        if (bundle != null) {
+            categoryID = bundle.getString(Constants.CATEGORY_ID);
+        }
+
+        category = controller.getCategoryWithCategoryID(categoryID);
+
+        productList = new ArrayList<>();
+
+        //TODO: Get the products in the category list from the Controller
+        populateProductsInCategoryList();
 
         return view;
     }
 
     /**
-     * This method is used to fill the shopping list
-     * It gets all products wanted by the user from the Controller
+     * This method is used to fill the products list
+     * It gets all products that are in the Category from the Controller
      * For the clicked product it starts the ShowProductActivity
      */
-    private void populateShoppingList() {
-        listViewShoppingList = (ListView) view.findViewById(R.id.listViewShoppingList);
+    private void populateProductsInCategoryList() {
+        listViewProductsInCategory = (ListView) view.findViewById(R.id.listViewProductsInCategory);
 
-        //Get the user's shopping list
-        productList = controller.getUserShoppingList(controller.getConnectedUser());
+        //Get the products list
+        List<Product> allProducts = controller.getAllProducts();
+
+        for (Product product : allProducts) {
+            if (product.getProductCategory().getCategoryID().equals(category.getCategoryID()))
+                productList.add(product);
+        }
 
         ShoppingListViewAdapter shoppingListViewAdapter = new ShoppingListViewAdapter(getActivity(), productList);
-        listViewShoppingList.setAdapter(shoppingListViewAdapter);
+        listViewProductsInCategory.setAdapter(shoppingListViewAdapter);
 
-        listViewShoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewProductsInCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Product product = (Product) parent.getItemAtPosition(position);
 
-                //TODO: Decide what to do when the user clicks a product; possibly start a new activity and show more info about product
                 startShowProductActivity(product);
             }
         });

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import barcan.virgil.com.shopassistant.backend.backend.database.DatabaseHelper;
 import barcan.virgil.com.shopassistant.frontend.MainActivity;
+import barcan.virgil.com.shopassistant.model.Category;
 import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.CompanyUser;
 import barcan.virgil.com.shopassistant.model.Constants;
@@ -321,4 +322,14 @@ public class Controller {
     public String getShopToShow() {
         return shopToShow;
     }
+
+    /**
+     * Get the Category with the given categoryID
+     * @param categoryID the categoryID of the wanted category
+     * @return the category with the categoryID or null if it doesn't exist
+     */
+    public Category getCategoryWithCategoryID(String categoryID) {
+        return databaseHelper.getCategoryWithCategoryID(categoryID);
+    }
+
 }
