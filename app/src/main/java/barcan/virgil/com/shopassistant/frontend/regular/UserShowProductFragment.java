@@ -101,19 +101,21 @@ public class UserShowProductFragment extends Fragment {
      * It gets the similar products from the backend and displays them
      */
     private void setSimilarProductsList() {
-        //TODO: Get the list of similar products from the backend and then display it
-        List<Product> shoppingList = controller.getUserShoppingList(controller.getConnectedUser());
+        //Get the list of similar products from the backend and then display it
+        List<Product> allProducts = controller.getAllProducts();
 
         LinearLayout linearLayoutSimilarProducts = (LinearLayout) view.findViewById(R.id.linearLayoutSimilarProductsList);
 
-        for (Product product : shoppingList) {
-            System.out.println("UserShowProductFragment.setSimilarProductsList: product=" + product);
-            ProductButton productButton = new ProductButton(getActivity().getApplicationContext());
-            productButton.setImageSrc(R.mipmap.product_image); //TODO: Use the real image
-            productButton.setProduct(product);
-            productButton.setOnClickListener(getProductButtonOnClickListener());
+        for (Product product : allProducts) {
+            if (product.getProductCategory().getCategoryID().equals(this.product.getProductCategory().getCategoryID())) {
+                System.out.println("UserShowProductFragment.setSimilarProductsList: product=" + product);
+                ProductButton productButton = new ProductButton(getActivity().getApplicationContext());
+                productButton.setImageSrc(R.mipmap.product_image); //TODO: Use the real image
+                productButton.setProduct(product);
+                productButton.setOnClickListener(getProductButtonOnClickListener());
 
-            linearLayoutSimilarProducts.addView(productButton);
+                linearLayoutSimilarProducts.addView(productButton);
+            }
         }
     }
 
