@@ -4,6 +4,6 @@
     <CheckBoxPreference
         android:title="Show notifications"
         android:defaultValue="true"
-        android:summary="This option if selected will allow the application to show notifications."
+        android:summary="This option if selected will allow the application to get your location and show notifications."
         android:key="applicationNotifications" />
 </PreferenceScreen>

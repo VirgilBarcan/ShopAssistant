@@ -26,6 +26,7 @@ import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.backend.service.LocationReceiver;
 import barcan.virgil.com.shopassistant.frontend.LocationActivity;
+import barcan.virgil.com.shopassistant.frontend.SettingsActivity;
 import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -57,6 +58,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
         else {
             stopLocationService();
         }
+
         //Choose the right fragment to show:
         // if the activity was opened by a notification, show the shopping list fragment
         // else show the home fragment
