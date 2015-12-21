@@ -36,6 +36,8 @@ public class UserMainScreenActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
+    private Intent intentLocationService;
+
     private Controller controller;
 
     @Override
@@ -48,9 +50,13 @@ public class UserMainScreenActivity extends AppCompatActivity {
 
         controller = Controller.getInstance();
 
-        //Start the location service
-        startLocationService();
-
+        //Start the location service?
+        if (controller.startService()) {
+            startLocationService();
+        }
+        else {
+            stopLocationService();
+        }
         //Choose the right fragment to show:
         // if the activity was opened by a notification, show the shopping list fragment
         // else show the home fragment
@@ -197,7 +203,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
                 //TODO: React to settings
 
                 //Just a small test
-                openLocationActivity();
+                openPreferenceActivity();
 
                 break;
 
@@ -214,8 +220,9 @@ public class UserMainScreenActivity extends AppCompatActivity {
      * If a shop that sells something the user wants is close, the Service notifies
      */
     private void startLocationService() {
+        System.out.println("UserMainScreenActivity.startLocationService");
         if (!isMyServiceRunning(LocationReceiver.class)) {
-            Intent intentLocationService = createExplicitIntentFromImplicitIntent(getApplicationContext(), new Intent("barcan.virgil.com.shopassistant.backend.service"));
+            intentLocationService = createExplicitIntentFromImplicitIntent(getApplicationContext(), new Intent("barcan.virgil.com.shopassistant.backend.service"));
             startService(intentLocationService);
 
             //Intent intent = new Intent(this, LocationService.class);
@@ -223,6 +230,16 @@ public class UserMainScreenActivity extends AppCompatActivity {
             //AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             //alarmManager.cancel(pendingIntent);
             //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, pendingIntent);
+        }
+    }
+
+    /**
+     * This method is used to stop the LocationService
+     */
+    private void stopLocationService() {
+        System.out.println("UserMainScreenActivity.stopLocationService");
+        if (isMyServiceRunning(LocationReceiver.class)) {
+            stopService(intentLocationService);
         }
     }
 
@@ -369,4 +386,8 @@ public class UserMainScreenActivity extends AppCompatActivity {
         //finish();
     }
 
+    private void openPreferenceActivity() {
+        Intent intentSettingsActivity = new Intent(this, SettingsActivity.class);
+        startActivity(intentSettingsActivity);
+    }
 }

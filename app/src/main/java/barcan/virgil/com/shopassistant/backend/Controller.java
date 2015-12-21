@@ -72,7 +72,6 @@ public class Controller {
     /**
      * This function is the getter for the Singleton
      * @param context the Context
-     * @param mainActivity the MainActivity
      * @return the Controller instance
      */
     public static Controller getInstance(Context context) {
@@ -186,6 +185,14 @@ public class Controller {
         SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
         sharedPreferencesEditor.putString(Constants.SHARED_PREFERENCES_USERNAME_LOG_IN, "");
         sharedPreferencesEditor.apply();
+    }
+
+    /**
+     * Should the service be started?
+     * @return true if the service should be started, false otherwise
+     */
+    public boolean startService() {
+        return sharedPreferences.getBoolean("applicationNotifications", true);
     }
 
     /**
