@@ -65,6 +65,31 @@ public class UserLoggedHomeFragment extends Fragment {
         }
     }
 
+    private View.OnClickListener getCategoryButtonOnClickListener() {
+        return new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                CategoryButton categoryButton = (CategoryButton) view;
+                System.out.println("UserLoggedHomeFragment.onClick: " + categoryButton.getCategory().getCategoryName());
+
+                openCategoryFragment(categoryButton.getCategory());
+            }
+        };
+    }
+
+    private void openCategoryFragment(Category category) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.CATEGORY_ID, category.getCategoryID());
+
+        UserShowCategoryFragment fragmentShowCategory = new UserShowCategoryFragment();
+        fragmentShowCategory.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, fragmentShowCategory);
+        fragmentTransaction.addToBackStack("Category");
+        fragmentTransaction.commit();
+    }
+
     /**
      * Initialize the preview of the user shopping list
      */
@@ -82,17 +107,6 @@ public class UserLoggedHomeFragment extends Fragment {
 
             linearLayoutShoppingList.addView(productButton);
         }
-    }
-
-    private View.OnClickListener getCategoryButtonOnClickListener() {
-        return new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                CategoryButton categoryButton = (CategoryButton) view;
-                System.out.println("UserLoggedHomeFragment.onClick: " + categoryButton.getCategory().getCategoryName());
-            }
-        };
     }
 
     /**
@@ -118,10 +132,10 @@ public class UserLoggedHomeFragment extends Fragment {
 
         UserShowProductFragment fragmentShowProduct = new UserShowProductFragment();
         fragmentShowProduct.setArguments(bundle);
-        FragmentTransaction fragmentTransactionHome = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransactionHome.replace(R.id.frame, fragmentShowProduct);
-        fragmentTransactionHome.addToBackStack("Product");
-        fragmentTransactionHome.commit();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, fragmentShowProduct);
+        fragmentTransaction.addToBackStack("Product");
+        fragmentTransaction.commit();
     }
 
 }
