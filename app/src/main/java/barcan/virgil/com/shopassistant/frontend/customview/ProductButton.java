@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import barcan.virgil.com.shopassistant.R;
+import barcan.virgil.com.shopassistant.model.Product;
 
 /**
  * Created by virgil on 20.12.2015.
@@ -29,6 +30,8 @@ public class ProductButton extends LinearLayout {
     private String productNameString;
     private String productSellerString;
     private String productPriceString;
+
+    private Product product;
 
     /**
      * ProductButton constructor
@@ -174,6 +177,10 @@ public class ProductButton extends LinearLayout {
         this.listener = listener;
     }
 
+    /**
+     * Set the image source of this view
+     * @param imageSrc the image source id
+     */
     public void setImageSrc(int imageSrc) {
         this.imageSrc = imageSrc;
 
@@ -185,6 +192,10 @@ public class ProductButton extends LinearLayout {
         this.invalidate();
     }
 
+    /**
+     * Set the product name
+     * @param productNameString the product name
+     */
     public void setProductNameString(String productNameString) {
         this.productNameString = productNameString;
 
@@ -196,6 +207,10 @@ public class ProductButton extends LinearLayout {
         this.invalidate();
     }
 
+    /**
+     * Set the product seller
+     * @param productSellerString product seller
+     */
     public void setProductSellerString(String productSellerString) {
         this.productSellerString = productSellerString;
 
@@ -207,6 +222,10 @@ public class ProductButton extends LinearLayout {
         this.invalidate();
     }
 
+    /**
+     * Set the product price
+     * @param productPriceString the product price
+     */
     public void setProductPriceString(String productPriceString) {
         this.productPriceString = productPriceString;
 
@@ -216,5 +235,25 @@ public class ProductButton extends LinearLayout {
         productPrice.setText(this.productPriceString);
 
         this.invalidate();
+    }
+
+    /**
+     * Get the product that the view represents
+     * @return the product
+     */
+    public Product getProduct() {
+        return product;
+    }
+
+    /**
+     * Set the product that the view represents
+     * @param product the product
+     */
+    public void setProduct(Product product) {
+        this.product = product;
+
+        setProductNameString(product.getProductName());
+        setProductSellerString(product.getProductSeller().getCompanyName());
+        setProductPriceString(product.getProductPriceString());
     }
 }

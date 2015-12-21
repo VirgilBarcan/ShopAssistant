@@ -2,11 +2,11 @@ package barcan.virgil.com.shopassistant.frontend.regular;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Space;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,7 @@ import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.frontend.customview.CategoryButton;
 import barcan.virgil.com.shopassistant.frontend.customview.ProductButton;
 import barcan.virgil.com.shopassistant.model.Category;
+import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.Product;
 
 /**
@@ -39,6 +40,9 @@ public class UserLoggedHomeFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Initialize the preview of favourite categories based on the user shopping list
+     */
     private void initFavouriteCategoriesPreview() {
         List<Product> shoppingList = controller.getUserShoppingList(controller.getConnectedUser());
         List<Category> favouriteCategories = new ArrayList<>();
@@ -54,12 +58,16 @@ public class UserLoggedHomeFragment extends Fragment {
             System.out.println("UserLoggedHomeFragment.initFavouriteCategoriesPreview: category=" + category);
             CategoryButton categoryButton = new CategoryButton(getActivity().getApplicationContext());
             categoryButton.setImageSrc(R.mipmap.product_image); //TODO: User the real image
-            categoryButton.setCategoryNameString(category.getCategoryName());
+            categoryButton.setCategory(category);
+            categoryButton.setOnClickListener(getCategoryButtonOnClickListener());
 
             linearLayoutFavouriteCategories.addView(categoryButton);
         }
     }
 
+    /**
+     * Initialize the preview of the user shopping list
+     */
     private void initShoppingListPreview() {
         List<Product> shoppingList = controller.getUserShoppingList(controller.getConnectedUser());
 
@@ -69,12 +77,51 @@ public class UserLoggedHomeFragment extends Fragment {
             System.out.println("UserLoggedHomeFragment.initShoppingListPreview: product=" + product);
             ProductButton productButton = new ProductButton(getActivity().getApplicationContext());
             productButton.setImageSrc(R.mipmap.product_image); //TODO: Use the real image
-            productButton.setProductNameString(product.getProductName());
-            productButton.setProductSellerString(product.getProductSeller().getCompanyName());
-            productButton.setProductPriceString(product.getProductPriceString());
+            productButton.setProduct(product);
+            productButton.setOnClickListener(getProductButtonOnClickListener());
 
             linearLayoutShoppingList.addView(productButton);
         }
+    }
+
+    private View.OnClickListener getCategoryButtonOnClickListener() {
+        return new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                CategoryButton categoryButton = (CategoryButton) view;
+                System.out.println("UserLoggedHomeFragment.onClick: " + categoryButton.getCategory().getCategoryName());
+            }
+        };
+    }
+
+    /**
+     * Get the ProductButton OnClickListener
+     * @return the OnClickListener for the ProductButton
+     */
+    private View.OnClickListener getProductButtonOnClickListener() {
+        return new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                ProductButton productButton = (ProductButton) view;
+                System.out.println("UserLoggedHomeFragment.onClick: " + productButton.getProduct().getProductName());
+
+                openProductFragment(productButton.getProduct());
+            }
+        };
+    }
+
+    private void openProductFragment(Product product) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.PRODUCT_ID, product.getProductID());
+
+        UserShowProductFragment fragmentShowProduct = new UserShowProductFragment();
+        fragmentShowProduct.setArguments(bundle);
+        FragmentTransaction fragmentTransactionHome = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransactionHome.replace(R.id.frame, fragmentShowProduct);
+        fragmentTransactionHome.addToBackStack("Product");
+        fragmentTransactionHome.commit();
     }
 
 }

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import barcan.virgil.com.shopassistant.R;
+import barcan.virgil.com.shopassistant.model.Category;
 
 /**
  * Created by virgil on 20.12.2015.
@@ -25,6 +26,8 @@ public class CategoryButton extends LinearLayout {
 
     private int imageSrc;
     private String categoryNameString;
+
+    private Category category;
 
     /**
      * CategoryButton constructor
@@ -156,6 +159,10 @@ public class CategoryButton extends LinearLayout {
         this.listener = listener;
     }
 
+    /**
+     * Set the image source
+     * @param imageSrc the image source
+     */
     public void setImageSrc(int imageSrc) {
         this.imageSrc = imageSrc;
 
@@ -167,6 +174,10 @@ public class CategoryButton extends LinearLayout {
         this.invalidate();
     }
 
+    /**
+     * Set the category name
+     * @param categoryNameString the category name
+     */
     public void setCategoryNameString(String categoryNameString) {
         this.categoryNameString = categoryNameString;
 
@@ -176,5 +187,23 @@ public class CategoryButton extends LinearLayout {
         categoryName.setText(this.categoryNameString);
 
         this.invalidate();
+    }
+
+    /**
+     * Get the category that is represented by this view
+     * @return the category
+     */
+    public Category getCategory() {
+        return category;
+    }
+
+    /**
+     * Set the category that will be represented by this view
+     * @param category the category
+     */
+    public void setCategory(Category category) {
+        this.category = category;
+
+        setCategoryNameString(this.category.getCategoryName());
     }
 }
