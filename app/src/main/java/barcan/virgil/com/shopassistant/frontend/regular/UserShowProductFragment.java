@@ -2,14 +2,19 @@ package barcan.virgil.com.shopassistant.frontend.regular;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
+import barcan.virgil.com.shopassistant.frontend.customview.ProductButton;
 import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.Product;
 
@@ -97,6 +102,52 @@ public class UserShowProductFragment extends Fragment {
      */
     private void setSimilarProductsList() {
         //TODO: Get the list of similar products from the backend and then display it
+        List<Product> shoppingList = controller.getUserShoppingList(controller.getConnectedUser());
+
+        LinearLayout linearLayoutSimilarProducts = (LinearLayout) view.findViewById(R.id.linearLayoutSimilarProductsList);
+
+        for (Product product : shoppingList) {
+            System.out.println("UserShowProductFragment.setSimilarProductsList: product=" + product);
+            ProductButton productButton = new ProductButton(getActivity().getApplicationContext());
+            productButton.setImageSrc(R.mipmap.product_image); //TODO: Use the real image
+            productButton.setProduct(product);
+            productButton.setOnClickListener(getProductButtonOnClickListener());
+
+            linearLayoutSimilarProducts.addView(productButton);
+        }
+    }
+
+    /**
+     * Get the ProductButton OnClickListener
+     * @return the OnClickListener for the ProductButton
+     */
+    private View.OnClickListener getProductButtonOnClickListener() {
+        return new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                ProductButton productButton = (ProductButton) view;
+                System.out.println("UserShowProductFragment.onClick: " + productButton.getProduct().getProductName());
+
+                openProductFragment(productButton.getProduct());
+            }
+        };
+    }
+
+    /**
+     * Open the fragment where info about the product are shown
+     * @param product the product whose info will be shown
+     */
+    private void openProductFragment(Product product) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.PRODUCT_ID, product.getProductID());
+
+        UserShowProductFragment fragmentShowProduct = new UserShowProductFragment();
+        fragmentShowProduct.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, fragmentShowProduct);
+        fragmentTransaction.addToBackStack("Product");
+        fragmentTransaction.commit();
     }
 
 }
