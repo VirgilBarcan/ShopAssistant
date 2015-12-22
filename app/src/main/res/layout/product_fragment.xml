@@ -22,24 +22,21 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:minHeight="250dp"
-                    android:maxHeight="400dp"
                     android:background="@color/blue" >
 
                     <ImageView
                         android:id="@+id/imageViewProductImageLarge"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:minHeight="200dp"
-                        android:maxHeight="400dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
                         android:layout_margin="5dp" />
                 </LinearLayout>
 

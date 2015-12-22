@@ -201,6 +201,7 @@ public class ProductButton extends LinearLayout {
         if (productImage == null) {
             productImage = (ImageView) this.findViewById(R.id.productButtonImage);
         }
+        productImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         productImage.setImageBitmap(image);
 
         this.invalidate();

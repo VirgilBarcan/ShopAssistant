@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -111,7 +112,7 @@ public class UserLoggedHomeFragment extends Fragment {
             System.out.println("UserLoggedHomeFragment.initShoppingListPreview: product=" + product);
             ProductButton productButton = new ProductButton(getActivity().getApplicationContext());
             Bitmap productImage = controller.getProductImage(product);
-            productButton.setImageSrc(productImage); //TODO: Use the real image
+            productButton.setImageSrc(productImage);
             productButton.setProduct(product);
             productButton.setOnClickListener(getProductButtonOnClickListener());
 

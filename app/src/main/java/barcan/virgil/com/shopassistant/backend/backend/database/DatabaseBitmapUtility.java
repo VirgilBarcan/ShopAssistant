@@ -1,7 +1,10 @@
 package barcan.virgil.com.shopassistant.backend.backend.database;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.Display;
+import android.view.WindowManager;
 
 import java.io.ByteArrayOutputStream;
 

@@ -26,6 +26,7 @@
                 android:id="@+id/imageViewProductImageSmall"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:adjustViewBounds="true"
                 android:background="@color/blue"
                 android:src="@drawable/ic_product_image"
                 android:minWidth="100dp"

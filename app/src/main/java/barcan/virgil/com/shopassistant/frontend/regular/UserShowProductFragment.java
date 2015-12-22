@@ -1,11 +1,15 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -73,8 +77,10 @@ public class UserShowProductFragment extends Fragment {
 
         //ProofOfConcept
         ImageView imageViewProductImage = (ImageView) view.findViewById(R.id.imageViewProductImageLarge);
-        imageViewProductImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageViewProductImage.setImageResource(R.drawable.app_logo);
+        imageViewProductImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+        Bitmap productImage = controller.getProductImage(product);
+        imageViewProductImage.setImageBitmap(productImage);
     }
 
     /**
@@ -110,7 +116,8 @@ public class UserShowProductFragment extends Fragment {
             if (product.getProductCategory().getCategoryID().equals(this.product.getProductCategory().getCategoryID())) {
                 System.out.println("UserShowProductFragment.setSimilarProductsList: product=" + product);
                 ProductButton productButton = new ProductButton(getActivity().getApplicationContext());
-                productButton.setImageSrc(R.mipmap.product_image); //TODO: Use the real image
+                Bitmap productImage = controller.getProductImage(product);
+                productButton.setImageSrc(productImage);
                 productButton.setProduct(product);
                 productButton.setOnClickListener(getProductButtonOnClickListener());
 
