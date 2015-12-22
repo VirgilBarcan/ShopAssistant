@@ -269,6 +269,38 @@ public class Controller {
     }
 
     /**
+     * Get the list of all Products sold by the Company given by its companyID
+     * @param companyID the id of the Company
+     * @return the list of all Products sold by the Company
+     */
+    public List<Product> getAllProductsSoldBy(String companyID) {
+        List<Product> allProducts = databaseHelper.getAllProducts();
+        List<Product> result = new ArrayList<>();
+
+        for (Product product : allProducts)
+            if (product.getProductSeller().getCompanyID().equals(companyID))
+                result.add(product);
+
+        return result;
+    }
+
+    /**
+     * Get the list of all Products in the given Category
+     * @param categoryID the id of the Category
+     * @return the list of all Products sold by the Company
+     */
+    public List<Product> getAllProductsInCategory(String categoryID) {
+        List<Product> allProducts = databaseHelper.getAllProducts();
+        List<Product> result = new ArrayList<>();
+
+        for (Product product : allProducts)
+            if (product.getProductCategory().getCategoryID().equals(categoryID))
+                result.add(product);
+
+        return result;
+    }
+
+    /**
      * Get the product image
      * @param product the product
      * @return the product image

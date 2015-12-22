@@ -2,6 +2,7 @@ package barcan.virgil.com.shopassistant.frontend.regular;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.CategoriesListViewAdapter;
 import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.model.Category;
+import barcan.virgil.com.shopassistant.model.Constants;
 
 /**
  * Created by virgil on 22.12.2015.
@@ -53,10 +55,28 @@ public class UserShowCategoriesFragment extends Fragment {
         listViewCategoriesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Category category = (Category) parent.getItemAtPosition(position);
 
-                //TODO: Start the fragment that shows all products sold by a shop
+                //Start the fragment that shows all products with a category
+                startProductsFragment(category);
             }
         });
+    }
+
+
+    /**
+     * This method starts the Products fragment when the user clicks on a Category from the list
+     */
+    private void startProductsFragment(Category category) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.CATEGORY_ID, category.getCategoryID());
+
+        UserProductsFragment fragmentProducts = new UserProductsFragment();
+        fragmentProducts.setArguments(bundle);
+        FragmentTransaction fragmentTransactionHome = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransactionHome.replace(R.id.frame, fragmentProducts);
+        fragmentTransactionHome.addToBackStack("Products");
+        fragmentTransactionHome.commit();
     }
 
 }

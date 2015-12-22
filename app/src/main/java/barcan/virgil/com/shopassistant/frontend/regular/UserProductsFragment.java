@@ -23,9 +23,13 @@ import barcan.virgil.com.shopassistant.model.Product;
 public class UserProductsFragment extends Fragment {
 
     private Controller controller;
+    private Bundle bundle;
     private View view;
     private ListView listViewProductsList;
     private List<Product> productList;
+
+    private String categoryID;
+    private String companyID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,7 +37,24 @@ public class UserProductsFragment extends Fragment {
 
         controller = Controller.getInstance();
 
-        populateProductsList();
+        bundle = getArguments();
+        categoryID = "";
+        companyID = "";
+
+        String whatToGet = "ALL";
+
+        if (bundle != null  && bundle.containsKey(Constants.CATEGORY_ID)) {
+            categoryID = bundle.getString(Constants.CATEGORY_ID);
+            whatToGet = "CATEGORY";
+        }
+        else {
+            if (bundle != null && bundle.containsKey(Constants.COMPANY_ID)) {
+                companyID = bundle.getString(Constants.COMPANY_ID);
+                whatToGet = "COMPANY";
+            }
+        }
+
+        populateProductsList(whatToGet);
 
         return view;
     }
@@ -43,11 +64,21 @@ public class UserProductsFragment extends Fragment {
      * It gets all products from the Controller
      * For the clicked product it starts the UserShowProductFragment
      */
-    private void populateProductsList() {
+    private void populateProductsList(String whatToGet) {
         listViewProductsList = (ListView) view.findViewById(R.id.listViewProductsList);
 
-        //Get all products list
-        productList = controller.getAllProducts();
+        if (whatToGet.equals("ALL")) {
+            //Get all products list
+            productList = controller.getAllProducts();
+        }
+        if (whatToGet.equals("COMPANY")) {
+            //Get all products sold by the company
+            productList = controller.getAllProductsSoldBy(companyID);
+        }
+        if (whatToGet.equals("CATEGORY")) {
+            //Get all products in the given category
+            productList = controller.getAllProductsInCategory(categoryID);
+        }
 
         ProductsListViewAdapter productsListViewAdapter = new ProductsListViewAdapter(getActivity(), productList);
         listViewProductsList.setAdapter(productsListViewAdapter);
