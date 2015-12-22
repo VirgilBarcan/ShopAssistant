@@ -1,5 +1,6 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -109,7 +110,8 @@ public class UserLoggedHomeFragment extends Fragment {
         for (Product product : shoppingList) {
             System.out.println("UserLoggedHomeFragment.initShoppingListPreview: product=" + product);
             ProductButton productButton = new ProductButton(getActivity().getApplicationContext());
-            productButton.setImageSrc(R.mipmap.product_image); //TODO: Use the real image
+            Bitmap productImage = controller.getProductImage(product);
+            productButton.setImageSrc(productImage); //TODO: Use the real image
             productButton.setProduct(product);
             productButton.setOnClickListener(getProductButtonOnClickListener());
 

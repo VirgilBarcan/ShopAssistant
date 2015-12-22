@@ -8,6 +8,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.io.FileOutputStream;
@@ -784,6 +785,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Get the product image
+     * @param productID the id of the product
+     * @return the product image
+     */
+    public Bitmap getProductImage(String productID) {
+        Bitmap productImage = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            String query = "SELECT PI.productID, PI.image \n" +
+                    "FROM PRODUCT_IMAGE PI, PRODUCT P\n" +
+                    "WHERE PI.productID = P.productID\n" +
+                    "AND P.productID = " + productID;
+
+            cursor = db.rawQuery(query, null);
+
+            if(cursor == null) return null;
+
+            cursor.moveToFirst();
+
+            String id = cursor.getString(0);
+            byte[] image = cursor.getBlob(1);
+
+            productImage = DatabaseBitmapUtility.getImage(image);
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return productImage;
+    }
+
+    /**
      * Get the Category with the given categoryID
      * @param categoryID the categoryID of the wanted category
      * @return the category with the categoryID or null if it doesn't exist
@@ -1076,4 +1115,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return shoppingList;
     }
+
 }

@@ -2,6 +2,7 @@ package barcan.virgil.com.shopassistant.backend;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
@@ -265,6 +266,24 @@ public class Controller {
      */
     public List<Product> getAllProducts() {
         return databaseHelper.getAllProducts();
+    }
+
+    /**
+     * Get the product image
+     * @param product the product
+     * @return the product image
+     */
+    public Bitmap getProductImage(Product product) {
+        return databaseHelper.getProductImage(product.getProductID());
+    }
+
+    /**
+     * Get the product image
+     * @param productID the id of the product
+     * @return the product image
+     */
+    public Bitmap getProductImage(String productID) {
+        return databaseHelper.getProductImage(productID);
     }
 
     /**
