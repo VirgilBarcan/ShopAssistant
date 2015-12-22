@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -35,11 +36,48 @@ public class UserLoggedHomeFragment extends Fragment {
 
         controller = Controller.getInstance();
 
+        //Add Search buttons listeners
+        addSearchButtonsListeners();
+
+        //Initialize the Favourite Categories preview
         initFavouriteCategoriesPreview();
 
+        //Initialize the Shopping list preview
         initShoppingListPreview();
 
         return view;
+    }
+
+    /**
+     * This method adds OnClickListeners to the Search buttons: SearchByCategory/SearchByShop
+     */
+    private void addSearchButtonsListeners() {
+        Button searchByCategory = (Button) view.findViewById(R.id.buttonSearchByCategory);
+        Button searchByShop = (Button) view.findViewById(R.id.buttonSearchByShop);
+
+        searchByCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("UserMainScreenActivity.onClick: searchByCategory");
+                UserShowCategoriesFragment fragmentShowCategories = new UserShowCategoriesFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame, fragmentShowCategories);
+                fragmentTransaction.addToBackStack("SearchByCategory");
+                fragmentTransaction.commit();
+            }
+        });
+
+        searchByShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("UserMainScreenActivity.onClick: searchByShop");
+                UserShowShopsFragment fragmentShowShops = new UserShowShopsFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame, fragmentShowShops);
+                fragmentTransaction.addToBackStack("SearchByShop");
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     /**
