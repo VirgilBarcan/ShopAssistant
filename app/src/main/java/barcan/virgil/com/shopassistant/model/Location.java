@@ -9,7 +9,6 @@ public class Location {
     private Double latitude;
     private Double longitude;
 
-    private String fullAddress;
     private String countryName;
     private String cityName;
     private String streetName;
@@ -37,7 +36,6 @@ public class Location {
         this.streetName = new String(location.getStreetName());
         this.streetNo = new String(location.getStreetNo());
         this.ZIP = new String(location.getZIP());
-        this.fullAddress = new String(location.getFullAddress());
     }
 
     private void initMemberData() {
@@ -50,7 +48,6 @@ public class Location {
         this.streetName = "";
         this.streetNo = "";
         this.ZIP = "";
-        this.fullAddress = "";
     }
 
     public String getLocationID() {
@@ -78,11 +75,7 @@ public class Location {
     }
 
     public String getFullAddress() {
-        return fullAddress;
-    }
-
-    public void setFullAddress(String fullAddress) {
-        this.fullAddress = fullAddress;
+        return this.streetName + ", " + this.streetNo + ", " + this.cityName + ", " + this.countryName;
     }
 
     public String getCountryName() {
@@ -123,5 +116,19 @@ public class Location {
 
     public void setZIP(String ZIP) {
         this.ZIP = ZIP;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "locationID='" + locationID + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", countryName='" + countryName + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", streetNo='" + streetNo + '\'' +
+                ", ZIP='" + ZIP + '\'' +
+                '}';
     }
 }

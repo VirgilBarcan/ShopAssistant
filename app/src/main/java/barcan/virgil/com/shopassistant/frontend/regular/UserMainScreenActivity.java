@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,7 +62,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
         //Choose the right fragment to show:
         // if the activity was opened by a notification, show the shopping list fragment
         // else show the home fragment
-        String fragmentToShowString = "UserLoggedHomeFragment";
+        String fragmentToShowString = "UserHomeFragment";
         String shopProductsToShow = "ALL";
         if (getIntent() != null && getIntent().getStringExtra(Constants.FRAGMENT_TO_START) != null) {
             fragmentToShowString = getIntent().getStringExtra(Constants.FRAGMENT_TO_START);
@@ -71,14 +70,14 @@ public class UserMainScreenActivity extends AppCompatActivity {
         }
         controller.setShopToShow(shopProductsToShow);
 
-        if (fragmentToShowString.equals("UserLoggedHomeFragment")) {
-            UserLoggedHomeFragment fragmentHome = new UserLoggedHomeFragment();
+        if (fragmentToShowString.equals("UserHomeFragment")) {
+            UserHomeFragment fragmentHome = new UserHomeFragment();
             FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
             fragmentTransactionHome.replace(R.id.frame, fragmentHome);
             fragmentTransactionHome.commit();
         }
         else {
-            UserLoggedShoppingListFragment fragmentShoppingList = new UserLoggedShoppingListFragment();
+            UserShoppingListFragment fragmentShoppingList = new UserShoppingListFragment();
             FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
             fragmentTransactionHome.replace(R.id.frame, fragmentShoppingList);
             fragmentTransactionHome.commit();
@@ -323,7 +322,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
      * in the NavigationView (Drawer)
      */
     private void startHomeFragment() {
-        UserLoggedHomeFragment fragmentHome = new UserLoggedHomeFragment();
+        UserHomeFragment fragmentHome = new UserHomeFragment();
         FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
         fragmentTransactionHome.replace(R.id.frame, fragmentHome);
         fragmentTransactionHome.addToBackStack("Home");
@@ -335,7 +334,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
      * in the NavigationView (Drawer)
      */
     private void startProductsFragment() {
-        UserLoggedProductsFragment fragmentProducts = new UserLoggedProductsFragment();
+        UserProductsFragment fragmentProducts = new UserProductsFragment();
         FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
         fragmentTransactionHome.replace(R.id.frame, fragmentProducts);
         fragmentTransactionHome.addToBackStack("Products");
@@ -347,7 +346,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
      * in the NavigationView (Drawer)
      */
     private void startShoppingListFragment() {
-        UserLoggedShoppingListFragment fragmentShoppingList = new UserLoggedShoppingListFragment();
+        UserShoppingListFragment fragmentShoppingList = new UserShoppingListFragment();
         FragmentTransaction fragmentTransactionShoppingList = getSupportFragmentManager().beginTransaction();
         fragmentTransactionShoppingList.replace(R.id.frame, fragmentShoppingList);
         fragmentTransactionShoppingList.addToBackStack("Shopping List");
@@ -359,7 +358,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
      * in the NavigationView (Drawer)
      */
     private void startAccountFragment() {
-        UserLoggedAccountFragment fragmentAccount = new UserLoggedAccountFragment();
+        UserAccountFragment fragmentAccount = new UserAccountFragment();
         FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
         fragmentTransactionHome.replace(R.id.frame, fragmentAccount);
         fragmentTransactionHome.addToBackStack("Account");
@@ -371,7 +370,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
      * in the NavigationView (Drawer)
      */
     private void startNotificationsFragment() {
-        UserLoggedNotificationsFragment fragmentNotifications = new UserLoggedNotificationsFragment();
+        UserNotificationsFragment fragmentNotifications = new UserNotificationsFragment();
         FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
         fragmentTransactionHome.replace(R.id.frame, fragmentNotifications);
         fragmentTransactionHome.addToBackStack("Notifications");

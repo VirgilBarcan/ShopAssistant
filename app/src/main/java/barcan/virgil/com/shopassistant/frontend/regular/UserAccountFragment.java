@@ -19,7 +19,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by virgil on 08.12.2015.
  */
-public class UserLoggedAccountFragment extends Fragment {
+public class UserAccountFragment extends Fragment {
 
     private Controller controller;
     private View view;
@@ -46,7 +46,7 @@ public class UserLoggedAccountFragment extends Fragment {
     private void addUserInfo() {
         User connectedUser = controller.getConnectedUser();
 
-        System.out.println("UserLoggedAccountFragment.addUserInfo: connectedUser=" + connectedUser);
+        System.out.println("UserAccountFragment.addUserInfo: connectedUser=" + connectedUser);
 
         if (connectedUser != null) {
             TextView textViewFullName = (TextView) view.findViewById(R.id.textViewNameSurname);
@@ -57,7 +57,7 @@ public class UserLoggedAccountFragment extends Fragment {
             circleImageView.setImageResource(R.drawable.ic_account_circle);
         }
         else {
-            System.out.println("UserLoggedAccountFragment.addUserInfo: ERROR! No user is connected! This should not be possible!");
+            System.out.println("UserAccountFragment.addUserInfo: ERROR! No user is connected! This should not be possible!");
         }
 
     }

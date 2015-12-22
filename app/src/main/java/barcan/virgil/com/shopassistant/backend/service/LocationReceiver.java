@@ -123,7 +123,7 @@ public class LocationReceiver extends BroadcastReceiver {
 
         Intent intentShowProducts = new Intent(context, MainActivity.class);
         intentShowProducts.putExtra(Constants.ACTIVITY_TO_START, "UserMainScreenActivity");
-        intentShowProducts.putExtra(Constants.FRAGMENT_TO_START, "UserLoggedShoppingListFragment");
+        intentShowProducts.putExtra(Constants.FRAGMENT_TO_START, "UserShoppingListFragment");
         intentShowProducts.putExtra(Constants.SHOP_PRODUCTS_TO_SHOW, companyName);
 
         PendingIntent pendingIntentShowProducts = PendingIntent.getActivity(context, 0, intentShowProducts, PendingIntent.FLAG_UPDATE_CURRENT);

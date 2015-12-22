@@ -20,7 +20,7 @@ import barcan.virgil.com.shopassistant.model.Product;
 /**
  * Created by virgil on 08.12.2015.
  */
-public class UserLoggedShoppingListFragment extends Fragment {
+public class UserShoppingListFragment extends Fragment {
 
     private Controller controller;
     private View view;

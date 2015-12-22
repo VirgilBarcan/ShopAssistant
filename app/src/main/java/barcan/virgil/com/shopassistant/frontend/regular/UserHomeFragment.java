@@ -25,7 +25,7 @@ import barcan.virgil.com.shopassistant.model.Product;
 /**
  * Created by virgil on 08.12.2015.
  */
-public class UserLoggedHomeFragment extends Fragment {
+public class UserHomeFragment extends Fragment {
 
     private Controller controller;
     private View view;
@@ -95,7 +95,7 @@ public class UserLoggedHomeFragment extends Fragment {
         LinearLayout linearLayoutFavouriteCategories = (LinearLayout) view.findViewById(R.id.linearLayoutFavouriteCategories);
 
         for (Category category : favouriteCategories) {
-            System.out.println("UserLoggedHomeFragment.initFavouriteCategoriesPreview: category=" + category);
+            System.out.println("UserHomeFragment.initFavouriteCategoriesPreview: category=" + category);
             CategoryButton categoryButton = new CategoryButton(getActivity().getApplicationContext());
             categoryButton.setImageSrc(R.mipmap.product_image); //TODO: User the real image
             categoryButton.setCategory(category);
@@ -115,7 +115,7 @@ public class UserLoggedHomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 CategoryButton categoryButton = (CategoryButton) view;
-                System.out.println("UserLoggedHomeFragment.onClick: " + categoryButton.getCategory().getCategoryName());
+                System.out.println("UserHomeFragment.onClick: " + categoryButton.getCategory().getCategoryName());
 
                 openCategoryFragment(categoryButton.getCategory());
             }
@@ -147,7 +147,7 @@ public class UserLoggedHomeFragment extends Fragment {
         LinearLayout linearLayoutShoppingList = (LinearLayout) view.findViewById(R.id.linearLayoutShoppingList);
 
         for (Product product : shoppingList) {
-            System.out.println("UserLoggedHomeFragment.initShoppingListPreview: product=" + product);
+            System.out.println("UserHomeFragment.initShoppingListPreview: product=" + product);
             ProductButton productButton = new ProductButton(getActivity().getApplicationContext());
             Bitmap productImage = controller.getProductImage(product, 70, 80);
             productButton.setImageSrc(productImage);
@@ -168,7 +168,7 @@ public class UserLoggedHomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ProductButton productButton = (ProductButton) view;
-                System.out.println("UserLoggedHomeFragment.onClick: " + productButton.getProduct().getProductName());
+                System.out.println("UserHomeFragment.onClick: " + productButton.getProduct().getProductName());
 
                 openProductFragment(productButton.getProduct());
             }

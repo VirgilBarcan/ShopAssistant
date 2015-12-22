@@ -375,4 +375,25 @@ public class Controller {
         return databaseHelper.getCategoryWithCategoryID(categoryID);
     }
 
+    /**
+     * Get all categories from the Database
+     * @return the list of all categories
+     */
+    public List<Category> getAllCategories() {
+        List<Category> categories = new ArrayList<>();
+
+        for (Category category : databaseHelper.getAllCategories().values())
+            categories.add(category);
+
+        return categories;
+    }
+
+    public List<Company> getAllCompanies() {
+        List<Company> companies = new ArrayList<>();
+
+        for (Company company : databaseHelper.getAllCompanies().values())
+            companies.add(company);
+
+        return companies;
+    }
 }

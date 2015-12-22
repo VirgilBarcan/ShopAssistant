@@ -1,25 +1,39 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context=".MainActivity"
     android:orientation="vertical" >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
+        android:gravity="bottom"
         android:paddingLeft="@dimen/activity_main_horizontal_margin"
         android:paddingRight="@dimen/activity_main_horizontal_margin"
         android:paddingTop="@dimen/activity_main_vertical_margin"
         android:paddingBottom="@dimen/activity_main_vertical_margin"
         tools:context=".MainActivity" >
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/linearLayoutShopsList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Shops show layout will be added soon" />
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <ListView
+                android:id="@+id/listViewShopsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cardsDialogsColor" >
+
+            </ListView>
+
+        </LinearLayout>
 
     </LinearLayout>
 

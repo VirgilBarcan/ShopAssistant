@@ -428,7 +428,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String streetName;
             String streetNo;
             String ZIP;
-            String fullAddress;
 
             cursor.moveToFirst();
 
@@ -440,7 +439,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             streetName = cursor.getString(5);
             streetNo = cursor.getString(6);
             ZIP = cursor.getString(7);
-            fullAddress = cursor.getString(8);
 
             location = new Location();
             location.setLocationID(locationID);
@@ -451,7 +449,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             location.setStreetName(streetName);
             location.setStreetNo(streetNo);
             location.setZIP(ZIP);
-            location.setFullAddress(fullAddress);
 
             cursor.close();
         } catch (Exception e) {

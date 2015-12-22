@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             if (true) {
                 //If the activity is started from a notification, then send the user to the specific fragment
                 String activityToStart = "UserMainScreenActivity";
-                String fragmentToStart = "UserLoggedHomeFragment";
+                String fragmentToStart = "UserHomeFragment";
                 String shopProductsToShow = "ALL";
 
                 if (getIntent() != null) {
