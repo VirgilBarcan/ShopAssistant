@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
@@ -49,6 +51,8 @@ public class UserShowCategoriesFragment extends Fragment {
         //Get the user's shopping list
         categoriesList = controller.getAllCategories();
 
+        sortCategoriesByName();
+
         CategoriesListViewAdapter categoriesListViewAdapter = new CategoriesListViewAdapter(getActivity(), categoriesList);
         listViewCategoriesList.setAdapter(categoriesListViewAdapter);
 
@@ -59,6 +63,18 @@ public class UserShowCategoriesFragment extends Fragment {
 
                 //Start the fragment that shows all products with a category
                 startProductsFragment(category);
+            }
+        });
+    }
+
+    /**
+     * Sort categories by name
+     */
+    private void sortCategoriesByName() {
+        Collections.sort(categoriesList, new Comparator<Category>() {
+            @Override
+            public int compare(Category lhs, Category rhs) {
+                return lhs.getCategoryName().compareTo(rhs.getCategoryName());
             }
         });
     }

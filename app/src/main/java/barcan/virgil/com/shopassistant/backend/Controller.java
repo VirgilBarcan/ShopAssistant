@@ -3,8 +3,6 @@ package barcan.virgil.com.shopassistant.backend;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 
 import java.util.ArrayList;

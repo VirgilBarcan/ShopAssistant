@@ -2,6 +2,7 @@ package barcan.virgil.com.shopassistant.frontend.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -132,7 +133,7 @@ public class CategoryButton extends LinearLayout {
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_UP) {
             if(listener != null) {
                 listener.onClick(this);
@@ -143,7 +144,7 @@ public class CategoryButton extends LinearLayout {
     }
 
     @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
+    public boolean dispatchKeyEvent(@NonNull KeyEvent event) {
         if(event.getAction() == KeyEvent.ACTION_UP && (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_CENTER || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
             if(listener != null) listener.onClick(this);
         }

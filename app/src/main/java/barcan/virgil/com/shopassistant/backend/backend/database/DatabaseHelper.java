@@ -76,7 +76,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /***
      * Copy database from res/raw to the device internal storage
-     * @throws IOException
      */
     public void copyDataBase() {
         try {
@@ -105,13 +104,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /***
      * Check if the database doesn't exist on device, create new one
-     * @throws IOException
      */
     public void createDatabase() {
         boolean dbExist = checkDatabase();
 
         if (dbExist) {
             //Do nothing, we already have the database
+            System.out.println("DatabaseHelper.createDatabase: database exists already!");
         } else {
             this.getReadableDatabase();
 

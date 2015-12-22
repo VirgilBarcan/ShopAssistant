@@ -102,9 +102,6 @@ public class LocationReceiver extends BroadcastReceiver {
                     System.out.println("LocationReceiver.calculateDistancesAndNotify: YOU ARE NOT CLOSE TO THE PRODUCTS SOLD BY: " + company.getCompanyName() + " distance=" + distanceToShop);
                 }
             }
-            else {
-                //The location of the shop is not set, skip it
-            }
         }
     }
 

@@ -9,12 +9,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.backend.ShopsListViewAdapter;
-import barcan.virgil.com.shopassistant.model.Category;
 import barcan.virgil.com.shopassistant.model.Company;
 import barcan.virgil.com.shopassistant.model.Constants;
 
@@ -50,6 +51,8 @@ public class UserShowShopsFragment extends Fragment {
         //Get the user's shopping list
         companiesList = controller.getAllCompanies();
 
+        sortCompaniesByName();
+
         ShopsListViewAdapter shopsListViewAdapter = new ShopsListViewAdapter(getActivity(), companiesList);
         listViewCategoriesList.setAdapter(shopsListViewAdapter);
 
@@ -60,6 +63,18 @@ public class UserShowShopsFragment extends Fragment {
 
                 //Start the fragment that shows all products sold by a shop
                 startProductsFragment(company);
+            }
+        });
+    }
+
+    /**
+     * Sort companies by name
+     */
+    private void sortCompaniesByName() {
+        Collections.sort(companiesList, new Comparator<Company>() {
+            @Override
+            public int compare(Company lhs, Company rhs) {
+                return lhs.getCompanyName().compareTo(rhs.getCompanyName());
             }
         });
     }

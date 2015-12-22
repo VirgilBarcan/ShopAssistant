@@ -11,7 +11,6 @@ import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.model.Category;
-import barcan.virgil.com.shopassistant.model.Company;
 
 /**
  * Created by virgil on 29.11.2015.

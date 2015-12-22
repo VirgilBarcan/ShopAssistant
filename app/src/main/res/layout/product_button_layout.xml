@@ -32,7 +32,7 @@
                 android:gravity="center_horizontal"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="10dp"
-                android:textSize="10dp"
+                android:textSize="10sp"
                 android:textStyle="bold"
                 android:textColor="@color/textColorPrimary" />
 
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:layout_above="@+id/productButtonProductPrice"
-                android:textSize="8dp"
+                android:textSize="8sp"
                 android:textColor="@color/textColorSecondary" />
 
             <TextView
@@ -52,7 +52,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="5dp"
                 android:gravity="center_horizontal"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:textColor="#FF0000" />
 
         </RelativeLayout>

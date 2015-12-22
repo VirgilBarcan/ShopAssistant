@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Product Name"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:maxLines="1"
                 android:maxLength="20"
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Product Category"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:layout_marginStart="15dp" />
 
             <TextView
@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Company Selling"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:layout_marginStart="15dp" />
         </LinearLayout>
 
@@ -84,7 +84,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="end"
                 android:text="Price"
-                android:textSize="13dp"
+                android:textSize="13sp"
                 android:textColor="#fa4343"
                 android:textStyle="bold" />
         </LinearLayout>

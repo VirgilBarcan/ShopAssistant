@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
-import barcan.virgil.com.shopassistant.model.Category;
 import barcan.virgil.com.shopassistant.model.Company;
 
 /**

@@ -61,7 +61,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_login_text"
-                android:onClick="userLogin"
                 android:background="@color/colorAccentLoginLogout" />
         </LinearLayout>
 
