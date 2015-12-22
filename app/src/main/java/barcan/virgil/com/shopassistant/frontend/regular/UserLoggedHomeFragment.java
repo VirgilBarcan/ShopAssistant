@@ -111,7 +111,7 @@ public class UserLoggedHomeFragment extends Fragment {
         for (Product product : shoppingList) {
             System.out.println("UserLoggedHomeFragment.initShoppingListPreview: product=" + product);
             ProductButton productButton = new ProductButton(getActivity().getApplicationContext());
-            Bitmap productImage = controller.getProductImage(product);
+            Bitmap productImage = controller.getProductImage(product, 70, 80);
             productButton.setImageSrc(productImage);
             productButton.setProduct(product);
             productButton.setOnClickListener(getProductButtonOnClickListener());

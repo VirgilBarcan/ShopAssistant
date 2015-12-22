@@ -823,6 +823,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Get the product image
+     * @param productID the id of the product
+     * @param requiredWidth the required width of the resulting Bitmap
+     * @param requiredHeight the required height of the resulting Bitmap
+     * @return the product image
+     */
+    public Bitmap getProductImage(String productID, int requiredWidth, int requiredHeight) {
+        Bitmap productImage = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            String query = "SELECT PI.productID, PI.image \n" +
+                    "FROM PRODUCT_IMAGE PI, PRODUCT P\n" +
+                    "WHERE PI.productID = P.productID\n" +
+                    "AND P.productID = " + productID;
+
+            cursor = db.rawQuery(query, null);
+
+            if(cursor == null) return null;
+
+            cursor.moveToFirst();
+
+            String id = cursor.getString(0);
+            byte[] image = cursor.getBlob(1);
+
+            productImage = DatabaseBitmapUtility.decodeSampledBitmapFromByteArray(image, requiredWidth, requiredHeight);
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return productImage;
+    }
+
+    /**
      * Get the Category with the given categoryID
      * @param categoryID the categoryID of the wanted category
      * @return the category with the categoryID or null if it doesn't exist

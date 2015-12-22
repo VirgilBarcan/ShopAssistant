@@ -5,10 +5,12 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -79,7 +81,12 @@ public class UserShowProductFragment extends Fragment {
         ImageView imageViewProductImage = (ImageView) view.findViewById(R.id.imageViewProductImageLarge);
         imageViewProductImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
-        Bitmap productImage = controller.getProductImage(product);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        System.out.println("UserShowProductFragment.setProductImage: w=" + metrics.widthPixels + " h=" + metrics.heightPixels);
+
+        Bitmap productImage = controller.getProductImage(product, metrics.widthPixels / 2, metrics.heightPixels / 2);
         imageViewProductImage.setImageBitmap(productImage);
     }
 
@@ -116,7 +123,7 @@ public class UserShowProductFragment extends Fragment {
             if (product.getProductCategory().getCategoryID().equals(this.product.getProductCategory().getCategoryID())) {
                 System.out.println("UserShowProductFragment.setSimilarProductsList: product=" + product);
                 ProductButton productButton = new ProductButton(getActivity().getApplicationContext());
-                Bitmap productImage = controller.getProductImage(product);
+                Bitmap productImage = controller.getProductImage(product, 70, 80);
                 productButton.setImageSrc(productImage);
                 productButton.setProduct(product);
                 productButton.setOnClickListener(getProductButtonOnClickListener());

@@ -287,6 +287,28 @@ public class Controller {
     }
 
     /**
+     * Get the product image
+     * @param product the product
+     * @param requiredWidth the required width of the resulting Bitmap
+     * @param requiredHeight the required height of the resulting Bitmap
+     * @return the product image
+     */
+    public Bitmap getProductImage(Product product, int requiredWidth, int requiredHeight) {
+        return databaseHelper.getProductImage(product.getProductID(), requiredWidth, requiredHeight);
+    }
+
+    /**
+     * Get the product image
+     * @param productID the id of the product
+     * @param requiredWidth the required width of the resulting Bitmap
+     * @param requiredHeight the required height of the resulting Bitmap
+     * @return the product image
+     */
+    public Bitmap getProductImage(String productID, int requiredWidth, int requiredHeight) {
+        return databaseHelper.getProductImage(productID, requiredWidth, requiredHeight);
+    }
+
+    /**
      * Get the shopping list of the user
      * @param user the user whose shopping list we want
      * @return the shopping list of the user or null if it doesn't exist
