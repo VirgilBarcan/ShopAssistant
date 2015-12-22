@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -15,24 +16,27 @@ import barcan.virgil.com.shopassistant.model.Product;
 /**
  * Created by virgil on 29.11.2015.
  */
-public class ShoppingListViewAdapter extends BaseAdapter {
+public class ProductsListViewAdapter extends BaseAdapter {
 
+    private Controller controller;
     private Context context;
-    private List<Product> shoppingList;
+    private List<Product> productsList;
 
-    public ShoppingListViewAdapter(Context context, List<Product> shoppingList) {
+    public ProductsListViewAdapter(Context context, List<Product> productsList) {
         this.context = context;
-        this.shoppingList = shoppingList;
+        this.productsList = productsList;
+
+        this.controller = Controller.getInstance();
     }
 
     @Override
     public int getCount() {
-        return this.shoppingList.size();
+        return this.productsList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return this.shoppingList.get(position);
+        return this.productsList.get(position);
     }
 
     @Override
@@ -46,8 +50,11 @@ public class ShoppingListViewAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.shopping_list_row, null);
+            convertView = layoutInflater.inflate(R.layout.products_list_row, null);
         }
+
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.imageViewProductImageSmall);
+        imageView.setImageBitmap(controller.getProductImage(product, 60, 60));
 
         TextView textViewProductName = (TextView) convertView.findViewById(R.id.textViewProductName);
         textViewProductName.setText(product.getProductName());

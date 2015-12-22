@@ -14,7 +14,7 @@ import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
-import barcan.virgil.com.shopassistant.backend.ShoppingListViewAdapter;
+import barcan.virgil.com.shopassistant.backend.ProductsListViewAdapter;
 import barcan.virgil.com.shopassistant.model.Category;
 import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.Product;
@@ -70,7 +70,7 @@ public class UserShowCategoryFragment extends Fragment {
                 productList.add(product);
         }
 
-        ShoppingListViewAdapter shoppingListViewAdapter = new ShoppingListViewAdapter(getActivity(), productList);
+        ProductsListViewAdapter shoppingListViewAdapter = new ProductsListViewAdapter(getActivity(), productList);
         listViewProductsInCategory.setAdapter(shoppingListViewAdapter);
 
         listViewProductsInCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {

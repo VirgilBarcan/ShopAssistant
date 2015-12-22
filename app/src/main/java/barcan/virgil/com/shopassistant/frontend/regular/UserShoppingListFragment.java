@@ -13,7 +13,7 @@ import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
-import barcan.virgil.com.shopassistant.backend.ShoppingListViewAdapter;
+import barcan.virgil.com.shopassistant.backend.ProductsListViewAdapter;
 import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.Product;
 
@@ -33,7 +33,7 @@ public class UserShoppingListFragment extends Fragment {
 
         controller = Controller.getInstance();
 
-        //TODO: Get the shopping list from the Controller
+        //Get the shopping list from the Controller and populate the view
         populateShoppingList();
 
         return view;
@@ -50,7 +50,7 @@ public class UserShoppingListFragment extends Fragment {
         //Get the user's shopping list
         productList = controller.getUserShoppingList(controller.getConnectedUser());
 
-        ShoppingListViewAdapter shoppingListViewAdapter = new ShoppingListViewAdapter(getActivity(), productList);
+        ProductsListViewAdapter shoppingListViewAdapter = new ProductsListViewAdapter(getActivity(), productList);
         listViewShoppingList.setAdapter(shoppingListViewAdapter);
 
         listViewShoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,25 +58,17 @@ public class UserShoppingListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Product product = (Product) parent.getItemAtPosition(position);
 
-                //TODO: Decide what to do when the user clicks a product; possibly start a new activity and show more info about product
-                startShowProductActivity(product);
+                openShowProductFragment(product);
             }
         });
     }
 
     /**
-     * This method is used to start the ShowProductActivity for the selected product
+     * This method is used to start the UserShowProductFragment for the selected product
      * @param product the selected product
      */
-    private void startShowProductActivity(Product product) {
-        System.out.println("UserShoppingListActivity.startShowProductActivity");
-
-        //TODO: Use a fragment instead of an activity to have access to the NavigationView
-        /*
-        Intent intentShowProductActivity = new Intent(getActivity(), ShowProductActivity.class);
-        intentShowProductActivity.putExtra(Constants.PRODUCT_ID, product.getProductID());
-        startActivity(intentShowProductActivity);
-        */
+    private void openShowProductFragment(Product product) {
+        System.out.println("UserShoppingListActivity.openShowProductFragment");
 
         Bundle bundle = new Bundle();
         bundle.putString(Constants.PRODUCT_ID, product.getProductID());

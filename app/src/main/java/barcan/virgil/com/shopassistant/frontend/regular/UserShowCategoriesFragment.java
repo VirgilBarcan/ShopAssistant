@@ -13,10 +13,7 @@ import java.util.List;
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.CategoriesListViewAdapter;
 import barcan.virgil.com.shopassistant.backend.Controller;
-import barcan.virgil.com.shopassistant.backend.ShoppingListViewAdapter;
-import barcan.virgil.com.shopassistant.backend.ShopsListViewAdapter;
 import barcan.virgil.com.shopassistant.model.Category;
-import barcan.virgil.com.shopassistant.model.Product;
 
 /**
  * Created by virgil on 22.12.2015.
