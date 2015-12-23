@@ -60,13 +60,13 @@ public class UserShoppingListFragment extends Fragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Product selectedProduct = productList.get((int) info.id);
 
         switch (item.getItemId()) {
             case R.id.delete_product:
-                System.out.println("Delete city: " + info.id);
-                //deleteCity(info.id);
+                System.out.println("Delete product: " + info.id + " " + selectedProduct);
 
-                showDeleteProduct().show();
+                showDeleteProduct(selectedProduct).show();
 
                 return true;
             default:
@@ -78,13 +78,21 @@ public class UserShoppingListFragment extends Fragment {
      * The DeleteProduct AlertDialog
      * @return the DeleteProduct AlertDialog
      */
-    private AlertDialog showDeleteProduct() {
+    private AlertDialog showDeleteProduct(final Product selectedProduct) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
         alertDialogBuilder.setMessage(R.string.delete_product_from_shopping_list)
                 .setPositiveButton(R.string.delete_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //Delete from the Database
+                        boolean result = controller.deleteShoppingListProduct(selectedProduct);
+
+                        if (result) {
+                            //Update the visual list
+                            populateShoppingList();
+                        }
+
                         System.out.println("YES");
                     }
                 })

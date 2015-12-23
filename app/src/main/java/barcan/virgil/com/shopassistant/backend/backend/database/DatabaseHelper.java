@@ -1160,7 +1160,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public boolean changeRegularUserPassword(User user, String newPassword) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor;
 
         try {
             String query = "UPDATE REGULAR_USER\n" +
@@ -1171,6 +1170,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         } catch (Exception e) {
             Log.v("ShopAssist", e.getMessage());
+            return false;
+        }
+
+        db.close();
+
+        return true;
+    }
+
+    public boolean deleteShoppingListProduct(User user, Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        try {
+            String userID = user.getUserID() + "";
+            String productID = product.getProductID();
+            String sellerID = product.getProductSeller().getCompanyID();
+
+            String query = "DELETE  FROM SHOPPING_LIST\n" +
+                    "WHERE regularUserID = " + userID + "\n" +
+                    "AND productID = " + productID + "\n" +
+                    "AND companyID = " + sellerID + "";
+
+            db.execSQL(query);
+
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+            return false;
         }
 
         db.close();

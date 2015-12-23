@@ -441,4 +441,13 @@ public class Controller {
 
         return databaseHelper.changeRegularUserPassword(user, newPassword);
     }
+
+    /**
+     * Delete the given product from the user's shopping list
+     * @param product the product to be deleted from the shopping list
+     */
+    public boolean deleteShoppingListProduct(Product product) {
+        User user = getConnectedUser();
+        return databaseHelper.deleteShoppingListProduct(user, product);
+    }
 }
