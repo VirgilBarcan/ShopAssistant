@@ -43,4 +43,7 @@
     <string name="user_menu_drawer_account_text">Account</string>
     <string name="user_menu_drawer_settings_text">Settings</string>
     <string name="action_search">Search</string>
+    <string name="delete_product_from_shopping_list">Delete product from shopping list</string>
+    <string name="delete_yes">Yes</string>
+    <string name="delete_no">No</string>
 </resources>
