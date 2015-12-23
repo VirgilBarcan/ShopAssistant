@@ -28,10 +28,10 @@
             android:title="@string/user_menu_drawer_account_text" />
 
         <item
-            android:id="@+id/goToNotifications"
+            android:id="@+id/goToSettings"
             android:checked="false"
             android:icon="@drawable/ic_notifications"
-            android:title="@string/user_menu_drawer_notifications_text" />
+            android:title="@string/user_menu_drawer_settings_text" />
 
     </group>
 

@@ -25,7 +25,6 @@ import java.util.List;
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.backend.service.LocationReceiver;
-import barcan.virgil.com.shopassistant.frontend.LocationActivity;
 import barcan.virgil.com.shopassistant.frontend.SettingsActivity;
 import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.User;
@@ -103,7 +102,6 @@ public class UserMainScreenActivity extends AppCompatActivity {
                     case R.id.goToHome:
                         Toast.makeText(getApplicationContext(), "Home selected", Toast.LENGTH_SHORT).show();
 
-                        //TODO: Create fragments and classes
                         startHomeFragment();
 
                         return true;
@@ -111,7 +109,6 @@ public class UserMainScreenActivity extends AppCompatActivity {
                     case R.id.goToProducts:
                         Toast.makeText(getApplicationContext(), "Search products selected", Toast.LENGTH_SHORT).show();
 
-                        //TODO: Create fragments and classes
                         startProductsFragment();
 
                         return true;
@@ -119,7 +116,6 @@ public class UserMainScreenActivity extends AppCompatActivity {
                     case R.id.shoppingList:
                         Toast.makeText(getApplicationContext(), "Shopping list selected", Toast.LENGTH_SHORT).show();
 
-                        //TODO: Create fragments and classes
                         startShoppingListFragment();
 
                         return true;
@@ -127,16 +123,14 @@ public class UserMainScreenActivity extends AppCompatActivity {
                     case R.id.goToAccount:
                         Toast.makeText(getApplicationContext(), "Account selected", Toast.LENGTH_SHORT).show();
 
-                        //TODO: Create fragments and classes
                         startAccountFragment();
 
                         return true;
 
-                    case R.id.goToNotifications:
+                    case R.id.goToSettings:
                         Toast.makeText(getApplicationContext(), "Notifications selected", Toast.LENGTH_SHORT).show();
 
-                        //TODO: Create fragments and classes
-                        startNotificationsFragment();
+                        openPreferenceActivity();
 
                     default:
                         System.out.println("UserMainScreenActivity.onNavigationItemSelected: ERROR! Id not supported!");
@@ -366,28 +360,24 @@ public class UserMainScreenActivity extends AppCompatActivity {
     }
 
     /**
-     * This method starts the Notifications fragment when the user clicks on the Notifications button
+     * This method starts the Settings fragment when the user clicks on the Settings button
      * in the NavigationView (Drawer)
      */
-    private void startNotificationsFragment() {
-        UserNotificationsFragment fragmentNotifications = new UserNotificationsFragment();
+    private void startSettingsFragment() {
+        /*
+        UserNotificationsFragment fragmentSettings = new UserNotificationsFragment();
+
         FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
-        fragmentTransactionHome.replace(R.id.frame, fragmentNotifications);
-        fragmentTransactionHome.addToBackStack("Notifications");
+        fragmentTransactionHome.replace(R.id.frame, fragmentSettings);
+        fragmentTransactionHome.addToBackStack("Settings");
         fragmentTransactionHome.commit();
+        */
     }
 
-
-
-    private void openLocationActivity() {
-        Intent intentLocationActivity = new Intent(this, LocationActivity.class);
-        //intentLocationActivity.putExtra("KEY", "value");
-        startActivity(intentLocationActivity);
-
-        //Finish the app so the user can not get back to this activity
-        //finish();
-    }
-
+    /**
+     * This method starts the Settings activity when the user clicks on the Settings button
+     * in the NavigationView (Drawer)
+     */
     private void openPreferenceActivity() {
         Intent intentSettingsActivity = new Intent(this, SettingsActivity.class);
         startActivity(intentSettingsActivity);

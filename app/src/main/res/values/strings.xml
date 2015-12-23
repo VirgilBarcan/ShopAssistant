@@ -41,6 +41,6 @@
     <string name="user_menu_drawer_products_text">Products</string>
     <string name="user_menu_drawer_shopping_list_text">Shopping List</string>
     <string name="user_menu_drawer_account_text">Account</string>
-    <string name="user_menu_drawer_notifications_text">Notifications</string>
+    <string name="user_menu_drawer_settings_text">Settings</string>
     <string name="action_search">Search</string>
 </resources>
