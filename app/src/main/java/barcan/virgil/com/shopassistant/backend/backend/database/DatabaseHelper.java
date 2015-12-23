@@ -1152,4 +1152,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return shoppingList;
     }
 
+    /**
+     * Change the password of the given user
+     * @param user the user whose password is changed
+     * @param newPassword the new password
+     * @return true if the action finished with success, false otherwise
+     */
+    public boolean changeRegularUserPassword(User user, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor;
+
+        try {
+            String query = "UPDATE REGULAR_USER\n" +
+                    "SET password = \'" + newPassword + "\'\n" +
+                    "WHERE regularUserID = " + user.getUserID();
+
+            db.execSQL(query);
+
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+        }
+
+        db.close();
+
+        return true;
+    }
 }

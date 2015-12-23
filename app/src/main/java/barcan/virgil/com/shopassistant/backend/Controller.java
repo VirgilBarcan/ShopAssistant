@@ -418,6 +418,10 @@ public class Controller {
         return categories;
     }
 
+    /**
+     * Get the list of all Companies
+     * @return the list of all Companies
+     */
     public List<Company> getAllCompanies() {
         List<Company> companies = new ArrayList<>();
 
@@ -425,5 +429,16 @@ public class Controller {
             companies.add(company);
 
         return companies;
+    }
+
+    /**
+     * Change the password of the connected user
+     * @param newPassword the new password
+     * @return true if the action finished with success, false otherwise
+     */
+    public boolean changeRegularUserPassword(String newPassword) {
+        User user = getConnectedUser();
+
+        return databaseHelper.changeRegularUserPassword(user, newPassword);
     }
 }

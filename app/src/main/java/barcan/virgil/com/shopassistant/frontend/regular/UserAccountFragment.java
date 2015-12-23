@@ -3,6 +3,7 @@ package barcan.virgil.com.shopassistant.frontend.regular;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.frontend.MainActivity;
+import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -70,11 +72,17 @@ public class UserAccountFragment extends Fragment {
         buttonLogout.setOnClickListener(buttonLogoutClickListener());
 
         //TODO: ChangePassword button + the others
+        //Change password button
+        Button buttonChangePassword = (Button) view.findViewById(R.id.buttonChangePassword);
+        buttonChangePassword.setOnClickListener(buttonChangePasswordClickListener());
+
+        //Change location button
+        Button buttonChangeLocation = (Button) view.findViewById(R.id.buttonChangeLocation);
     }
 
     /**
-     * This function returns the ClickListener for the Logout button
-     * @return the ClickListener for the Logout button
+     * This function returns the OnClickListener for the Logout button
+     * @return the OnClickListener for the Logout button
      */
     private View.OnClickListener buttonLogoutClickListener() {
         return new View.OnClickListener() {
@@ -89,6 +97,23 @@ public class UserAccountFragment extends Fragment {
 
                 //Finish the activity to make it impossible for the user to come back here
                 getActivity().finish();
+            }
+        };
+    }
+
+    /**
+     * This function returns the OnClickListener for the Logout button
+     * @return the OnClickListener for the Logout button
+     */
+    private View.OnClickListener buttonChangePasswordClickListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserChangePasswordFragment fragmentChangePassword = new UserChangePasswordFragment();
+                FragmentTransaction fragmentTransactionHome = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransactionHome.replace(R.id.frame, fragmentChangePassword);
+                fragmentTransactionHome.addToBackStack("ChangePassword");
+                fragmentTransactionHome.commit();
             }
         };
     }
