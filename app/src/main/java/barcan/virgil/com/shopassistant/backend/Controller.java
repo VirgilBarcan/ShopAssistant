@@ -450,4 +450,14 @@ public class Controller {
         User user = getConnectedUser();
         return databaseHelper.deleteShoppingListProduct(user, product);
     }
+
+    /**
+     * Add the given product to the user's shopping list
+     * @param product the product to be added to the shopping list
+     * @return true if the action was completed, false otherwise
+     */
+    public boolean addProductToShoppingList(Product product) {
+        User user = getConnectedUser();
+        return databaseHelper.addProductToShoppingList(user, product);
+    }
 }

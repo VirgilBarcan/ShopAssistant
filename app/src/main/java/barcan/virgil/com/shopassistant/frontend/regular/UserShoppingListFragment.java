@@ -49,7 +49,6 @@ public class UserShoppingListFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);

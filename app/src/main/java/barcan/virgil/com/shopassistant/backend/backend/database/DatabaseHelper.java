@@ -1178,6 +1178,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    /**
+     * Delete the given Product from the User's shopping list
+     * @param user the User
+     * @param product the Product
+     * @return true if the action was completed, false otherwise
+     */
     public boolean deleteShoppingListProduct(User user, Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -1190,6 +1196,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "WHERE regularUserID = " + userID + "\n" +
                     "AND productID = " + productID + "\n" +
                     "AND companyID = " + sellerID + "";
+
+            db.execSQL(query);
+
+        } catch (Exception e) {
+            Log.v("ShopAssist", e.getMessage());
+            return false;
+        }
+
+        db.close();
+
+        return true;
+    }
+
+    /**
+     * Add the given Product to the User's shopping list
+     * @param user the User
+     * @param product the Product
+     * @return true if the action was completed, false otherwise
+     */
+    public boolean addProductToShoppingList(User user, Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        try {
+            String userID = user.getUserID() + "";
+            String productID = product.getProductID();
+            String sellerID = product.getProductSeller().getCompanyID();
+
+            String query = "INSERT INTO " +
+                    "SHOPPING_LIST(regularUserID, productID, companyID)\n" +
+                    "VALUES(" + userID + ", " + productID + ", " + sellerID + ")";
 
             db.execSQL(query);
 

@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import barcan.virgil.com.shopassistant.R;
@@ -91,6 +93,13 @@ public class UserHomeFragment extends Fragment {
                 favouriteCategories.add(product.getProductCategory());
         }
 
+        Collections.sort(favouriteCategories, new Comparator<Category>() {
+            @Override
+            public int compare(Category lhs, Category rhs) {
+                return lhs.getCategoryName().compareTo(rhs.getCategoryName());
+            }
+        });
+
         LinearLayout linearLayoutFavouriteCategories = (LinearLayout) view.findViewById(R.id.linearLayoutFavouriteCategories);
 
         for (Category category : favouriteCategories) {
@@ -143,6 +152,13 @@ public class UserHomeFragment extends Fragment {
     private void initShoppingListPreview() {
         List<Product> shoppingList = controller.getUserShoppingList(controller.getConnectedUser());
 
+        Collections.sort(shoppingList, new Comparator<Product>() {
+            @Override
+            public int compare(Product lhs, Product rhs) {
+                return lhs.getProductName().compareTo(rhs.getProductName());
+            }
+        });
+
         LinearLayout linearLayoutShoppingList = (LinearLayout) view.findViewById(R.id.linearLayoutShoppingList);
 
         for (Product product : shoppingList) {
@@ -189,5 +205,4 @@ public class UserHomeFragment extends Fragment {
         fragmentTransaction.addToBackStack("Product");
         fragmentTransaction.commit();
     }
-
 }

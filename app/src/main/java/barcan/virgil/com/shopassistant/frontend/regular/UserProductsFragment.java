@@ -1,9 +1,14 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -33,6 +38,8 @@ public class UserProductsFragment extends Fragment {
     private String categoryID;
     private String companyID;
 
+    private String whatToGet;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.user_logged_products, container, false);
@@ -43,7 +50,7 @@ public class UserProductsFragment extends Fragment {
         categoryID = "";
         companyID = "";
 
-        String whatToGet = "ALL";
+        whatToGet = "ALL";
 
         if (bundle != null  && bundle.containsKey(Constants.CATEGORY_ID)) {
             categoryID = bundle.getString(Constants.CATEGORY_ID);
@@ -58,7 +65,66 @@ public class UserProductsFragment extends Fragment {
 
         populateProductsList(whatToGet);
 
+        //Register listView for context menu
+        registerForContextMenu(listViewProductsList);
+
         return view;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+        MenuInflater contextMenuInflater = getActivity().getMenuInflater();
+        contextMenuInflater.inflate(R.menu.context_menu_products_list, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Product selectedProduct = productList.get((int) info.id);
+
+        switch (item.getItemId()) {
+            case R.id.add_product:
+                System.out.println("Add product to shopping list: " + info.id + " " + selectedProduct);
+
+                showAddProductToShoppingList(selectedProduct).show();
+
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    /**
+     * The DeleteProduct AlertDialog
+     * @return the DeleteProduct AlertDialog
+     */
+    private AlertDialog showAddProductToShoppingList(final Product selectedProduct) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+
+        alertDialogBuilder.setMessage(R.string.add_product_to_shopping_list)
+                .setPositiveButton(R.string.delete_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Delete from the Database
+                        boolean result = controller.addProductToShoppingList(selectedProduct);
+
+                        if (result) {
+                            //Update the visual list
+                            populateProductsList(whatToGet);
+                        }
+
+                        System.out.println("YES");
+                    }
+                })
+                .setNegativeButton(R.string.delete_no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.out.println("NO");
+                    }
+                });
+
+        return alertDialogBuilder.create();
     }
 
     /**
