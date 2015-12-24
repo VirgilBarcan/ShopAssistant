@@ -106,7 +106,7 @@ public class UserProductsFragment extends Fragment {
                 .setPositiveButton(R.string.delete_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //Delete from the Database
+                        //Add product to the Database
                         boolean result = controller.addProductToShoppingList(selectedProduct);
 
                         if (result) {

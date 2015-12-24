@@ -53,11 +53,6 @@
                 android:layout_height="fill_parent"
                 android:orientation="horizontal" >
 
-                <Space
-                    android:id="@+id/space"
-                    android:layout_width="5dp"
-                    android:layout_height="match_parent" />
-
             </LinearLayout>
 
         </HorizontalScrollView>

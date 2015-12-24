@@ -2,6 +2,7 @@ package barcan.virgil.com.shopassistant.frontend.regular;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ import barcan.virgil.com.shopassistant.backend.Controller;
 import barcan.virgil.com.shopassistant.frontend.customview.ProductButton;
 import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.Product;
+import barcan.virgil.com.shopassistant.model.User;
 
 /**
  * Created by virgil on 08.12.2015.
@@ -47,6 +50,23 @@ public class UserShowProductFragment extends Fragment {
 
         //Set the product info for the given product
         setProductAttributes();
+
+        FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("UserShowProductFragment.onClick: FAB!!!");
+
+                boolean result = controller.addProductToShoppingList(product);
+
+                if (result) {
+                    Toast.makeText(getActivity(), "Product added to your shopping list", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getActivity(), "Product not added to your shopping list", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         return view;
     }

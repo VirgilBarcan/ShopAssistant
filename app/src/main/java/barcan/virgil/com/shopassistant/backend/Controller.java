@@ -458,6 +458,16 @@ public class Controller {
      */
     public boolean addProductToShoppingList(Product product) {
         User user = getConnectedUser();
-        return databaseHelper.addProductToShoppingList(user, product);
+
+        //TODO: Make some checks to see if the product isn't already added to the list
+        boolean add = true;
+        for (Product productInShoppingList : getUserShoppingList(user)) {
+            if (product.getProductID().equals(productInShoppingList.getProductID()))
+                add = false;
+        }
+
+        if (add == true)
+            return databaseHelper.addProductToShoppingList(user, product);
+        return false;
     }
 }
