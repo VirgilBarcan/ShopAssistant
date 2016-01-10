@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -150,6 +151,9 @@ public class UserProductsFragment extends Fragment {
 
         sortProductsByName();
 
+        //eliminate products with the same name but different sellers
+        uniquify();
+
         ProductsListViewAdapter productsListViewAdapter = new ProductsListViewAdapter(getActivity(), productList);
         listViewProductsList.setAdapter(productsListViewAdapter);
 
@@ -173,6 +177,23 @@ public class UserProductsFragment extends Fragment {
                 return lhs.getProductName().compareTo(rhs.getProductName());
             }
         });
+    }
+
+    /**
+     * Eliminate products with the same name but different sellers
+     */
+    private void uniquify() {
+        List<Product> uniqueProducts = new ArrayList<>();
+
+        uniqueProducts.add(productList.get(0));
+
+        for (Product product : productList) {
+            if (!product.getProductName().equals(uniqueProducts.get(uniqueProducts.size() - 1).getProductName())) {
+                uniqueProducts.add(product);
+            }
+        }
+
+        productList = uniqueProducts;
     }
 
     /**
