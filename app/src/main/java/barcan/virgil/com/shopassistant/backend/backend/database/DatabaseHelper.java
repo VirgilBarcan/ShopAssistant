@@ -691,7 +691,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.v("ShopAssist", e.getMessage());
         }
 
-        db.close();
+        //db.close();
 
         return products;
     }
@@ -1194,8 +1194,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             String query = "DELETE  FROM SHOPPING_LIST\n" +
                     "WHERE regularUserID = " + userID + "\n" +
-                    "AND productID = " + productID + "\n" +
-                    "AND companyID = " + sellerID + "";
+                    "AND productID = " + productID; // + "\n" +
+                    //"AND companyID = " + sellerID + ""; //we add all products with the same name, so we need to delete them all
 
             db.execSQL(query);
 
@@ -1219,6 +1219,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         try {
+            List<Product> allProducts = getAllProducts();
+
             String userID = user.getUserID() + "";
             String productID = product.getProductID();
             String sellerID = product.getProductSeller().getCompanyID();
@@ -1228,6 +1230,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "VALUES(" + userID + ", " + productID + ", " + sellerID + ")";
 
             db.execSQL(query);
+
+            //add the product selected by the user and the same product sold by other companies
+
+            for (Product sameProductOtherSeller : allProducts) {
+
+                if (sameProductOtherSeller.equals(product) &&
+                        !sameProductOtherSeller.getProductSeller().equals(product.getProductSeller())) {
+
+                    productID = sameProductOtherSeller.getProductID();
+                    sellerID = sameProductOtherSeller.getProductSeller().getCompanyID();
+
+                    query = "INSERT INTO " +
+                            "SHOPPING_LIST(regularUserID, productID, companyID)\n" +
+                            "VALUES(" + userID + ", " + productID + ", " + sellerID + ")";
+
+                    db.execSQL(query);
+                }
+            }
 
         } catch (Exception e) {
             Log.v("ShopAssist", e.getMessage());

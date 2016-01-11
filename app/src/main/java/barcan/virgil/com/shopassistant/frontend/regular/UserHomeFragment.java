@@ -152,12 +152,16 @@ public class UserHomeFragment extends Fragment {
     private void initShoppingListPreview() {
         List<Product> shoppingList = controller.getUserShoppingList(controller.getConnectedUser());
 
+        //sort by name
         Collections.sort(shoppingList, new Comparator<Product>() {
             @Override
             public int compare(Product lhs, Product rhs) {
                 return lhs.getProductName().compareTo(rhs.getProductName());
             }
         });
+
+        //uniquify
+        shoppingList = uniquify(shoppingList);
 
         LinearLayout linearLayoutShoppingList = (LinearLayout) view.findViewById(R.id.linearLayoutShoppingList);
 
@@ -171,6 +175,39 @@ public class UserHomeFragment extends Fragment {
 
             linearLayoutShoppingList.addView(productButton);
         }
+    }
+
+    /**
+     * Eliminate products with the same name but different sellers
+     * @param productList the list or products to be uniquified
+     */
+    private List<Product> uniquify(List<Product> productList) {
+        List<Product> uniqueProducts = new ArrayList<>();
+
+        int index = 0;
+        while (index < productList.size()) {
+            Product product = productList.get(index);
+
+            List<Product> sameNameProducts = new ArrayList<>();
+            while (++index < productList.size() &&
+                    product.getProductName().equals(productList.get(index).getProductName()));
+
+            sameNameProducts.add(product);
+
+            //sort sameNameProducts by the price in order to show to the user the cheapest product
+            Collections.sort(sameNameProducts, new Comparator<Product>() {
+                @Override
+                public int compare(Product lhs, Product rhs) {
+                    return lhs.getProductPrice().getPriceValue().compareTo(rhs.getProductPrice().getPriceValue());
+                }
+            });
+
+            uniqueProducts.add(sameNameProducts.get(0));
+
+            //++index;
+        }
+
+        return uniqueProducts;
     }
 
     /**

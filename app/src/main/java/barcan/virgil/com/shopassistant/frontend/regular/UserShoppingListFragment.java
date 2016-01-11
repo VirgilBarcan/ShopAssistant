@@ -118,12 +118,13 @@ public class UserShoppingListFragment extends Fragment {
         //Get the user's shopping list
         controller.setShopToShow(shopProductsToShow);
         productList = controller.getUserShoppingList(controller.getConnectedUser());
-        controller.setShopToShow("ALL");
+
 
         sortProductsByName();
 
         //eliminate products with the same name but different sellers
-        uniquify();
+        //uniquify();
+        controller.setShopToShow("ALL");
 
         ProductsListViewAdapter shoppingListViewAdapter = new ProductsListViewAdapter(getActivity(), productList);
         listViewShoppingList.setAdapter(shoppingListViewAdapter);

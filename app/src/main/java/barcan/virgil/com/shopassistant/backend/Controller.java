@@ -371,11 +371,21 @@ public class Controller {
 
         for (Product product : userShoppingList) {
 
+            for (Company company : allCompanies.values()) {
+
+                if (company.getAvailableProducts().contains(product) &&
+                        !userShoppingListCompanies.contains(company)) {
+                    userShoppingListCompanies.add(company);
+                }
+            }
+
+            /*
             Company company = allCompanies.get(product.getProductSeller().getCompanyID());
 
             if (!userShoppingListCompanies.contains(company)) {
                 userShoppingListCompanies.add(company);
             }
+            */
         }
 
         return userShoppingListCompanies;
