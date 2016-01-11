@@ -97,6 +97,22 @@ public class Company {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Company company = (Company) o;
+
+        return !(companyName != null ? !companyName.equals(company.companyName) : company.companyName != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return companyName != null ? companyName.hashCode() : 0;
+    }
+
+    @Override
     public String toString() {
         return "Company{" +
                 "companyID='" + companyID + '\'' +

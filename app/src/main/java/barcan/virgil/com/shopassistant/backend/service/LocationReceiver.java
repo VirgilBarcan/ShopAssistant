@@ -32,7 +32,7 @@ public class LocationReceiver extends BroadcastReceiver {
     private Location currentLocation;
     private Controller controller;
     private User connectedUser;
-    private List<Company> userShoppingListCompanies;
+    private List<Company> allCompanies;
 
     public LocationReceiver() {
     }
@@ -48,9 +48,9 @@ public class LocationReceiver extends BroadcastReceiver {
             this.connectedUser = this.controller.getConnectedUser();
         System.out.println("LocationReceiver.LocationReceiver: " + this.connectedUser);
 
-        if (this.userShoppingListCompanies == null)
-            this.userShoppingListCompanies = this.controller.getShoppingListCompanies(this.connectedUser);
-        System.out.println("LocationReceiver.LocationReceiver: " + this.userShoppingListCompanies);
+        if (this.allCompanies == null)
+            this.allCompanies = this.controller.getShoppingListCompanies(this.connectedUser);
+        System.out.println("LocationReceiver.LocationReceiver: " + this.allCompanies);
     }
 
     @Override
@@ -79,9 +79,9 @@ public class LocationReceiver extends BroadcastReceiver {
 
         Map<Company, Boolean> notifyUserAboutCompany = new HashMap<>();
 
-        System.out.println("LocationReceiver.calculateDistancesAndNotify: " + this.userShoppingListCompanies);
+        System.out.println("LocationReceiver.calculateDistancesAndNotify: " + this.allCompanies);
 
-        for (Company company : this.userShoppingListCompanies) {
+        for (Company company : this.allCompanies) {
             Location shopLocation = new Location("");
 
             if (company.getLocation() != null) {

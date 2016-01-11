@@ -83,6 +83,26 @@ public class Product {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (productName != null ? !productName.equals(product.productName) : product.productName != null)
+            return false;
+        return !(productCategory != null ? !productCategory.equals(product.productCategory) : product.productCategory != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = productName != null ? productName.hashCode() : 0;
+        result = 31 * result + (productCategory != null ? productCategory.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Product{" +
                 "productID='" + productID + '\'' +

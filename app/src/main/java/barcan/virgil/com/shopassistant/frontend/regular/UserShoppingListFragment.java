@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -33,6 +34,7 @@ public class UserShoppingListFragment extends Fragment {
     private View view;
     private ListView listViewShoppingList;
     private List<Product> productList;
+    private String shopProductsToShow;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -114,9 +116,14 @@ public class UserShoppingListFragment extends Fragment {
         listViewShoppingList = (ListView) view.findViewById(R.id.listViewShoppingList);
 
         //Get the user's shopping list
+        controller.setShopToShow(shopProductsToShow);
         productList = controller.getUserShoppingList(controller.getConnectedUser());
+        controller.setShopToShow("ALL");
 
         sortProductsByName();
+
+        //eliminate products with the same name but different sellers
+        uniquify();
 
         ProductsListViewAdapter shoppingListViewAdapter = new ProductsListViewAdapter(getActivity(), productList);
         listViewShoppingList.setAdapter(shoppingListViewAdapter);
@@ -129,6 +136,38 @@ public class UserShoppingListFragment extends Fragment {
                 openShowProductFragment(product);
             }
         });
+    }
+
+    /**
+     * Eliminate products with the same name but different sellers
+     */
+    private void uniquify() {
+        List<Product> uniqueProducts = new ArrayList<>();
+
+        int index = 0;
+        while (index < productList.size()) {
+            Product product = productList.get(index);
+
+            List<Product> sameNameProducts = new ArrayList<>();
+            while (++index < productList.size() &&
+                    product.getProductName().equals(productList.get(index).getProductName()));
+
+            sameNameProducts.add(product);
+
+            //sort sameNameProducts by the price in order to show to the user the cheapest product
+            Collections.sort(sameNameProducts, new Comparator<Product>() {
+                @Override
+                public int compare(Product lhs, Product rhs) {
+                    return lhs.getProductPrice().getPriceValue().compareTo(rhs.getProductPrice().getPriceValue());
+                }
+            });
+
+            uniqueProducts.add(sameNameProducts.get(0));
+
+            //++index;
+        }
+
+        productList = uniqueProducts;
     }
 
     /**
@@ -161,4 +200,7 @@ public class UserShoppingListFragment extends Fragment {
         fragmentTransactionHome.commit();
     }
 
+    public void setShopToShow(String shopProductsToShow) {
+        this.shopProductsToShow = shopProductsToShow;
+    }
 }

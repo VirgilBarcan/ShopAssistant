@@ -67,7 +67,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
             fragmentToShowString = getIntent().getStringExtra(Constants.FRAGMENT_TO_START);
             shopProductsToShow = getIntent().getStringExtra(Constants.SHOP_PRODUCTS_TO_SHOW);
         }
-        controller.setShopToShow(shopProductsToShow);
+        //controller.setShopToShow(shopProductsToShow);
 
         if (fragmentToShowString.equals("UserHomeFragment")) {
             UserHomeFragment fragmentHome = new UserHomeFragment();
@@ -77,6 +77,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
         }
         else {
             UserShoppingListFragment fragmentShoppingList = new UserShoppingListFragment();
+            fragmentShoppingList.setShopToShow(shopProductsToShow);
             FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
             fragmentTransactionHome.replace(R.id.frame, fragmentShoppingList);
             fragmentTransactionHome.commit();
@@ -97,6 +98,8 @@ public class UserMainScreenActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
 
                 System.out.println("UserMainScreenActivity.onNavigationItemSelected: menuItem.getItemId()=" + menuItem.getItemId());
+
+                controller.setShopToShow("ALL");
 
                 switch (menuItem.getItemId()) {
                     case R.id.goToHome:
@@ -341,6 +344,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
      */
     private void startShoppingListFragment() {
         UserShoppingListFragment fragmentShoppingList = new UserShoppingListFragment();
+        fragmentShoppingList.setShopToShow("ALL");
         FragmentTransaction fragmentTransactionShoppingList = getSupportFragmentManager().beginTransaction();
         fragmentTransactionShoppingList.replace(R.id.frame, fragmentShoppingList);
         fragmentTransactionShoppingList.addToBackStack("Shopping List");

@@ -180,17 +180,45 @@ public class UserProductsFragment extends Fragment {
     }
 
     /**
+     * Sort the products by price
+     */
+    private void sortProductsByPrice() {
+        Collections.sort(productList, new Comparator<Product>() {
+            @Override
+            public int compare(Product lhs, Product rhs) {
+                return lhs.getProductPrice().getPriceValue().compareTo(rhs.getProductPrice().getPriceValue());
+            }
+        });
+    }
+
+    /**
      * Eliminate products with the same name but different sellers
      */
     private void uniquify() {
         List<Product> uniqueProducts = new ArrayList<>();
 
-        uniqueProducts.add(productList.get(0));
+        int index = 0;
+        while (index < productList.size() - 1) {
+            Product product = productList.get(index);
 
-        for (Product product : productList) {
-            if (!product.getProductName().equals(uniqueProducts.get(uniqueProducts.size() - 1).getProductName())) {
-                uniqueProducts.add(product);
+            List<Product> sameNameProducts = new ArrayList<>();
+            while (product.getProductName().equals(productList.get(index + 1).getProductName())) {
+                ++index;
             }
+
+            sameNameProducts.add(product);
+
+            //sort sameNameProducts by the price in order to show to the user the cheapest product
+            Collections.sort(sameNameProducts, new Comparator<Product>() {
+                @Override
+                public int compare(Product lhs, Product rhs) {
+                    return lhs.getProductPrice().getPriceValue().compareTo(rhs.getProductPrice().getPriceValue());
+                }
+            });
+
+            uniqueProducts.add(sameNameProducts.get(0));
+
+            ++index;
         }
 
         productList = uniqueProducts;

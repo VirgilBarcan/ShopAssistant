@@ -370,6 +370,7 @@ public class Controller {
         Map<String, Company> allCompanies = getCompanies();
 
         for (Product product : userShoppingList) {
+
             Company company = allCompanies.get(product.getProductSeller().getCompanyID());
 
             if (!userShoppingListCompanies.contains(company)) {
