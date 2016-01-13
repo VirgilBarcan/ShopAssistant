@@ -47,4 +47,6 @@
     <string name="delete_product_from_shopping_list">Delete product from shopping list</string>
     <string name="delete_yes">Yes</string>
     <string name="delete_no">No</string>
+    <string name="search_result">Search Result!</string>
+    <string name="searchable_hint">Search shops and products</string>
 </resources>

@@ -5,10 +5,10 @@
     tools:context=".MainActivity">
 
     <item android:id="@+id/action_search"
-          android:actionViewClass="android.widget.SearchView"
+          app:actionViewClass="android.support.v7.widget.SearchView"
           android:icon="@drawable/ic_search"
           android:orderInCategory="1"
-          app:showAsAction="ifRoom"
+          app:showAsAction="always"
           android:title="@string/action_search" />
 
     <item android:id="@+id/action_shopping_list"

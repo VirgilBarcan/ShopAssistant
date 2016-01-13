@@ -1,6 +1,7 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
 import android.app.ActivityManager;
+import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +10,11 @@ import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -171,6 +174,12 @@ public class UserMainScreenActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_main, menu);
 
         System.out.println("UserMainScreenActivity.onCreateOptionsMenu: menu=" + menu);
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        System.out.println("UserMainScreenActivity.onCreateOptionsMenu: getComponentName=" + getComponentName());
+        System.out.println("UserMainScreenActivity.onCreateOptionsMenu: searchableInfo=" + searchManager.getSearchableInfo(getComponentName()));
 
         return super.onCreateOptionsMenu(menu);
     }
