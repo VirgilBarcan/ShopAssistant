@@ -1,12 +1,6 @@
 package barcan.virgil.com.shopassistant.frontend.regular;
 
-import android.app.ActivityManager;
 import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -24,11 +18,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
-import barcan.virgil.com.shopassistant.backend.service.LocationReceiver;
-import barcan.virgil.com.shopassistant.frontend.SettingsActivity;
 import barcan.virgil.com.shopassistant.model.Constants;
 import barcan.virgil.com.shopassistant.model.User;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -38,8 +29,6 @@ public class UserMainScreenActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
-    private Intent intentLocationService;
 
     private Controller controller;
 
@@ -55,10 +44,10 @@ public class UserMainScreenActivity extends AppCompatActivity {
 
         //Start the location service?
         if (controller.startService()) {
-            startLocationService();
+            controller.startLocationService();
         }
         else {
-            stopLocationService();
+            controller.stopLocationService();
         }
 
         //Choose the right fragment to show:
@@ -136,8 +125,9 @@ public class UserMainScreenActivity extends AppCompatActivity {
                     case R.id.goToSettings:
                         Toast.makeText(getApplicationContext(), "Notifications selected", Toast.LENGTH_SHORT).show();
 
-                        openPreferenceActivity();
+                        startSettingsFragment();
 
+                        return true;
                     default:
                         System.out.println("UserMainScreenActivity.onNavigationItemSelected: ERROR! Id not supported!");
                 }
@@ -211,7 +201,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
                 //TODO: React to settings
 
                 //Just a small test
-                openPreferenceActivity();
+                startSettingsFragment();
 
                 break;
 
@@ -220,78 +210,6 @@ public class UserMainScreenActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * This method starts the LocationService
-     * The LocationService gets GPS position and checks if shops are close to the user
-     * If a shop that sells something the user wants is close, the Service notifies
-     */
-    private void startLocationService() {
-        System.out.println("UserMainScreenActivity.startLocationService");
-        if (!isMyServiceRunning(LocationReceiver.class)) {
-            intentLocationService = createExplicitIntentFromImplicitIntent(getApplicationContext(), new Intent("barcan.virgil.com.shopassistant.backend.service"));
-            startService(intentLocationService);
-
-            //Intent intent = new Intent(this, LocationService.class);
-            //PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            //AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            //alarmManager.cancel(pendingIntent);
-            //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, pendingIntent);
-        }
-    }
-
-    /**
-     * This method is used to stop the LocationService
-     */
-    private void stopLocationService() {
-        System.out.println("UserMainScreenActivity.stopLocationService");
-        if (isMyServiceRunning(LocationReceiver.class)) {
-            stopService(intentLocationService);
-        }
-    }
-
-    /**
-     * This function converts an implicit intent (given as a string) to an explicit one
-     * @param context the context
-     * @param implicitIntent the implicit intent
-     * @return the explicit Intent
-     */
-    private Intent createExplicitIntentFromImplicitIntent(Context context, Intent implicitIntent) {
-        PackageManager packageManager = context.getPackageManager();
-        List<ResolveInfo> resolveInfos = packageManager.queryIntentServices(implicitIntent, 0);
-
-        //Make sure only one match was found
-        if (resolveInfos == null || resolveInfos.size() != 1) {
-            return null;
-        }
-
-        //Get component info and create ComponentName
-        ResolveInfo serviceInfo = resolveInfos.get(0);
-        String packageName = serviceInfo.serviceInfo.packageName;
-        String className = serviceInfo.serviceInfo.name;
-        ComponentName componentName = new ComponentName(packageName, className);
-
-        Intent explicitIntent = new Intent(implicitIntent);
-        explicitIntent.setComponent(componentName);
-
-        return explicitIntent;
-    }
-
-    /**
-     * This function is used to check if the service is running already, to not start it again
-     * @param serviceClass the class of the service
-     * @return true if the service is running, false otherwise
-     */
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                System.out.println("UserMainScreenActivity.isMyServiceRunning: yes, the " + service.service.getClassName() + " is running");
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
@@ -341,10 +259,10 @@ public class UserMainScreenActivity extends AppCompatActivity {
      */
     private void startProductsFragment() {
         UserProductsFragment fragmentProducts = new UserProductsFragment();
-        FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
-        fragmentTransactionHome.replace(R.id.frame, fragmentProducts);
-        fragmentTransactionHome.addToBackStack("Products");
-        fragmentTransactionHome.commit();
+        FragmentTransaction fragmentTransactionProducts = getSupportFragmentManager().beginTransaction();
+        fragmentTransactionProducts.replace(R.id.frame, fragmentProducts);
+        fragmentTransactionProducts.addToBackStack("Products");
+        fragmentTransactionProducts.commit();
     }
 
     /**
@@ -366,10 +284,10 @@ public class UserMainScreenActivity extends AppCompatActivity {
      */
     private void startAccountFragment() {
         UserAccountFragment fragmentAccount = new UserAccountFragment();
-        FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
-        fragmentTransactionHome.replace(R.id.frame, fragmentAccount);
-        fragmentTransactionHome.addToBackStack("Account");
-        fragmentTransactionHome.commit();
+        FragmentTransaction fragmentTransactionAccount = getSupportFragmentManager().beginTransaction();
+        fragmentTransactionAccount.replace(R.id.frame, fragmentAccount);
+        fragmentTransactionAccount.addToBackStack("Account");
+        fragmentTransactionAccount.commit();
     }
 
     /**
@@ -377,22 +295,13 @@ public class UserMainScreenActivity extends AppCompatActivity {
      * in the NavigationView (Drawer)
      */
     private void startSettingsFragment() {
-        /*
-        UserNotificationsFragment fragmentSettings = new UserNotificationsFragment();
 
-        FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
-        fragmentTransactionHome.replace(R.id.frame, fragmentSettings);
-        fragmentTransactionHome.addToBackStack("Settings");
-        fragmentTransactionHome.commit();
-        */
-    }
+        UserSettingsFragment fragmentSettings = new UserSettingsFragment();
 
-    /**
-     * This method starts the Settings activity when the user clicks on the Settings button
-     * in the NavigationView (Drawer)
-     */
-    private void openPreferenceActivity() {
-        Intent intentSettingsActivity = new Intent(this, SettingsActivity.class);
-        startActivity(intentSettingsActivity);
+        FragmentTransaction fragmentTransactionSettings = getSupportFragmentManager().beginTransaction();
+        fragmentTransactionSettings.replace(R.id.frame, fragmentSettings);
+        fragmentTransactionSettings.addToBackStack("Settings");
+        fragmentTransactionSettings.commit();
+
     }
 }

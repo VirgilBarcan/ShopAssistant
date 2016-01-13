@@ -1,7 +1,12 @@
 package barcan.virgil.com.shopassistant.backend;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 
@@ -10,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import barcan.virgil.com.shopassistant.backend.backend.database.DatabaseHelper;
+import barcan.virgil.com.shopassistant.backend.service.LocationReceiver;
 import barcan.virgil.com.shopassistant.frontend.MainActivity;
 import barcan.virgil.com.shopassistant.model.Category;
 import barcan.virgil.com.shopassistant.model.Company;
@@ -39,6 +45,8 @@ public class Controller {
     private Context context;
     //Store the shop whose products will be shown in the shopping list
     private String shopToShow;
+
+    private Intent intentLocationService;
 
     private static Controller instance;
 
@@ -481,4 +489,80 @@ public class Controller {
             return databaseHelper.addProductToShoppingList(user, product);
         return false;
     }
+
+    //region Start Location service
+
+    /**
+     * This method starts the LocationService
+     * The LocationService gets GPS position and checks if shops are close to the user
+     * If a shop that sells something the user wants is close, the Service notifies
+     */
+    public void startLocationService() {
+        System.out.println("Controller.startLocationService");
+        if (!isMyServiceRunning(LocationReceiver.class)) {
+            intentLocationService = createExplicitIntentFromImplicitIntent(context.getApplicationContext(), new Intent("barcan.virgil.com.shopassistant.backend.service"));
+            context.startService(intentLocationService);
+
+            //Intent intent = new Intent(this, LocationService.class);
+            //PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            //AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            //alarmManager.cancel(pendingIntent);
+            //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, pendingIntent);
+        }
+    }
+
+    /**
+     * This method is used to stop the LocationService
+     */
+    public void stopLocationService() {
+        System.out.println("Controller.stopLocationService");
+        if (isMyServiceRunning(LocationReceiver.class)) {
+            context.stopService(intentLocationService);
+        }
+    }
+
+    /**
+     * This function converts an implicit intent (given as a string) to an explicit one
+     * @param context the context
+     * @param implicitIntent the implicit intent
+     * @return the explicit Intent
+     */
+    private Intent createExplicitIntentFromImplicitIntent(Context context, Intent implicitIntent) {
+        PackageManager packageManager = context.getPackageManager();
+        List<ResolveInfo> resolveInfos = packageManager.queryIntentServices(implicitIntent, 0);
+
+        //Make sure only one match was found
+        if (resolveInfos == null || resolveInfos.size() != 1) {
+            return null;
+        }
+
+        //Get component info and create ComponentName
+        ResolveInfo serviceInfo = resolveInfos.get(0);
+        String packageName = serviceInfo.serviceInfo.packageName;
+        String className = serviceInfo.serviceInfo.name;
+        ComponentName componentName = new ComponentName(packageName, className);
+
+        Intent explicitIntent = new Intent(implicitIntent);
+        explicitIntent.setComponent(componentName);
+
+        return explicitIntent;
+    }
+
+    /**
+     * This function is used to check if the service is running already, to not start it again
+     * @param serviceClass the class of the service
+     * @return true if the service is running, false otherwise
+     */
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                System.out.println("Controller.isMyServiceRunning: yes, the " + service.service.getClassName() + " is running");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //endregion
 }
