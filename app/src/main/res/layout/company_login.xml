@@ -1,69 +1,77 @@
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_main_horizontal_margin"
-    android:paddingRight="@dimen/activity_main_horizontal_margin"
-    android:paddingTop="@dimen/activity_main_vertical_margin"
-    android:paddingBottom="@dimen/activity_main_vertical_margin"
-    tools:context=".MainActivity" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayoutCompanyLogin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_main_horizontal_margin"
+        android:paddingRight="@dimen/activity_main_horizontal_margin"
+        android:paddingTop="@dimen/activity_main_vertical_margin"
+        android:paddingBottom="@dimen/activity_main_vertical_margin"
+        tools:context=".MainActivity" >
 
         <LinearLayout
-            android:id="@+id/linearLayoutAppLogo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageViewLogo"
+            <LinearLayout
+                android:id="@+id/linearLayoutAppLogo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/app_logo"
-                android:layout_gravity="center" />
-        </LinearLayout>
+                android:layout_weight="1">
 
-        <LinearLayout
-            android:id="@+id/linearLayoutForm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/imageViewLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/app_logo"
+                    android:layout_gravity="center" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/editTextUsername"
+            <LinearLayout
+                android:id="@+id/linearLayoutForm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/edit_text_username_text"
-                android:inputType="textPersonName"
-                android:singleLine="true"
-                android:textStyle="bold"
-                android:ellipsize="start"
-                android:outlineProvider="paddedBounds" />
+                android:orientation="vertical"
+                android:layout_weight="1">
 
-            <EditText
-                android:id="@+id/editTextPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/edit_text_password_text"
-                android:inputType="textPassword"
-                android:singleLine="true"
-                android:outlineProvider="paddedBounds" />
+                <EditText
+                    android:id="@+id/editTextUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/edit_text_username_text"
+                    android:inputType="textPersonName"
+                    android:singleLine="true"
+                    android:textStyle="bold"
+                    android:ellipsize="start"
+                    android:outlineProvider="paddedBounds" />
 
-            <Button
-                android:id="@+id/buttonLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/button_login_text"
-                android:background="@color/colorAccentLoginLogout" />
+                <EditText
+                    android:id="@+id/editTextPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/edit_text_password_text"
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:outlineProvider="paddedBounds" />
+
+                <Button
+                    android:id="@+id/buttonLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_login_text"
+                    android:background="@color/colorAccentLoginLogout" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

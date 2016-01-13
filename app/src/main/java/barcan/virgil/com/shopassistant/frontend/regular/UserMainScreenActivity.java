@@ -2,7 +2,9 @@ package barcan.virgil.com.shopassistant.frontend.regular;
 
 import android.app.SearchManager;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -29,6 +31,7 @@ public class UserMainScreenActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private CoordinatorLayout coordinatorLayout;
 
     private Controller controller;
 
@@ -36,6 +39,8 @@ public class UserMainScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_logged);
+
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,34 +100,39 @@ public class UserMainScreenActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.goToHome:
-                        Toast.makeText(getApplicationContext(), "Home selected", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(coordinatorLayout, "Home selected", Snackbar.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Home selected", Toast.LENGTH_SHORT).show();
 
                         startHomeFragment();
 
                         return true;
 
                     case R.id.goToProducts:
-                        Toast.makeText(getApplicationContext(), "Search products selected", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(coordinatorLayout, "Search products selected", Snackbar.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Search products selected", Toast.LENGTH_SHORT).show();
 
                         startProductsFragment();
 
                         return true;
 
                     case R.id.shoppingList:
-                        Toast.makeText(getApplicationContext(), "Shopping list selected", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(coordinatorLayout, "Shopping list selected", Snackbar.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Shopping list selected", Toast.LENGTH_SHORT).show();
 
                         startShoppingListFragment();
 
                         return true;
 
                     case R.id.goToAccount:
-                        Toast.makeText(getApplicationContext(), "Account selected", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(coordinatorLayout, "Account selected", Snackbar.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Account selected", Toast.LENGTH_SHORT).show();
 
                         startAccountFragment();
 
                         return true;
 
                     case R.id.goToSettings:
+                        Snackbar.make(coordinatorLayout, "Settings selected", Snackbar.LENGTH_SHORT).show();
                         Toast.makeText(getApplicationContext(), "Notifications selected", Toast.LENGTH_SHORT).show();
 
                         startSettingsFragment();

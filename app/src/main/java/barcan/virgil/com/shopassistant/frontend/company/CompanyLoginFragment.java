@@ -2,6 +2,8 @@ package barcan.virgil.com.shopassistant.frontend.company;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ public class CompanyLoginFragment extends Fragment {
     private Controller controller;
     private View rootView;
     private Button buttonLogin;
+    private CoordinatorLayout coordinatorLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,6 +34,8 @@ public class CompanyLoginFragment extends Fragment {
         controller = Controller.getInstance();
 
         rootView = inflater.inflate(R.layout.company_login, container, false);
+
+        coordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.coordinatorLayoutCompanyLogin);
 
         buttonLogin = (Button) rootView.findViewById(R.id.buttonLogin);
 
@@ -79,7 +84,8 @@ public class CompanyLoginFragment extends Fragment {
             System.out.println("CompanyLoginFragment.companyLogin: incorrect login credentials!");
 
             editTextUsername.setText(""); editTextPassword.setText("");
-            Toast.makeText(getActivity(), Constants.INCORRECT_LOGIN_CREDENTIALS, Toast.LENGTH_LONG).show();
+            Snackbar.make(coordinatorLayout, Constants.INCORRECT_LOGIN_CREDENTIALS, Snackbar.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), Constants.INCORRECT_LOGIN_CREDENTIALS, Toast.LENGTH_LONG).show();
         }
     }
 

@@ -5,8 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import barcan.virgil.com.shopassistant.frontend.company.CompanyLoginFragment;
-import barcan.virgil.com.shopassistant.frontend.regular.UserLoginFragment;
-import barcan.virgil.com.shopassistant.frontend.regular.UserRegisterFragment;
 import barcan.virgil.com.shopassistant.frontend.regular.UserRootFragment;
 
 /**

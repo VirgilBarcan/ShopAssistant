@@ -485,7 +485,7 @@ public class Controller {
                 add = false;
         }
 
-        if (add == true)
+        if (add)
             return databaseHelper.addProductToShoppingList(user, product);
         return false;
     }
