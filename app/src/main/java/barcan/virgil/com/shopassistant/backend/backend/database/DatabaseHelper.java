@@ -1123,6 +1123,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             query += ")";
 
+            System.out.println("DatabaseHelper.getUserShoppingListSortedByShop: query=" + query);
+
             cursor = db.rawQuery(query, null);
 
             if(cursor == null) return null;
@@ -1232,7 +1234,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(query);
 
             //add the product selected by the user and the same product sold by other companies
-
             for (Product sameProductOtherSeller : allProducts) {
 
                 if (sameProductOtherSeller.equals(product) &&

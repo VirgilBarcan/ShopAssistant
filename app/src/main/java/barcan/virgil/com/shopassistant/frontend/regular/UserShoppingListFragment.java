@@ -119,11 +119,10 @@ public class UserShoppingListFragment extends Fragment {
         controller.setShopToShow(shopProductsToShow);
         productList = controller.getUserShoppingList(controller.getConnectedUser());
 
-
         sortProductsByName();
 
         //eliminate products with the same name but different sellers
-        //uniquify();
+        uniquify();
         controller.setShopToShow("ALL");
 
         ProductsListViewAdapter shoppingListViewAdapter = new ProductsListViewAdapter(getActivity(), productList);

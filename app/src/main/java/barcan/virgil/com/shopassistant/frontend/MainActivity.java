@@ -106,10 +106,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public AppSectionsPageAdapter getPageAdapter() {
-        return appSectionsPageAdapter;
-    }
-
     /**
      * This method is called when the regular user is already logged in
      * The Activity is changed to MainActivityLogged, which has the action bar
