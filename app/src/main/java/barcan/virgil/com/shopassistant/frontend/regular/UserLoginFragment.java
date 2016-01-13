@@ -3,6 +3,7 @@ package barcan.virgil.com.shopassistant.frontend.regular;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import barcan.virgil.com.shopassistant.R;
 import barcan.virgil.com.shopassistant.backend.Controller;
+import barcan.virgil.com.shopassistant.frontend.MainActivity;
 import barcan.virgil.com.shopassistant.model.Constants;
 
 public class UserLoginFragment extends Fragment {
@@ -19,6 +21,7 @@ public class UserLoginFragment extends Fragment {
     private Controller controller;
     private View rootView;
     private Button buttonLogin;
+    private Button buttonCreateNewAccount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,11 +36,18 @@ public class UserLoginFragment extends Fragment {
         rootView = inflater.inflate(R.layout.user_login, container, false);
 
         buttonLogin = (Button) rootView.findViewById(R.id.buttonLogin);
-
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userLogin();
+            }
+        });
+
+        buttonCreateNewAccount = (Button) rootView.findViewById(R.id.buttonCreateNewAccount);
+        buttonCreateNewAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userCreateNewAccount();
             }
         });
 
@@ -74,6 +84,20 @@ public class UserLoginFragment extends Fragment {
             editTextUsername.setText(""); editTextPassword.setText("");
             Toast.makeText(getActivity(), Constants.INCORRECT_LOGIN_CREDENTIALS, Toast.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * This function is called when the Create new Account button from the user login screen is pressed
+     * It opens the UserRegisterFragment
+     */
+    private void userCreateNewAccount() {
+        System.out.println("UserLoginFragment.userCreateNewAccount");
+
+        UserRegisterFragment fragmentRegister = new UserRegisterFragment();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.root_frame, fragmentRegister);
+        fragmentTransaction.addToBackStack("Register");
+        fragmentTransaction.commit();
     }
 
     /**

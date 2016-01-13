@@ -78,7 +78,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/linearLayoutShoppingList"
+                android:id="@+id/linearLayoutAppLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >

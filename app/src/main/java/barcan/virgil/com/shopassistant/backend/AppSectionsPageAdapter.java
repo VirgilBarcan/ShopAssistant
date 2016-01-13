@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import barcan.virgil.com.shopassistant.frontend.company.CompanyLoginFragment;
 import barcan.virgil.com.shopassistant.frontend.regular.UserLoginFragment;
+import barcan.virgil.com.shopassistant.frontend.regular.UserRegisterFragment;
+import barcan.virgil.com.shopassistant.frontend.regular.UserRootFragment;
 
 /**
  * Created by virgil on 01.12.2015.
@@ -20,7 +22,7 @@ public class AppSectionsPageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0: //User
-                return new UserLoginFragment();
+                return new UserRootFragment();
             case 1: //Company
                 return new CompanyLoginFragment();
             default:

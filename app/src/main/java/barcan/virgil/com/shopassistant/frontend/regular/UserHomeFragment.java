@@ -163,7 +163,7 @@ public class UserHomeFragment extends Fragment {
         //uniquify
         shoppingList = uniquify(shoppingList);
 
-        LinearLayout linearLayoutShoppingList = (LinearLayout) view.findViewById(R.id.linearLayoutShoppingList);
+        LinearLayout linearLayoutShoppingList = (LinearLayout) view.findViewById(R.id.linearLayoutAppLogo);
 
         for (Product product : shoppingList) {
             System.out.println("UserHomeFragment.initShoppingListPreview: product=" + product);
