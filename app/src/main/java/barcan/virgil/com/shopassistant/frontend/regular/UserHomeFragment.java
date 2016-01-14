@@ -105,9 +105,15 @@ public class UserHomeFragment extends Fragment {
         for (Category category : favouriteCategories) {
             System.out.println("UserHomeFragment.initFavouriteCategoriesPreview: category=" + category);
             CategoryButton categoryButton = new CategoryButton(getActivity().getApplicationContext());
-            categoryButton.setImageSrc(R.mipmap.product_image); //TODO: User the real image
             categoryButton.setCategory(category);
             categoryButton.setOnClickListener(getCategoryButtonOnClickListener());
+
+            for (Product product : shoppingList) {
+                if (product.getProductCategory().equals(category)) {
+                    Bitmap productImage = controller.getProductImage(product, 70, 80);
+                    categoryButton.setImageSrc(productImage);
+                }
+            }
 
             linearLayoutFavouriteCategories.addView(categoryButton);
         }
@@ -163,7 +169,7 @@ public class UserHomeFragment extends Fragment {
         //uniquify
         shoppingList = uniquify(shoppingList);
 
-        LinearLayout linearLayoutShoppingList = (LinearLayout) view.findViewById(R.id.linearLayoutAppLogo);
+        LinearLayout linearLayoutShoppingList = (LinearLayout) view.findViewById(R.id.linearLayoutShoppingListPreview);
 
         for (Product product : shoppingList) {
             System.out.println("UserHomeFragment.initShoppingListPreview: product=" + product);

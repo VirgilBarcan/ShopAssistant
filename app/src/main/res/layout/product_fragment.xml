@@ -9,25 +9,24 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_main_horizontal_margin"
-        android:paddingRight="@dimen/activity_main_horizontal_margin"
-        android:paddingTop="@dimen/activity_main_vertical_margin"
-        android:paddingBottom="@dimen/activity_main_vertical_margin"
-        tools:context=".MainActivity" >
+        android:orientation="vertical" >
 
         <ScrollView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_main_horizontal_margin"
+                android:paddingRight="@dimen/activity_main_horizontal_margin"
+                android:paddingTop="@dimen/activity_main_vertical_margin"
+                android:paddingBottom="@dimen/activity_main_vertical_margin"
                 android:orientation="vertical" >
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/blue" >
 
@@ -46,7 +45,8 @@
                     android:layout_weight="3"
                     android:orientation="vertical"
                     android:layout_marginTop="15dp"
-                    android:background="#32575757" >
+                    android:background="@color/colorPrimaryLight"
+                    android:elevation="4dp" >
 
                     <TextView
                         android:id="@+id/productName"

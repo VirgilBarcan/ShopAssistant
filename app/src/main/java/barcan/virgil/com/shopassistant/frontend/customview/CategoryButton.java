@@ -2,6 +2,7 @@ package barcan.virgil.com.shopassistant.frontend.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -171,6 +172,20 @@ public class CategoryButton extends LinearLayout {
             categoryImage = (ImageView) this.findViewById(R.id.categoryButtonImage);
         }
         categoryImage.setImageResource(this.imageSrc);
+
+        this.invalidate();
+    }
+
+    /**
+     * Set the image source of this view
+     * @param image the image
+     */
+    public void setImageSrc(Bitmap image) {
+        if (categoryImage == null) {
+            categoryImage = (ImageView) this.findViewById(R.id.categoryButtonImage);
+        }
+        categoryImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        categoryImage.setImageBitmap(image);
 
         this.invalidate();
     }
