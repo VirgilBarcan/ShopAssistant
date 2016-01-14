@@ -14,6 +14,7 @@
         android:paddingRight="@dimen/activity_main_horizontal_margin"
         android:paddingTop="@dimen/activity_main_vertical_margin"
         android:paddingBottom="@dimen/activity_main_vertical_margin"
+        android:background="@color/cardsDialogsColor"
         tools:context=".MainActivity" >
 
         <LinearLayout
@@ -30,8 +31,8 @@
                 <ImageView
                     android:id="@+id/imageViewLogo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/app_logo"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/application_logo"
                     android:layout_gravity="center" />
             </LinearLayout>
 

@@ -12,12 +12,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:gravity="bottom"
-        android:paddingLeft="@dimen/activity_main_horizontal_margin"
-        android:paddingRight="@dimen/activity_main_horizontal_margin"
-        android:paddingTop="@dimen/activity_main_vertical_margin"
-        android:paddingBottom="@dimen/activity_main_vertical_margin"
-        tools:context=".MainActivity" >
+        android:gravity="bottom" >
 
         <LinearLayout
             android:id="@+id/linearLayoutProductsList"
@@ -29,6 +24,10 @@
                 android:id="@+id/listViewProductsList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_main_horizontal_margin"
+                android:paddingRight="@dimen/activity_main_horizontal_margin"
+                android:paddingTop="@dimen/activity_main_vertical_margin"
+                android:paddingBottom="@dimen/activity_main_vertical_margin"
                 android:background="@color/cardsDialogsColor" >
 
             </ListView>
